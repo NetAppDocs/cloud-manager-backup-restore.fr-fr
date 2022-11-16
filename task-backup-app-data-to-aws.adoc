@@ -1,0 +1,61 @@
+---
+sidebar: sidebar 
+permalink: task-backup-app-data-to-aws.html 
+keywords: backing up, back up, backup, backup application data, Amazon Web services, AWS, Cloud Backup, cloud backup service, Oracle database, Microsoft SQL Server database, SAP HANA database 
+summary: 'Réalisez quelques étapes pour sauvegarder vos données applicatives d"ONTAP vers AWS.' 
+---
+= Sauvegardez les données des applications sur site dans Amazon Web Services
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez sauvegarder les données applicatives de ONTAP vers Amazon Web Services en intégrant Cloud Backup pour les applications avec BlueXP et SnapCenter sur site.
+
+Vous pouvez protéger une ou plusieurs applications simultanément dans le cloud à l'aide d'une seule règle.
+
+
+IMPORTANT: Vous ne pouvez protéger qu'une seule application à la fois si vous utilisez l'interface graphique BlueXP. Toutefois, si vous utilisez des API REST, vous pouvez protéger plusieurs applications simultanément.
+
+*Étapes*
+
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *applications*.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à l'application et cliquer sur *Activer la sauvegarde*.
+. Dans la page attribuer une stratégie, sélectionnez la stratégie et cliquez sur *Suivant*.
+. Ajouter l'environnement de travail.
++
+Configurer le cluster ONTAP qui héberge le SVM sur lequel l'application est en cours d'exécution. Une fois l'environnement de travail ajouté pour l'une des applications, il peut être réutilisé pour toutes les autres applications qui résident sur le même cluster ONTAP.
+
++
+.. Sélectionner le SVM et cliquer sur *Ajouter un environnement de travail*.
+.. Dans l'assistant Ajouter un environnement de travail :
++
+... Spécifier l'adresse IP du cluster ONTAP
+... Spécifiez les informations d'identification admin.
++
+Cloud Backup pour applications ne prend en charge que les administrateurs de cluster.
+
+
+
+.. Cliquez sur *Ajouter un environnement de travail*.
+
+
+. Sélectionnez *Amazon Web Services* comme fournisseur de services clouds.
++
+.. Spécifier le compte AWS
+.. Dans le champ clé d'accès AWS, spécifiez la clé.
+.. Dans le champ clé secrète AWS, spécifiez le mot de passe.
+.. Sélectionnez la région dans laquelle vous souhaitez créer les sauvegardes.
+.. Spécifiez l'espace IP.
+.. Sélectionnez le niveau d'archivage.
++
+Il est recommandé de définir le niveau d'archivage car il s'agit d'une activité unique et vous ne serez pas autorisé à le configurer ultérieurement.
+
+
+
+. Vérifiez les détails et cliquez sur *Activer la sauvegarde*.
+

@@ -1,0 +1,83 @@
+---
+sidebar: sidebar 
+permalink: task-monitor-backup-jobs.html 
+keywords: cloud backup, cloud backup service, backup, restore, status, monitor, alert, notification 
+summary: 'Vous pouvez surveiller l"état des tâches de sauvegarde et de restauration que vous avez lancées dans vos environnements de travail. Cela vous permet de voir les travaux qui ont réussi, ceux qui sont en cours et ceux qui ont échoué afin de diagnostiquer et de résoudre tout problème. Vous pouvez également configurer les notifications à envoyer par e-mail pour vous informer de l"activité système importante, même lorsque vous n"êtes pas connecté au système.' 
+---
+= Surveillance de l'état des tâches de sauvegarde et de restauration
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez surveiller l'état des tâches de sauvegarde et de restauration que vous avez lancées dans vos environnements de travail. Cela vous permet de voir les travaux qui ont réussi, ceux qui sont en cours et ceux qui ont échoué afin de diagnostiquer et de résoudre tout problème. Vous pouvez également configurer les notifications à envoyer par e-mail pour vous informer de l'activité système importante, même lorsque vous n'êtes pas connecté au système.
+
+
+
+== Utilisez le moniteur des tâches pour afficher l'état des tâches de sauvegarde et de restauration
+
+Vous pouvez afficher la liste de toutes les opérations de sauvegarde et de restauration ainsi que leur état actuel dans l'onglet *surveillance des travaux*. Il s'agit notamment des opérations de vos systèmes Cloud Volumes ONTAP, ONTAP sur site, applications, machines virtuelles et Kubernetes. Chaque opération, ou tâche, a un ID et un état uniques. Le statut peut être :
+
+* Réussite
+* En cours
+* En file d'attente
+* Avertissement
+* Échec
+
+
+Notez que les tâches lancées par le système, telles que les opérations de sauvegarde en cours, ne sont pas reflétées dans l'onglet *surveillance des tâches* -- seules les tâches exécutées par l'utilisateur sont affichées.
+
+.Étapes
+. Dans le menu BlueXP, sélectionnez *protection > sauvegarde et récupération*.
+. Cliquez sur l'onglet *surveillance des travaux*.
++
+image:screenshot_backup_job_monitor.png["Capture d'écran affichant les tâches de sauvegarde et de restauration dans le tableau de bord surveillance des tâches."]
+
+
+
+Cette capture d'écran affiche les en-têtes de colonne/champ par défaut. Vous pouvez cliquer sur image:button_plus_sign_round.png[""] Pour afficher et masquer les en-têtes de colonne, ou pour ajouter 2 en-têtes supplémentaires pour « Nom d'utilisateur » et « Type ».
+
+Si vous recherchez des emplois spécifiques, vous pouvez :
+
+* utilisez le sélecteur de temps en haut à gauche de la page pour afficher les travaux pendant un certain temps
+* Entrez une partie du nom du travail dans le champ Rechercher
+* Cliquez sur *Afficher les travaux* pour un certain état, par exemple sous "échec" pour afficher uniquement les travaux ayant échoué
+* pour trier les résultats, utilisez le filtre de chaque en-tête de colonne. Par exemple, le filtre de la colonne « charges de travail » vous permet d'afficher les tâches des catégories suivantes :
++
+** Volumes (volumes Cloud Volumes ONTAP et ONTAP sur site)
+** En termes de latence
+** Ordinateurs virtuels
+** Kubernetes
+
+
+
+
+Notez que cette page est automatiquement actualisée toutes les 15 minutes afin que vous puissiez toujours voir les résultats d'état des travaux les plus récents. Vous pouvez cliquer sur le bouton *Actualiser* pour mettre la page à jour immédiatement.
+
+Pour afficher les détails correspondant à un travail spécifique, cliquez sur le nom du travail. Vous verrez tous les sous-travaux en cours d'exécution pour terminer le travail principal dans la page Détails du travail.
+
+image:screenshot_backup_job_monitor_details.png["Capture d'écran affichant la page Détails du travail."]
+
+
+
+== Utilisez le Centre de notification pour consulter les alertes de sauvegarde et de restauration
+
+Le Centre de notification suit la progression des travaux de sauvegarde et de restauration que vous avez lancés afin de vérifier si l'opération a réussi ou non. Vous pouvez afficher les notifications en cliquant sur le bouton (image:icon_bell.png["signal sonore de notification"]) Dans la barre de menus BlueXP. Vous pouvez également configurer BlueXP pour qu'il envoie des notifications par e-mail en tant qu'alertes de sorte que vous puissiez être informé de l'activité système importante, même lorsque vous n'êtes pas connecté au système.
+
+À ce stade, quatre événements déclenchent des alertes par e-mail :
+
+* L'activation de Cloud Backup a échoué sur l'environnement de travail
+* Échec de l'opération de restauration de Cloud Backup
+* Échec de la sauvegarde du volume ad hoc (à la demande)
+* Attaques par ransomware potentielles détectées sur votre système
+
+
+Par défaut, les administrateurs de compte BlueXP recevront des e-mails pour toutes les alertes « critiques » et « recommandations ». Par défaut, tous les autres utilisateurs et destinataires sont configurés pour ne pas recevoir d'e-mails de notification. Il est possible d'envoyer des e-mails aux utilisateurs BlueXP qui font partie de votre compte Cloud NetApp, ou à tous les destinataires qui doivent avoir connaissance des activités de sauvegarde et de restauration.
+
+Vous devez sélectionner les types de notification « critique » et « erreur » pour recevoir les alertes e-mail relatives à Cloud Backup.
+
+https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-monitor-cm-operations.html["En savoir plus sur le Centre de notification et sur la manière d'envoyer des e-mails d'alerte pour les tâches de sauvegarde et de restauration"^].

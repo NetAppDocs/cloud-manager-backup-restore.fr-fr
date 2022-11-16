@@ -1,0 +1,196 @@
+---
+sidebar: sidebar 
+permalink: concept-kubernetes-backup-to-cloud.html 
+keywords: backing up, restoring, back up, backup, restore, aws, azure, s3, blob, google cloud, back up volumes, cloud backup, restore volumes, billing, cost, kubernetes 
+summary: 'Cloud Backup inclut des fonctionnalités de sauvegarde et de restauration pour la protection et l"archivage à long terme des données de votre cluster Kubernetes. Les sauvegardes sont automatiquement générées et stockées dans un magasin d"objets de votre compte cloud public ou privé.' 
+---
+= Protection des données du cluster Kubernetes à l'aide de Cloud Backup
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Cloud Backup inclut des fonctionnalités de sauvegarde et de restauration pour la protection et l'archivage à long terme des données de votre cluster Kubernetes. Les sauvegardes sont automatiquement générées et stockées dans un magasin d'objets de votre compte cloud public ou privé.
+
+Si nécessaire, vous pouvez restaurer un _volume_ entier à partir d'une sauvegarde vers le même environnement de travail ou vers un environnement de travail différent.
+
+
+
+== Caractéristiques
+
+Fonctionnalités de sauvegarde :
+
+* Sauvegardez des copies indépendantes de vos volumes persistants sur un stockage objet à faible coût.
+* Appliquer une seule stratégie de sauvegarde à tous les volumes d'un cluster, ou attribuer différentes règles de sauvegarde aux volumes ayant des objectifs de point de restauration uniques.
+* Les données de sauvegarde sont sécurisées par chiffrement AES 256 bits au repos et TLS 1.2 HTTPS en transit.
+* Prise en charge de 4,000 sauvegardes maximum d'un seul volume.
+
+
+Fonctions de restauration :
+
+* Restauration des données à partir d'un point dans le temps spécifique
+* Restaurer un volume vers le système source ou vers un autre système.
+* Restaure les données au niveau bloc en les plaçant directement à l'emplacement que vous indiquez, tout en conservant les ACL d'origine.
+
+
+
+
+== Environnements de travail Kubernetes et fournisseurs de stockage objet pris en charge
+
+Cloud Backup vous permet de sauvegarder des volumes Kubernetes à partir de ces environnements de travail vers un stockage objet dans plusieurs fournisseurs de cloud public et privé :
+
+[cols="45,40"]
+|===
+| Environnement de travail source | Destination du fichier de sauvegarde ifdef::aws[] 
+
+
+| Cluster Kubernetes dans AWS | Amazon S3 endif::aws[] ifdef::Azure[] 
+
+
+| Cluster Kubernetes dans Azure | Azure Blob endif::Azure[] ifdef::gcp[] 
+
+
+| Cluster Kubernetes dans Google | Google Cloud Storage endif::gcp[] 
+|===
+Vous pouvez restaurer un volume à partir d'un fichier de sauvegarde Kubernetes vers les environnements de travail suivants :
+
+[cols="40,45"]
+|===
+| Emplacement du fichier de sauvegarde | Destination Environnement de travail ifdef::aws[] 
+
+
+| Amazon S3 | Cluster Kubernetes dans AWS endif::aws[] ifdef::Azure[] 
+
+
+| Blob d'Azure | Cluster Kubernetes dans Azure endif::Azure[] ifdef::gcp[] 
+
+
+| Google Cloud Storage | Cluster Kubernetes dans Google endif::gcp[] 
+|===
+
+
+== Le coût
+
+Deux types de coûts sont associés à Cloud Backup : les frais de ressources et les frais de service.
+
+*Frais de ressources*
+
+Les frais en ressources sont payés au fournisseur cloud pour la capacité de stockage objet dans le cloud. Étant donné que Cloud Backup préserve l'efficacité du stockage du volume source, vous payez les coûts de stockage objet du fournisseur cloud pour les données _après_ efficacité ONTAP (pour la quantité de données plus faible après l'application de la déduplication et de la compression).
+
+*Frais de service*
+
+Les frais de service sont payés à NetApp et couvrent à la fois le coût de _créer_ sauvegardes et de _restaurer_ volumes à partir de ces sauvegardes. Vous ne payez que les données que vous protégez, calculées par la capacité logique utilisée source (_before_ ONTAP efficacités) des volumes sauvegardés sur le stockage objet. Cette capacité est également connue sous le nom de téraoctets frontaux (FETB).
+
+Vous pouvez payer le service de sauvegarde de deux façons. La première option consiste à vous abonner à votre fournisseur cloud pour un paiement mensuel. La deuxième option consiste à acheter des licences directement auprès de NetApp. Lire le ,Licences pour plus de détails.
+
+
+
+== Licences
+
+Deux options de licence sont disponibles pour Cloud Backup : le paiement à l'utilisation (PAYGO) et le modèle de licence BYOL (Bring Your Own License). Un essai gratuit de 30 jours est disponible si vous n'avez pas de licence.
+
+
+
+=== Essai gratuit
+
+Lorsque vous utilisez l'essai gratuit de 30 jours, vous êtes averti du nombre de jours d'essai gratuits qui restent. À la fin de votre essai gratuit, les sauvegardes cessent d'être créées. Vous devez vous abonner au service ou acheter une licence pour continuer à utiliser le service.
+
+Les fichiers de sauvegarde ne sont pas supprimés lorsque le service est désactivé. Votre fournisseur cloud continuera de vous facturer les coûts de stockage objet pour la capacité de vos sauvegardes, à moins de supprimer les sauvegardes.
+
+
+
+=== Abonnement avec paiement à l'utilisation
+
+Cloud Backup propose un modèle de paiement à l'utilisation avec des licences basées sur la consommation. Après vous être abonné sur le marché de votre fournisseur cloud, vous payez par Go pour les données sauvegardées, sans paiement initial ​there. Votre fournisseur cloud vous facturé mensuellement.
+
+Vous devez vous abonner même si vous disposez d'une période d'essai gratuite ou si vous apportez votre propre licence (BYOL) :
+
+* L'abonnement garantit l'absence de perturbation du service après la fin de votre essai gratuit.
++
+À la fin de l'essai, vous serez facturé toutes les heures en fonction de la quantité de données que vous sauvegardez.
+
+* Si vous sauvegardez plus de données que ce que votre licence BYOL, la sauvegarde des données se poursuit avec votre abonnement au paiement basé sur l'utilisation.
++
+Par exemple, si vous disposez d'une licence BYOL 10 To, toute la capacité au-delà de 10 To est facturée via l'abonnement PAYGO.
+
+
+
+Vous ne serez pas facturé à partir de votre abonnement au paiement à l'utilisation pendant votre essai gratuit ou si vous n'avez pas dépassé votre licence BYOL.
+
+link:task-licensing-cloud-backup.html#use-a-cloud-backup-paygo-subscription["Découvrez comment configurer un abonnement avec paiement à l'utilisation"].
+
+
+
+=== Bring your own license (BYOL)
+
+BYOL est basé sur la durée (12, 24 ou 36 mois) _et_ sur la capacité par incréments de 1 To. Vous payez NetApp pour une utilisation du service pendant une période, disons 1 an, et pour une capacité maximale, disons 10 To.
+
+Vous recevrez un numéro de série que vous entrez dans la page BlueXP Digital Wallet pour activer le service. Lorsque l'une ou l'autre limite est atteinte, vous devez renouveler la licence. La licence de sauvegarde BYOL s'applique à tous les systèmes source associés à votre https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-netapp-accounts.html["Compte BlueXP"^].
+
+link:task-licensing-cloud-backup.html#use-a-cloud-backup-byol-license["Découvrez comment gérer vos licences BYOL"].
+
+
+
+== Fonctionnement de Cloud Backup
+
+Lorsque vous activez Cloud Backup sur un système Kubernetes, le service effectue une sauvegarde complète de vos données. Après la sauvegarde initiale, toutes les sauvegardes supplémentaires sont incrémentielles, ce qui signifie que seuls les blocs modifiés et les nouveaux blocs sont sauvegardés. Le trafic réseau est ainsi réduit au minimum.
+
+
+CAUTION: Toute action effectuée directement depuis votre environnement de fournisseur cloud pour gérer ou modifier des fichiers de sauvegarde peut corrompre les fichiers et entraîner une configuration non prise en charge.
+
+L'image suivante montre la relation entre chaque composant :
+
+image:diagram_cloud_backup_general_k8s.png["Un diagramme montrant comment Cloud Backup communique avec les volumes des systèmes source et le stockage objet de destination où sont situés les fichiers de sauvegarde."]
+
+
+
+=== Classes de stockage ou niveaux d'accès pris en charge
+
+ifdef::aws[]
+
+* Dans AWS, les sauvegardes commencent dans la classe de stockage _Standard_ et la transition vers la classe de stockage _Standard-Infrequent Access_ après 30 jours.
+
+
+endif::aws[]
+
+ifdef::azure[]
+
+* Dans Azure, les sauvegardes sont associées au niveau d'accès _Cool_.
+
+
+endif::azure[]
+
+ifdef::gcp[]
+
+* Dans GCP, les sauvegardes sont associées par défaut à la classe de stockage _Standard_.
+
+
+endif::gcp[]
+
+
+
+=== Personnalisation des paramètres de planification des sauvegardes et de conservation pour chaque cluster
+
+Lorsque vous activez Cloud Backup pour un environnement de travail, tous les volumes que vous sélectionnez initialement sont sauvegardés à l'aide de la stratégie de sauvegarde par défaut que vous définissez. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes ayant des objectifs de point de récupération différents, vous pouvez créer des règles supplémentaires pour ce cluster et les affecter à d'autres volumes.
+
+Vous avez le choix entre des sauvegardes toutes les heures, tous les jours, toutes les semaines et tous les mois,
+
+Lorsque vous avez atteint le nombre maximal de sauvegardes pour une catégorie ou un intervalle, les anciennes sauvegardes sont supprimées, ce qui vous permet d'avoir toujours les sauvegardes les plus récentes.
+
+
+
+== Volumes pris en charge
+
+Cloud Backup prend en charge les volumes persistants (PVS).
+
+
+
+== Limites
+
+* Lors de la création ou de la modification d'une stratégie de sauvegarde lorsqu'aucun volume n'est affecté à la stratégie, le nombre de sauvegardes conservées peut atteindre un maximum de 1018. Pour contourner ce problème, vous pouvez réduire le nombre de sauvegardes pour créer la stratégie. Vous pouvez ensuite modifier la stratégie pour créer jusqu'à 4000 sauvegardes après avoir affecté des volumes à la stratégie.
+* Les sauvegardes de volume ad hoc utilisant le bouton *Backup Now* ne sont pas prises en charge sur les volumes Kubernetes.
+

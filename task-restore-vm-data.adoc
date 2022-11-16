@@ -1,0 +1,48 @@
+---
+sidebar: sidebar 
+permalink: task-restore-vm-data.html 
+keywords: restore virtual machines 
+summary: Vous pouvez restaurer des machines virtuelles depuis le cloud vers SnapCenter sur site. 
+---
+= Restaurer des machines virtuelles à partir du cloud
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez restaurer des machines virtuelles à partir du cloud vers vCenter sur site. La sauvegarde sera restaurée au même emplacement que celui où elle a été effectuée. Vous ne pouvez pas restaurer la sauvegarde à un autre emplacement. Vous pouvez restaurer des machines virtuelles depuis le datastore ou depuis la vue VM.
+
+
+NOTE: Vous ne pouvez pas restaurer des machines virtuelles qui sont fractionnés entre les datastores.
+
+Assurez-vous que vous avez rempli toutes les link:concept-protect-vm-data.html#Requirements["de formation"] avant de restaurer des machines virtuelles à partir du cloud.
+
+.Étapes
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et restauration* > *machines virtuelles* > *Plug-in SnapCenter pour VMware vSphere* et sélectionnez le plug-in SnapCenter pour VMware vSphere dont vous souhaitez restaurer la machine virtuelle.
+
+
+
+NOTE: Si la machine virtuelle source est déplacée vers un autre emplacement (vMotion) et si l'utilisateur déclenche une restauration de cette machine virtuelle depuis BlueXP, la machine virtuelle sera restaurée vers l'emplacement source d'origine à partir duquel la sauvegarde a été effectuée.
+
+. Pour effectuer une restauration à partir du datastore :
++
+.. Cliquez sur image:icon-action.png["action"] Correspondant au datastore que vous souhaitez restaurer et cliquer sur *Afficher les détails*.
+.. Cliquez sur *Restaurer* correspondant à la sauvegarde que vous souhaitez restaurer.
+.. Sélectionnez la machine virtuelle à restaurer à partir de la sauvegarde et cliquez sur *Suivant*.
+.. Vérifiez les détails et cliquez sur *Restaurer*.
+
+
+. Pour restaurer à partir de machines virtuelles :
++
+.. Cliquez sur image:icon-action.png["action"] Correspondant à la machine virtuelle que vous souhaitez restaurer et cliquer sur *Restaurer*.
+.. Sélectionnez la sauvegarde par laquelle vous souhaitez restaurer la machine virtuelle et cliquez sur *Suivant*.
+.. Vérifiez les détails et cliquez sur *Restaurer*.
+
+
+
+
+La machine virtuelle est restaurée au même emplacement depuis lequel la sauvegarde a été effectuée.

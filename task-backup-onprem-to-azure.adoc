@@ -1,0 +1,320 @@
+---
+sidebar: sidebar 
+permalink: task-backup-onprem-to-azure.html 
+keywords: backing up, back up, backup, backup on-prem ontap, on-premises, back up volumes, cloud backup, azure, azure blob, government 
+summary: Suivez quelques étapes pour commencer à sauvegarder les données à partir de vos systèmes ONTAP sur site vers le stockage Azure Blob. 
+---
+= La sauvegarde des données ONTAP sur site dans un stockage Azure Blob
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Suivez quelques étapes pour commencer à sauvegarder les données à partir de vos systèmes ONTAP sur site vers le stockage Azure Blob.
+
+Notez que les « systèmes ONTAP sur site » comprennent les systèmes FAS, AFF et ONTAP Select.
+
+
+
+== Démarrage rapide
+
+Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux sections restantes pour obtenir de plus amples informations.
+
+.<span class=« image »><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"[] alt=« one »></span> Vérifiez la prise en charge de votre configuration
+* Vous avez découvert le cluster sur site et l'avez ajouté à un environnement de travail dans BlueXP. Voir https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html["Découverte des clusters ONTAP"^] pour plus d'informations.
++
+** Le cluster exécute ONTAP 9.7P5 ou version ultérieure.
+** Le cluster est doté d'une licence SnapMirror -- elle est incluse dans le bundle Premium ou Data protection.
+** Le cluster doit disposer des connexions réseau requises vers le stockage Blob et vers le connecteur.
+
+
+* Le connecteur doit disposer des connexions réseau requises vers le stockage Blob et vers le cluster, ainsi que des autorisations requises.
+* Vous disposez d'un abonnement Azure valide pour l'espace de stockage objet dans lequel vos sauvegardes seront stockées.
+
+
+[role="quick-margin-para"]
+Sélectionnez l'environnement de travail et cliquez sur *Activer > Backup volumes* en regard du service Backup & Restore dans le panneau de droite, puis suivez l'assistant d'installation.
+
+[role="quick-margin-para"]
+image:screenshot_backup_onprem_enable.png["Capture d'écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."]
+
+[role="quick-margin-para"]
+Sélectionnez Microsoft Azure comme fournisseur, puis saisissez les informations relatives au fournisseur. Vous devez sélectionner l'abonnement Azure et la région dans laquelle vous souhaitez créer les sauvegardes. Vous pouvez également choisir votre propre clé gérée par le client pour le chiffrement des données au lieu d'utiliser la clé de chiffrement par défaut gérée par Microsoft.
+
+[role="quick-margin-para"]
+image:screenshot_backup_onprem_to_azure.png["Une copie d'écran présente les informations détaillées du fournisseur cloud lors de la sauvegarde des volumes d'un cluster sur site vers le stockage Azure Blob."]
+
+[role="quick-margin-para"]
+Sélectionnez l'IPspace dans le cluster ONTAP où les volumes résident. Vous pouvez également choisir d'utiliser un terminal privé Azure existant pour établir une connexion plus sécurisée à vnet à partir de votre data Center sur site.
+
+[role="quick-margin-para"]
+image:screenshot_backup_onprem_azure_networking.png["Copie d'écran affichant les détails de mise en réseau lors de la sauvegarde des volumes d'un système ONTAP vers un stockage Azure Blob."]
+
+[role="quick-margin-para"]
+La règle par défaut sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes de chaque volume. Passage à des sauvegardes toutes les heures, tous les jours, toutes les semaines, tous les mois ou tous les ans vous pouvez également sélectionner l'une des règles définies par le système qui offrent plus d'options. Vous pouvez également modifier le nombre de copies de sauvegarde à conserver.
+
+[role="quick-margin-para"]
+Par défaut, les sauvegardes sont stockées dans le niveau d'accès Cool. Si votre cluster utilise ONTAP 9.10.1 ou version supérieure, vous pouvez transférer les sauvegardes vers le stockage Azure Archive après un certain nombre de jours afin d'optimiser les coûts. link:concept-cloud-backup-policies.html["En savoir plus sur les paramètres de configuration des règles de sauvegarde dans le cloud"^].
+
+[role="quick-margin-para"]
+image:screenshot_backup_policy_azure.png["Capture d'écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification de sauvegarde et la période de conservation."]
+
+[role="quick-margin-para"]
+Identifiez les volumes que vous souhaitez sauvegarder à l'aide de la stratégie de sauvegarde par défaut dans la page Sélectionner les volumes. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes, vous pouvez créer des règles supplémentaires et les appliquer ultérieurement aux volumes.
+
+
+
+== De formation
+
+Avant de commencer la sauvegarde des volumes sur site vers le stockage Azure Blob, lisez les informations suivantes pour vous assurer qu'une configuration est prise en charge.
+
+Deux méthodes de connexion sont disponibles pour la configuration des sauvegardes à partir des systèmes ONTAP sur site vers Azure Blob.
+
+* Connexion publique : connectez directement le système ONTAP au stockage Azure Blob Storage à l'aide d'un terminal public Azure.
+* Connexion privée : utilisez un VPN ou ExpressRoute et acheminez le trafic via un point de terminaison privé VNet qui utilise une adresse IP privée.
+
+
+Le schéma suivant montre la méthode *connexion publique* et les connexions que vous devez préparer entre les composants. Vous pouvez utiliser un connecteur que vous avez installé sur votre site ou un connecteur que vous avez déployé dans Azure vnet.
+
+image:diagram_cloud_backup_onprem_azure_public.png["Un diagramme montrant comment Cloud Backup communique sur une connexion publique avec les volumes du cluster et le stockage Azure Blob où sont situés les fichiers de sauvegarde."]
+
+Le schéma suivant montre la méthode *connexion privée* et les connexions que vous devez préparer entre les composants. Vous pouvez utiliser un connecteur que vous avez installé sur votre site ou un connecteur que vous avez déployé dans Azure vnet.
+
+image:diagram_cloud_backup_onprem_azure_private.png["Un diagramme montrant comment Cloud Backup communique sur une connexion privée avec les volumes du cluster et le stockage Azure Blob où sont situés les fichiers de sauvegarde."]
+
+
+
+=== Préparation des clusters ONTAP
+
+Vous devez découvrir vos clusters ONTAP sur site dans BlueXP avant de pouvoir commencer à sauvegarder des données de volumes.
+
+https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html["Découvrez comment détecter un cluster"^].
+
+Conditions requises pour le ONTAP::
++
+--
+* Minimum de ONTAP 9.7P5 ; ONTAP 9.8P13 et version ultérieure est recommandé.
+* Une licence SnapMirror (incluse dans le bundle Premium ou Data protection Bundle).
++
+*Remarque :* le « bundle Cloud hybride » n'est pas requis pour l'utilisation de Cloud Backup.
+
++
+Découvrez comment https://docs.netapp.com/us-en/ontap/system-admin/manage-licenses-concept.html["gérez les licences du cluster"^].
+
+* L'heure et le fuseau horaire sont correctement réglés.
++
+Découvrez comment https://docs.netapp.com/us-en/ontap/system-admin/manage-cluster-time-concept.html["configurez l'heure du cluster"^].
+
+
+
+--
+Configuration requise pour la mise en réseau des clusters::
++
+--
+* Le cluster ONTAP établit une connexion HTTPS via le port 443 entre le LIF intercluster et le stockage Azure Blob pour les opérations de sauvegarde et de restauration.
++
+Le ONTAP lit et écrit les données vers et à partir du stockage objet. Le stockage objet ne démarre jamais, il répond simplement.
+
+* ONTAP exige une connexion entrante depuis le connecteur jusqu'à la LIF de gestion du cluster. Le connecteur peut résider dans un réseau Azure VNet.
+* Un LIF intercluster est nécessaire sur chaque nœud ONTAP qui héberge les volumes que vous souhaitez sauvegarder. La LIF doit être associée au _IPspace_ que ONTAP doit utiliser pour se connecter au stockage objet. https://docs.netapp.com/us-en/ontap/networking/standard_properties_of_ipspaces.html["En savoir plus sur les IPspaces"^].
++
+Lors de la configuration de Cloud Backup, vous êtes invité à utiliser l'IPspace. Vous devez choisir l'IPspace auquel chaque LIF est associée. Il peut s'agir de l'IPspace par défaut ou d'un IPspace personnalisé que vous avez créé.
+
+* Les LIFs des nœuds et intercluster peuvent accéder au magasin d'objets.
+* Les serveurs DNS ont été configurés pour la machine virtuelle de stockage où les volumes sont situés. Découvrez comment https://docs.netapp.com/us-en/ontap/networking/configure_dns_services_auto.html["Configuration des services DNS pour le SVM"^].
+* Notez que si vous utilisez un IPspace différent de celui utilisé par défaut, vous devrez peut-être créer une route statique pour obtenir l'accès au stockage objet.
+* Mettre à jour les règles de pare-feu, si nécessaire, pour autoriser les connexions Cloud Backup Service de ONTAP au stockage objet via le port 443 et le trafic de résolution de nom entre le VM de stockage et le serveur DNS via le port 53 (TCP/UDP).
+
+
+--
+
+
+
+
+=== Création ou commutation de connecteurs
+
+Si vous avez déjà déployé un connecteur dans votre Azure VNet ou sur votre site, alors vous êtes paré. Si ce n'est pas le cas, vous devez créer un connecteur dans l'un de ces emplacements pour sauvegarder les données ONTAP dans le stockage Azure Blob. Vous ne pouvez pas utiliser un connecteur déployé dans un autre fournisseur de cloud.
+
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-connectors.html["En savoir plus sur les connecteurs"^]
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-checklist-cm.html["Mise en route des connecteurs"^]
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-azure.html["Installation d'un connecteur dans Azure"^]
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-installing-linux.html["Installation d'un connecteur dans vos locaux"^]
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-launching-azure-mktp.html["Installation d'un connecteur dans une région Azure Government"^]
++
+Cloud Backup est pris en charge dans les régions du secteur public Azure lorsque le connecteur est déployé dans le cloud, et non lorsqu'il est installé sur site. Vous devez également déployer le connecteur depuis Azure Marketplace. Vous ne pouvez pas déployer le connecteur dans une région du gouvernement à partir du site Web BlueXP SaaS.
+
+
+
+
+
+=== Préparation de la mise en réseau pour le connecteur
+
+Assurez-vous que le connecteur dispose des connexions réseau requises.
+
+.Étapes
+. Assurez-vous que le réseau sur lequel le connecteur est installé active les connexions suivantes :
++
+** Une connexion Internet sortante vers le Cloud Backup Service over port 443 (HTTPS)
+** Une connexion HTTPS via le port 443 vers votre stockage objet Blob
+** Une connexion HTTPS via le port 443 vers votre LIF de gestion de cluster ONTAP
+** Des règles de groupes de sécurité entrants supplémentaires sont requises pour les déploiements d'Azure et d'Azure Government. Voir https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-ports-azure.html["Règles pour le connecteur dans Azure"^] pour plus d'informations.
+
+
+. Déployez un terminal privé vnet sur un stockage Azure. Cela est nécessaire si vous disposez d'une connexion ExpressRoute ou VPN entre votre cluster ONTAP et VNet et que vous souhaitez que la communication entre le connecteur et le stockage Blob reste sur votre réseau privé virtuel (connexion *privée*).
+
+
+
+
+=== Vérifiez ou ajoutez des autorisations au connecteur
+
+Pour utiliser la fonctionnalité recherche et restauration de Cloud Backup, vous devez disposer d'autorisations spécifiques dans le rôle du connecteur afin qu'il puisse accéder à l'espace de travail Azure Synapse et au compte de stockage Data Lake. Reportez-vous aux autorisations ci-dessous et suivez les étapes si vous devez modifier la stratégie.
+
+Vous devez enregistrer le fournisseur de ressources Azure Synapse Analytics auprès de votre abonnement. https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider["Découvrez comment enregistrer ce fournisseur de ressources pour votre abonnement"^]. Vous devez être l'abonnement *propriétaire* ou *Contributeur* pour enregistrer le fournisseur de ressources.
+
+.Étapes
+. Identifier le rôle attribué à la machine virtuelle Connector :
++
+.. Dans le portail Azure, ouvrez le service Virtual machines.
+.. Sélectionnez la machine virtuelle Connector.
+.. Sous Paramètres, sélectionnez *identité*.
+.. Cliquez sur *attributions de rôles Azure*.
+.. Notez le rôle personnalisé attribué à la machine virtuelle Connector.
+
+
+. Mettre à jour le rôle personnalisé :
++
+.. Sur le portail Azure, ouvrez votre abonnement Azure.
+.. Cliquez sur *contrôle d'accès (IAM) > rôles*.
+.. Cliquez sur les points de suspension (...) du rôle personnalisé, puis cliquez sur *Modifier*.
+.. Cliquez sur JSON et ajoutez les autorisations suivantes :
++
+[source, json]
+----
+"Microsoft.Storage/checknameavailability/read",
+"Microsoft.Storage/operations/read",
+"Microsoft.Storage/storageAccounts/listkeys/action",
+"Microsoft.Storage/storageAccounts/read",
+"Microsoft.Storage/storageAccounts/write",
+"Microsoft.Storage/storageAccounts/blobServices/containers/read",
+"Microsoft.Storage/storageAccounts/listAccountSas/action",
+"Microsoft.Synapse/workspaces/write",
+"Microsoft.Synapse/workspaces/read",
+"Microsoft.Synapse/workspaces/delete",
+"Microsoft.Synapse/register/action",
+"Microsoft.Synapse/checkNameAvailability/action",
+"Microsoft.Synapse/workspaces/operationStatuses/read",
+"Microsoft.Synapse/workspaces/firewallRules/read",
+"Microsoft.Synapse/workspaces/replaceAllIpFirewallRules/action",
+"Microsoft.Synapse/workspaces/operationResults/read"
+----
++
+https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-azure.html["Afficher le format JSON complet de la règle"^]
+
+.. Cliquez sur *Revue + mise à jour*, puis sur *mise à jour*.
+
+
+
+
+
+
+=== Régions prises en charge
+
+Vous pouvez créer des sauvegardes à partir de systèmes sur site vers Azure Blob dans toutes les régions https://cloud.netapp.com/cloud-volumes-global-regions["Dans ce cas, Cloud Volumes ONTAP est pris en charge"^]; Y compris les régions du gouvernement d'Azure. Vous spécifiez la région dans laquelle les sauvegardes seront stockées lors de la configuration du service.
+
+
+
+=== Vérification des besoins en licence
+
+* Avant d'activer Cloud Backup pour votre cluster, vous devez vous abonner à une offre BlueXP Marketplace (PAYGO) ou acheter une licence Cloud Backup BYOL auprès de NetApp. Ces licences sont destinées à votre compte et peuvent être utilisées sur plusieurs systèmes.
++
+** Pour acquérir une licence Cloud Backup PAYGO, vous devez souscrire un abonnement à la https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["Azure"^] Offre BlueXP Marketplace pour utiliser Cloud Backup. La facturation pour Cloud Backup s'effectue via cet abonnement.
+** Dans le cas des licences BYOL, vous aurez besoin du numéro de série de NetApp qui vous permet d'utiliser le service pendant la durée et la capacité du contrat. link:task-licensing-cloud-backup.html#use-a-cloud-backup-byol-license["Découvrez comment gérer vos licences BYOL"].
+
+
+* Vous devez disposer d'un abonnement Azure pour l'espace de stockage objet dans lequel vos sauvegardes seront stockées.
++
+Vous pouvez créer des sauvegardes à partir de systèmes sur site vers Azure Blob dans toutes les régions https://cloud.netapp.com/cloud-volumes-global-regions["Dans ce cas, Cloud Volumes ONTAP est pris en charge"^]; Y compris les régions du gouvernement d'Azure. Vous spécifiez la région dans laquelle les sauvegardes seront stockées lors de la configuration du service.
+
+
+
+
+
+=== Préparation du stockage Azure Blob pour les sauvegardes
+
+. Vous pouvez utiliser vos propres clés gérées sur mesure pour le chiffrement des données dans l'assistant d'activation au lieu d'utiliser les clés de chiffrement gérées par Microsoft par défaut. Dans ce cas, vous devrez disposer de l'abonnement Azure, du nom du coffre-fort de clé et de la clé. https://docs.microsoft.com/en-us/azure/storage/common/customer-managed-keys-overview["Découvrez comment utiliser vos propres touches"^].
+. Si vous souhaitez bénéficier d'une connexion Internet publique plus sécurisée entre votre data Center sur site et VNet, il existe une option pour configurer un terminal privé Azure dans l'assistant d'activation. Dans ce cas, vous devez connaître le VNet et le sous-réseau pour cette connexion. https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-overview["Voir les détails sur l'utilisation d'un point d'extrémité privé"^].
+
+
+
+
+== Activation de Cloud Backup
+
+Activation de Cloud Backup à tout moment directement depuis l'environnement de travail sur site
+
+.Étapes
+. Dans Canvas, sélectionnez l'environnement de travail et cliquez sur *Activer > volumes de sauvegarde* en regard du service sauvegarde et restauration dans le panneau de droite.
++
+Si la destination Azure Blob de vos sauvegardes existe en tant qu'environnement de travail dans la zone de travail, vous pouvez faire glisser le cluster dans l'environnement de travail Azure Blob pour lancer l'assistant d'installation.
+
++
+image:screenshot_backup_onprem_enable.png["Capture d'écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."]
+
+. Sélectionnez Microsoft Azure comme fournisseur et cliquez sur *Suivant*.
+. Entrez les détails du fournisseur et cliquez sur *Suivant*.
++
+.. L'abonnement Azure utilisé pour les sauvegardes ainsi que la région Azure dans laquelle les sauvegardes seront stockées.
+.. Groupe de ressources qui gère le conteneur Blob : vous pouvez créer un nouveau groupe de ressources ou sélectionner un groupe de ressources existant.
+.. Que vous utilisiez la clé de chiffrement par défaut gérée par Microsoft ou que vous choisissiez vos propres clés gérées par le client pour gérer le chiffrement de vos données. (https://docs.microsoft.com/en-us/azure/storage/common/customer-managed-keys-overview["Découvrez comment utiliser vos propres touches"^]).
++
+image:screenshot_backup_onprem_to_azure.png["Une copie d'écran présente les informations détaillées du fournisseur cloud lors de la sauvegarde des volumes d'un cluster sur site vers le stockage Azure Blob."]
+
+
+
+. Si vous ne disposez pas d'une licence Cloud Backup pour votre compte, vous êtes invité à sélectionner le type de mode de facturation que vous souhaitez utiliser. Vous pouvez vous abonner à une offre de paiement basé sur l'utilisation (PAYGO) BlueXP Marketplace d'Azure (ou si vous disposez de plusieurs abonnements, vous pouvez en sélectionner un), ou acheter et activer une licence Cloud Backup BYOL auprès de NetApp. link:task-licensing-cloud-backup.html["Découvrez comment configurer les licences Cloud Backup."]
+. Entrez les détails de la mise en réseau et cliquez sur *Suivant*.
++
+.. L'IPspace dans le cluster ONTAP où les volumes à sauvegarder résident. Les LIF intercluster pour cet IPspace doivent avoir un accès Internet sortant.
+.. Vous pouvez également choisir de configurer un terminal privé Azure. https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-overview["Voir les détails sur l'utilisation d'un point d'extrémité privé"^].
++
+image:screenshot_backup_onprem_azure_networking.png["Copie d'écran affichant les détails de mise en réseau lors de la sauvegarde des volumes d'un système ONTAP vers un stockage Azure Blob."]
+
+
+
+. Entrez les détails de la stratégie de sauvegarde qui seront utilisés pour votre stratégie par défaut et cliquez sur *Suivant*. Vous pouvez sélectionner une stratégie existante ou créer une nouvelle stratégie en entrant vos sélections dans chaque section :
++
+.. Entrez le nom de la stratégie par défaut. Il n'est pas nécessaire de modifier le nom.
+.. Définissez le programme de sauvegarde et choisissez le nombre de sauvegardes à conserver. link:concept-ontap-backup-to-cloud.html#customizable-backup-schedule-and-retention-settings["Consultez la liste des règles que vous pouvez choisir"^].
+.. Si vous utilisez ONTAP 9.10.1 ou version ultérieure, vous pouvez choisir de transférer les sauvegardes vers le stockage Azure Archive après un certain nombre de jours pour optimiser les coûts. link:reference-azure-backup-tiers.html["En savoir plus sur l'utilisation des niveaux d'archivage"].
++
+image:screenshot_backup_policy_azure.png["Capture d'écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification et la conservation des sauvegardes."]
+
+
+
+. Sélectionnez les volumes que vous souhaitez sauvegarder à l'aide de la stratégie de sauvegarde définie dans la page Sélectionner les volumes. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes, vous pouvez créer des stratégies supplémentaires et les appliquer ultérieurement à ces volumes.
++
+** Pour sauvegarder tous les volumes existants et les volumes ajoutés à l'avenir, cochez la case « Sauvegarder tous les volumes existants et futurs... ». Nous vous recommandons cette option afin que tous vos volumes soient sauvegardés et que vous n'aurez jamais à vous souvenir de pouvoir effectuer des sauvegardes pour de nouveaux volumes.
+** Pour sauvegarder uniquement les volumes existants, cochez la case de la ligne de titre (image:button_backup_all_volumes.png[""]).
+** Pour sauvegarder des volumes individuels, cochez la case de chaque volume (image:button_backup_1_volume.png[""]).
++
+image:screenshot_backup_select_volumes.png["Capture d'écran de la sélection des volumes qui seront sauvegardés."]
+
+** Si des copies Snapshot locales des volumes de cet environnement de travail correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidiennement, hebdomadaires, etc.), une invite supplémentaire s'affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d'assurer la protection la plus complète de vos volumes.
+
+
+. Cliquez sur *Activer la sauvegarde* et Cloud Backup commence à effectuer les sauvegardes initiales de vos volumes.
+
+
+Un conteneur de stockage Blob est créé automatiquement dans le groupe de ressources que vous avez saisi et les fichiers de sauvegarde y sont stockés. Le tableau de bord de sauvegarde de volume s'affiche pour vous permettre de surveiller l'état des sauvegardes. Vous pouvez également surveiller l'état des tâches de sauvegarde et de restauration à l'aide de l' link:task-monitor-backup-jobs.html["Panneau surveillance des tâches"^].
+
+
+
+== Et la suite ?
+
+* C'est possible link:task-manage-backups-ontap.html["gérez vos fichiers de sauvegarde et vos règles de sauvegarde"^]. Cela comprend le démarrage et l'arrêt des sauvegardes, la suppression des sauvegardes, l'ajout et la modification de la planification des sauvegardes, etc.
+* C'est possible link:task-manage-backup-settings-ontap.html["gérez les paramètres de sauvegarde au niveau du cluster"^]. Cela inclut notamment la modification de la bande passante réseau disponible pour télécharger les sauvegardes vers le stockage objet, la modification du paramètre de sauvegarde automatique pour les volumes futurs, et bien plus encore.
+* Vous pouvez également link:task-restore-backups-ontap.html["restaurez des volumes, des dossiers ou des fichiers individuels à partir d'un fichier de sauvegarde"^] Vers un système Cloud Volumes ONTAP dans Azure ou vers un système ONTAP sur site.
+

@@ -1,0 +1,276 @@
+---
+sidebar: sidebar 
+permalink: concept-cloud-backup-policies.html 
+keywords: backing up, back up, backup, back up volumes, cloud backup, backup policies, policies, schedules 
+summary: Ce document décrit les paramètres de configuration de la stratégie de sauvegarde pour Cloud Backup. 
+---
+= Paramètres de configuration de la politique de Cloud Backup
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Ce document décrit les paramètres de configuration de la stratégie de sauvegarde des systèmes ONTAP sur site et Cloud Volumes ONTAP utilisés avec Cloud Backup Service.
+
+
+
+== Planifications de sauvegarde
+
+Cloud Backup vous permet de créer plusieurs règles de sauvegarde avec des planifications uniques pour chaque environnement de travail (cluster). Vous pouvez attribuer différentes stratégies de sauvegarde à des volumes ayant différents objectifs de point de récupération (RPO).
+
+Chaque stratégie de sauvegarde fournit une section pour _Labels & Retention_ que vous pouvez appliquer à vos fichiers de sauvegarde.
+
+image:screenshot_backup_schedule_settings.png["Capture d'écran des paramètres de planification de sauvegarde lors de la création d'une stratégie de sauvegarde."]
+
+Il y a deux parties du calendrier : l'étiquette et la valeur de conservation :
+
+* Le *label* définit la fréquence à laquelle un fichier de sauvegarde est créé (ou mis à jour) à partir du volume. Vous pouvez sélectionner l'un des types d'étiquettes suivants :
++
+** Vous pouvez choisir une ou une combinaison de *horaire*, *quotidien*, *hebdomadaire*, *mensuel*, et *calendriers annuels*.
+** Vous pouvez sélectionner une des règles définies par le système qui assure la sauvegarde et la conservation pendant 3 mois, 1 an ou 7 ans.
+** Si vous avez créé des règles de protection des sauvegardes personnalisées sur le cluster à l'aide de ONTAP System Manager ou de l'interface de ligne de commandes ONTAP, vous pouvez sélectionner l'une de ces règles.
+
+
+* La valeur *rétention* définit le nombre de fichiers de sauvegarde pour chaque étiquette (délai). Lorsque le nombre maximal de sauvegardes est atteint dans une catégorie ou un intervalle, les anciennes sauvegardes sont supprimées afin que vous ayez toujours les sauvegardes les plus récentes. Cela vous permet également d'économiser de l'espace de stockage, car les sauvegardes obsolètes ne prennent pas toujours de l'espace dans le cloud.
+
+
+Par exemple, dites que vous créez une stratégie de sauvegarde qui crée 7 sauvegardes *hebdomadaires* et 12 *mensuelles* :
+
+* chaque semaine et chaque mois, un fichier de sauvegarde est créé pour le volume
+* au cours de la 8e semaine, la première sauvegarde hebdomadaire est supprimée, et la nouvelle sauvegarde hebdomadaire est ajoutée pour la 8e semaine (pour un maximum de 7 sauvegardes hebdomadaires).
+* au 13ème mois, la première sauvegarde mensuelle est supprimée, et la nouvelle sauvegarde mensuelle du 13ème mois est ajoutée (en conservant un maximum de 12 sauvegardes mensuelles)
+
+
+Notez que les sauvegardes annuelles sont automatiquement supprimées du système source après leur transfert vers le stockage objet. Ce comportement par défaut peut être modifié link:task-manage-backup-settings-ontap#change-whether-yearly-snapshots-are-removed-from-the-source-system["Dans la page Paramètres avancés"] Pour l'environnement de travail.
+
+
+
+== Protection des données par verrouillage et protection contre les ransomwares
+
+Cloud Backup prend en charge le verrouillage des données et la protection contre les attaques par ransomware pour vos sauvegardes de volumes. Ces fonctionnalités vous permettent de verrouiller vos fichiers de sauvegarde et de les analyser afin de détecter un ransomware possible dans les fichiers de sauvegarde. Il s'agit d'un paramètre facultatif que vous pouvez définir dans vos stratégies de sauvegarde lorsque vous souhaitez bénéficier d'une protection supplémentaire pour vos sauvegardes de volume d'un cluster.
+
+Ces deux fonctionnalités protègent vos fichiers de sauvegarde, afin que vous puissiez toujours disposer d'un fichier de sauvegarde valide à même de récupérer vos données en cas d'attaque par ransomware lorsqu'elles sont présentes sur vos données source. Il est également utile de respecter certaines exigences réglementaires dans lesquelles les sauvegardes doivent être verrouillées et conservées pendant un certain temps. Lorsque le verrouillage des données et la protection contre les attaques par ransomware sont activés, le compartiment cloud provisionné dans le cadre de l'activation de Cloud Backup active le verrouillage des objets et le contrôle des versions des objets.
+
+Cette fonction n'assure pas la protection de vos volumes source, uniquement pour les sauvegardes de ces volumes source. Faites confiance à NetApp https://cloud.netapp.com/ci-sde-plp-cloud-secure-info-trial?hsCtaTracking=fefadff4-c195-4b6a-95e3-265d8ce7c0cd%7Cb696fdde-c026-4007-a39e-5e986c4d27c6["Cloud Insights et Cloud Secure"^], ou une partie du https://docs.netapp.com/us-en/ontap/anti-ransomware/index.html["Protections contre les ransomwares fournies par ONTAP"^] pour protéger vos volumes source.
+
+[CAUTION]
+====
+* Si vous prévoyez d'utiliser DataLock et protection contre les attaques par ransomware, vous devez l'activer lors de la création de votre première stratégie de sauvegarde et de l'activation de Cloud Backup pour ce cluster.
+* Il est impossible de désactiver le verrouillage des données et la protection contre les attaques par ransomware pour un cluster après sa configuration. N'activez pas cette fonctionnalité sur un cluster pour l'essayer.
+
+
+====
+
+
+=== Qu'est-ce que DataLock
+
+DataLock protège vos fichiers de sauvegarde contre les modifications ou les suppressions pendant un certain temps. Cette fonctionnalité utilise la technologie du fournisseur de stockage objet pour le « verrouillage des objets ». La période pendant laquelle le fichier de sauvegarde est verrouillé (et conservé) est appelée période de rétention de DataLock. Il est basé sur le programme de stratégie de sauvegarde et le paramètre de conservation que vous avez définis, plus une mémoire tampon de 14 jours. Toute stratégie de rétention DataLock inférieure à 30 jours est arrondie à 30 jours minimum.
+
+Notez que les anciennes sauvegardes sont supprimées après l'expiration de la période de rétention de DataLock, et non après l'expiration de la période de conservation de la stratégie de sauvegarde.
+
+Voyons quelques exemples de fonctionnement de cette méthode :
+
+* Si vous créez un programme de sauvegarde mensuel avec 12 rétentions, chaque sauvegarde est verrouillée pendant 12 mois (plus 14 jours) avant sa suppression.
+* Si vous créez une stratégie de sauvegarde qui crée 30 sauvegardes quotidiennes, 7 sauvegardes hebdomadaires et 12 sauvegardes mensuelles, trois périodes de conservation seront verrouillées. Les 30 sauvegardes quotidiennes seront conservées pendant 44 jours (30 jours plus 14 jours de mémoire tampon), les 7 sauvegardes hebdomadaires seraient conservées pendant 9 semaines (7 semaines plus 14 jours) et les 12 sauvegardes mensuelles seront conservées pendant 12 mois (plus 14 jours).
+* Si vous créez un programme de sauvegarde horaire avec 24 rétentions, vous pensez peut-être que les sauvegardes sont verrouillées pendant 24 heures. Cependant, étant donné qu'elle est inférieure au minimum de 30 jours, chaque sauvegarde est verrouillée et conservée pendant 44 jours (30 jours plus 14 jours de mémoire tampon).
++
+Dans ce dernier cas, si chaque fichier de sauvegarde est verrouillé pendant 44 jours, vous obtenez beaucoup plus de fichiers de sauvegarde qu'avec une stratégie de rétention horaire/24. En règle générale, lorsque Cloud Backup crée le 25e fichier de sauvegarde, il supprime la sauvegarde la plus ancienne pour conserver le maximum de retentions à 24 (selon la règle). Dans ce cas, le paramètre de rétention DataLock remplace le paramètre de conservation de la stratégie de sauvegarde de votre stratégie de sauvegarde. Cela peut affecter vos coûts de stockage car vos fichiers de sauvegarde seront enregistrés dans le magasin d'objets pendant une période plus longue.
+
+
+
+
+
+=== Protection contre les ransomwares
+
+La protection par ransomware analyse vos fichiers de sauvegarde pour rechercher la preuve d'une attaque par ransomware. La détection des attaques par ransomware est effectuée à l'aide d'une comparaison des checksums. Si un ransomware potentiel est identifié dans un fichier de sauvegarde par rapport au fichier de sauvegarde précédent, ce fichier de sauvegarde plus récent est remplacé par le fichier de sauvegarde le plus récent, qui ne montre aucun signe d'attaque par un ransomware. (Le fichier identifié comme ayant subi une attaque par ransomware est supprimé 1 jour après son remplacement.)
+
+Les analyses par ransomware se produisent à 3 points lors du processus de sauvegarde et de restauration :
+
+* Lorsqu'un fichier de sauvegarde est créé
++
+Le scan n'est pas effectué sur le fichier de sauvegarde lors de l'écriture initiale sur le stockage cloud, mais lorsque le fichier de sauvegarde *Next* est écrit. Par exemple, si vous avez défini un programme de sauvegarde hebdomadaire pour mardi, le mardi 14, une sauvegarde est créée. Puis, mardi, une nouvelle sauvegarde est créée. Le scan par ransomware est alors exécuté sur le fichier de sauvegarde depuis le 14.
+
+* Lorsque vous tentez de restaurer des données à partir d'un fichier de sauvegarde
++
+Vous pouvez choisir d'exécuter une analyse avant de restaurer les données d'un fichier de sauvegarde ou d'ignorer cette analyse.
+
+* Manuellement
++
+Vous pouvez à tout moment exécuter une analyse de protection par ransomware à la demande pour vérifier l'état d'un fichier de sauvegarde spécifique. Ceci peut être utile si vous avez rencontré un problème de ransomware sur un volume en particulier et que vous souhaitez vérifier que les sauvegardes de ce volume ne sont pas affectées.
+
+
+
+
+CAUTION: Une analyse par ransomware requiert que le fichier de sauvegarde soit téléchargé dans votre environnement BlueXP (où le connecteur est installé). En cas de déploiement de votre connecteur sur site, vous pouvez donc prévoir des coûts de sortie supplémentaires de votre fournisseur de cloud. Nous vous recommandons donc de déployer le connecteur dans le cloud et d'utiliser la même région que le compartiment dans lequel vos sauvegardes sont stockées.
+
+
+
+=== Paramètres de verrouillage des données et de protection contre les ransomwares
+
+Chaque stratégie de sauvegarde fournit une section pour _DataLock et protection contre les attaques par ransomware_ que vous pouvez appliquer à vos fichiers de sauvegarde.
+
+image:screenshot_datalock_ransomware_settings.png["Capture d'écran des paramètres DataLock et protection contre les attaques par ransomware lors de la création d'une stratégie de sauvegarde."]
+
+Vous pouvez choisir parmi les paramètres suivants pour chaque stratégie de sauvegarde :
+
+* Aucun (par défaut)
++
+La protection contre les verrous et les attaques par ransomware sont désactivées.
+
+* Gouvernance (non disponible avec StorageGRID)
++
+DataLock est défini sur _Governance_ mode où les utilisateurs avec des autorisations spécifiques (link:concept-cloud-backup-policies.html#requirements["voir ci-dessous"]) peut écraser ou supprimer des fichiers de sauvegarde pendant la période de rétention. La protection contre les ransomwares est activée.
+
+* La conformité
++
+DataLock est défini sur le mode _Compliance_, où aucun utilisateur ne peut écraser ou supprimer des fichiers de sauvegarde pendant la période de rétention. La protection contre les ransomwares est activée.
+
+
+
+
+NOTE: La fonction de verrouillage d'objet StorageGRID S3 fournit un mode de verrouillage de données unique équivalent au mode de conformité. Un mode de gouvernance équivalent n'est pas pris en charge. Par conséquent, aucun utilisateur n'a la possibilité de contourner les paramètres de rétention, d'écraser les sauvegardes protégées ou de supprimer les sauvegardes verrouillées.
+
+
+
+=== Environnements de travail et fournisseurs de stockage objet pris en charge
+
+Vous pouvez activer la protection des données et des attaques par ransomware sur les volumes ONTAP à partir de plusieurs environnements de travail lorsque vous utilisez le stockage objet dans plusieurs fournisseurs de cloud public et privé. D'autres fournisseurs de cloud seront ajoutés dans les prochaines versions.
+
+[cols="50,50"]
+|===
+| Environnement de travail source | Destination du fichier de sauvegarde ifdef::aws[] 
+
+
+| Cloud Volumes ONTAP dans AWS | Amazon S3 endif::aws[] ifdef::Azure[] endif::Azure[] ifdef::gcp[] endif::gcp[] 
+
+
+| Système ONTAP sur site | Ifdef::aws[] Amazon S3 endif::aws[] ifdef::Azure[] endif::Azure[] ifdef::gcp[] fdef::gcp[] dnif::gcp[] NetApp StorageGRID 
+|===
+
+
+=== De formation
+
+* Vos clusters doivent exécuter ONTAP 9.11.1 ou version supérieure
+* Vous devez utiliser BlueXP 3.9.21 ou supérieur
+
+
+ifdef::aws[]
+
+* Pour AWS :
++
+** Ce connecteur doit être déployé dans le cloud
+** Les autorisations S3 suivantes doivent faire partie du rôle IAM qui fournit au connecteur les autorisations. Ils résident dans la section « backupS3Policy » pour la ressource « arn:aws:s3::NetApp-backup-* » :
++
+*** s3:GetObjectVersionTagging
+*** s3:GetBuckeObjectLockConfiguration
+*** s3:GetObjectVersionAcl
+*** s3:PutObjectTagging
+*** s3:DeleteObject
+*** s3:DeleteObjectTagging
+*** s3:GetObjectRetention
+*** s3:DeleteObjectVersionTagging
+*** s3:PutObject
+*** s3:GetObject
+*** s3:PutBuckObjectLockConfiguration
+*** s3:GetLifecyclConfiguration
+*** s3:ListBuckeByTags
+*** s3:GetBucketTagging
+*** s3:DeleteObjectVersion
+*** s3:ListBuckeVersions
+*** s3:ListBucket
+*** s3:PutBuckeTagging
+*** s3:GetObjectTagging
+*** s3:PutBuckeVersioning
+*** s3:PutObjectVersionTagging
+*** s3:GetBucketVersioning
+*** s3:GetBucketAcl
+*** s3:BipassGovernanceRetention
+*** s3:PutObjectRetention
+*** s3:GetBucketLocation
+*** s3:GetObjectVersion
++
+« s3:BipassGovernanceRetention » doit être ajouté uniquement si vous souhaitez que les utilisateurs Admin puissent écraser/supprimer les fichiers de sauvegarde verrouillés en mode gouvernance.
+
++
+https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-aws.html["Affichez le format JSON complet de la règle dans laquelle vous pouvez copier et coller les autorisations requises"^].
+
+
+
+
+
+
+
+endif::aws[]
+
+* Pour StorageGRID :
++
+** Le connecteur doit être déployé sur votre site (il peut être installé sur un site avec ou sans accès Internet)
+** StorageGRID 11.6.0.3 et supérieur sont requis pour la prise en charge complète des capacités de verrouillage de données
+
+
+
+
+
+
+=== Restrictions
+
+* Data Lock et protection contre les attaques par ransomware n'est pas disponible si vous avez configuré le stockage d'archivage dans la stratégie de sauvegarde.
+* L'option DataLock que vous sélectionnez lors de l'activation de Cloud Backup (gouvernance ou conformité) doit être utilisée pour toutes les stratégies de sauvegarde de ce cluster. Vous ne pouvez pas utiliser le verrouillage des modes gouvernance et conformité sur un seul cluster.
+* Si vous activez DataLock, toutes les sauvegardes de volume seront verrouillées. Vous ne pouvez pas combiner des sauvegardes de volume verrouillées et non verrouillées pour un même cluster.
+* La protection des données et des attaques par ransomware est applicable pour les nouvelles sauvegardes de volumes grâce à une stratégie de sauvegarde avec DataLock et protection contre les attaques par ransomware activées. Vous ne pouvez pas activer cette fonctionnalité après l'activation de Cloud Backup.
+
+
+
+
+== Paramètres de stockage d'archivage
+
+Si vous utilisez un certain stockage cloud, vous pouvez déplacer d'anciens fichiers de sauvegarde vers un Tier de stockage/accès moins onéreux après un certain nombre de jours. Notez que le stockage d'archives ne peut pas être utilisé si vous avez activé DataLock.
+
+Les données des niveaux d'archivage ne sont pas accessibles immédiatement lorsque cela s'avère nécessaire. Par conséquent, les coûts de récupération des données sont plus élevés, vous devez déterminer la fréquence à laquelle restaurer les données à partir des fichiers de sauvegarde archivés.
+
+Lors de la création de fichiers de sauvegarde dans AWS ou Azure, chaque règle de sauvegarde fournit une section intitulée _Archival_ que vous pouvez appliquer à vos fichiers de sauvegarde.
+
+image:screenshot_archive_tier_settings.png["Capture d'écran des paramètres de la politique d'archivage lors de la création d'une politique de sauvegarde."]
+
+ifdef::aws[]
+
+* Dans AWS, les sauvegardes commencent dans la classe de stockage _Standard_ et la transition vers la classe de stockage _Standard-Infrequent Access_ après 30 jours.
++
+Si votre cluster utilise ONTAP 9.10.1 ou version ultérieure, vous pouvez choisir de hiérarchiser les anciennes sauvegardes vers _S3 Glacier_ ou le stockage _S3 Glacier Deep Archive_ après un certain nombre de jours pour optimiser les coûts. link:reference-aws-backup-tiers.html["En savoir plus sur le stockage d'archives AWS"^].
+
++
+Notez que si vous choisissez _S3 Glacier_ ou _S3 Glacier Deep Archive_ dans votre première stratégie de sauvegarde lors de l'activation de Cloud Backup, ce Tier sera le seul niveau d'archivage disponible pour les futures stratégies de sauvegarde de ce cluster. Si vous sélectionnez aucun niveau d'archivage dans votre première stratégie de sauvegarde, alors _S3 Glacier_ sera votre seule option d'archivage pour les futures stratégies.
+
+
+
+endif::aws[]
+
+ifdef::azure[]
+
+* Dans Azure, les sauvegardes sont associées au niveau d'accès _Cool_.
++
+Si votre cluster utilise ONTAP 9.10.1 ou version ultérieure, vous pouvez choisir de classer les anciennes sauvegardes vers _Azure Archive_ Storage au bout d'un certain nombre de jours afin d'optimiser les coûts. link:reference-azure-backup-tiers.html["En savoir plus sur le stockage des archives Azure"^].
+
+
+
+endif::azure[]
+
+ifdef::gcp[]
+
+* Dans GCP, les sauvegardes sont associées par défaut à la classe de stockage _Standard_.
++
+Vous pouvez utiliser la classe de stockage _Nearline_ moins chère ou les classes de stockage _Coldline_ ou _Archive_. Toutefois, vous configurez ces autres classes de stockage via Google, et non via l'interface utilisateur de Cloud Backup. Consultez la rubrique Google https://cloud.google.com/storage/docs/storage-classes["Classes de stockage"^] Pour plus d'informations sur la modification de la classe de stockage par défaut d'un compartiment Google Cloud Storage.
+
+
+
+endif::gcp[]
+
+* Dans StorageGRID, les sauvegardes sont associées à la classe de stockage _Standard_.
++
+Il n'y a pas de niveau d'archivage disponible pour le moment.
+
+

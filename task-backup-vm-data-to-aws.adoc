@@ -1,0 +1,51 @@
+---
+sidebar: sidebar 
+permalink: task-backup-vm-data-to-aws.html 
+keywords: back up, backup, backup virtual machine data, aws, Amazon Web Services, cloud backup, backup datastores 
+summary: Sauvegardez vos datastores ONTAP sur site dans AWS. 
+---
+= Sauvegarde des datastores dans Amazon Web Services
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez sauvegarder un ou plusieurs datastores Amazon Web Services en intégrant le plug-in SnapCenter pour VMware vSphere à BlueXP. Ils peuvent ainsi sauvegarder et archiver des données facilement et rapidement à des fins d'efficacité du stockage et d'accélération de la transition vers le cloud.
+
+
+NOTE: Assurez-vous que vous avez rempli toutes les link:concept-protect-vm-data.html#Requirements["de formation"] avant de sauvegarder des datastores dans le cloud.
+
+.Étapes
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *machines virtuelles*.
+. Cliquez sur image:icon-action.png["action"] Correspondant au datastore à sauvegarder et cliquer sur *Activer la sauvegarde*.
+. Dans la page attribuer une stratégie, sélectionnez la stratégie et cliquez sur *Suivant*.
+. Ajouter l'environnement de travail.
++
+Configurez les clusters ONTAP que vous souhaitez que BlueXP découvre pour sauvegarder vos datastores. Une fois l'environnement de travail ajouté pour l'un des datastores, il peut être réutilisé pour tous les autres datastores qui résident sur le même cluster ONTAP.
+
++
+.. Cliquer sur *Ajouter un environnement de travail* correspondant à la SVM.
+.. Dans l'assistant Ajouter un environnement de travail :
++
+... Spécifier l'adresse IP du cluster ONTAP
+... Spécifier les identifiants de l'utilisateur du cluster ONTAP
+
+
+.. Cliquez sur *Ajouter un environnement de travail*.
+
+
+. Sélectionnez *Amazon Web Services* pour le configurer en tant que fournisseur de cloud.
++
+.. Spécifier le compte AWS
+.. Dans le champ clé d'accès AWS, spécifiez la clé pour le chiffrement des données.
+.. Dans le champ clé secrète AWS, spécifiez le mot de passe pour le chiffrement des données.
+.. Sélectionnez la région dans laquelle vous souhaitez créer les sauvegardes.
+.. Spécifiez les adresses IP des clusters ONTAP qui ont été ajoutés en tant qu'environnements de travail.
+
+
+. Vérifiez les détails et cliquez sur *Activer la sauvegarde*.
+

@@ -1,0 +1,100 @@
+---
+sidebar: sidebar 
+permalink: task-restore-cloud-native-app-data.html 
+keywords: cloud native, application data, restore, data files, control files, recovery 
+summary: Restaurez les fichiers de données, les fichiers de contrôle ou les deux, puis récupérez la base de données. 
+---
+= Restaurez les données applicatives cloud natives
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+En cas de perte de données, vous pouvez restaurer les fichiers de données, les fichiers de contrôle ou les deux, puis restaurer la base de données.
+
+*Étapes*
+
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à la base de données à restaurer et cliquer sur *Afficher les détails*.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à la sauvegarde de données à utiliser pour la restauration et cliquer sur *Restaurer*.
+. Dans la section objectif de restauration, effectuez les opérations suivantes :
++
+|===
+| Si... | Procédez comme ça... 
+
+
+ a| 
+Vous souhaitez restaurer uniquement les fichiers de données
+ a| 
+Sélectionnez *tous les fichiers de données*.
+
+
+
+ a| 
+Vous souhaitez restaurer uniquement les fichiers de contrôle
+ a| 
+Sélectionnez *fichiers de contrôle*
+
+
+
+ a| 
+Veulent restaurer à la fois les fichiers de données et les fichiers de contrôle
+ a| 
+Sélectionnez *tous les fichiers de données* et *fichiers de contrôle*.
+
+|===
++
+
+NOTE: La restauration des fichiers de données avec des fichiers de contrôle ou uniquement des fichiers de contrôle ne sont pas prises en charge pour iSCSI sur la disposition ASM.
+
++
+Vous pouvez également sélectionner la case à cocher *forcer la restauration sur place*.
+
++
+L'option *forcer la restauration sur place* remplace les fichiers spfile, les fichiers de mot de passe et les fichiers journaux d'archive du groupe de disques des fichiers de données. Vous devez utiliser la dernière sauvegarde lorsque l'option * forcer la restauration sur place* est sélectionnée.
+
+. Dans la section étendue de la récupération, effectuez les opérations suivantes :
++
+|===
+| Si... | Procédez comme ça... 
+
+
+ a| 
+Que vous souhaitez restaurer à la dernière transaction
+ a| 
+Sélectionnez *tous les journaux*.
+
+
+
+ a| 
+Que vous souhaitez récupérer à un numéro de changement de système (SCN) spécifique
+ a| 
+Sélectionnez *jusqu'à ce que Numéro de changement de système* et spécifiez le SCN.
+
+
+
+ a| 
+Vous souhaitez effectuer une restauration à une date et une heure précises
+ a| 
+Sélectionnez *Date et heure*.
+
+
+
+ a| 
+Ne pas récupérer
+ a| 
+Sélectionnez *pas de récupération*.
+
+|===
++
+Pour la portée de récupération sélectionnée, dans le champ *emplacements des fichiers journaux d'archives*, vous pouvez éventuellement spécifier l'emplacement qui contient les journaux d'archivage requis pour la restauration.
+
++
+Cochez la case si vous souhaitez ouvrir la base de données en mode LECTURE-ÉCRITURE après la restauration.
+
+. Cliquez sur *Suivant* et vérifiez les détails.
+. Cliquez sur *Restaurer*.
+

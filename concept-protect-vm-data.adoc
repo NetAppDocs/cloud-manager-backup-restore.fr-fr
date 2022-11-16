@@ -1,0 +1,42 @@
+---
+sidebar: sidebar 
+permalink: concept-protect-vm-data.html 
+keywords: protect virtual machines, vm, policy, policies, backup back up, restore, SnapCenter Plug-in, Cloud Manager, BlueXP 
+summary: Apprenez-en plus sur la protection des données sur vos machines virtuelles et découvrez les différentes stratégies. 
+---
+= Protection des données des machines virtuelles
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez protéger les données stockées sur vos machines virtuelles en intégrant le plug-in SnapCenter pour VMware vSphere à BlueXP (anciennement Cloud Manager). Vous pouvez sauvegarder des datastores dans le cloud et restaurer facilement les serveurs virtuels depuis le plug-in SnapCenter sur site pour VMware vSphere.
+
+Vous pouvez sauvegarder des datastores Amazon Web Services S3, Microsoft Azure Blob et StorageGRID.
+
+
+
+== De formation
+
+Avant de commencer à sauvegarder des datastores et des machines virtuelles sur des services cloud, lisez les éléments suivants pour vous assurer que la configuration est prise en charge.
+
+* Plug-in SnapCenter pour VMware vSphere 4.6P1 ou version ultérieure
+* ONTAP 9.8 ou version ultérieure
+* BlueXP 3.9 ou version ultérieure
+* Au moins une sauvegarde doit avoir été incluse dans le plug-in SnapCenter pour VMware vSphere 4.6P1.
+* Au moins une règle quotidienne, hebdomadaire ou mensuelle du plug-in SnapCenter pour VMware vSphere sans étiquette ni même étiquette que la politique de Cloud Backup pour machines virtuelles dans BlueXP.
+* Dans le cas d'une règle prédéfinie, le niveau de planification doit être le même pour le datastore dans le plug-in SnapCenter pour VMware vSphere et dans le cloud.
+* Assurez-vous qu'il n'y a pas de volumes FlexGroup dans le datastore, car la sauvegarde et la restauration des volumes FlexGroup ne sont pas prises en charge.
+* Assurez-vous qu'aucun volume n'est chiffré car la restauration des volumes chiffrés n'est pas prise en charge.
+* Désactivez "*_Recent*" sur les groupes de ressources requis. Si «*_Recent* » est activé pour le groupe de ressources, les sauvegardes de ces groupes de ressources ne peuvent pas être utilisées pour la protection des données dans le cloud et ne peuvent plus être utilisées pour l'opération de restauration.
+* Assurez-vous que le datastore de destination sur lequel la machine virtuelle sera restaurée dispose d'un espace suffisant pour prendre en charge une copie de tous les fichiers des machines virtuelles tels que VMDK, VMX, VMSD, etc.
+* Assurez-vous que le datastore de destination ne contient pas de fichiers de machine virtuelle obsolètes au format restore_xxx_xxxxxx_filename des échecs précédents de l'opération de restauration. Vous devez supprimer les fichiers obsolètes avant de lancer une opération de restauration.
+
+
+L'image suivante montre chaque composant et les connexions que vous devez préparer entre eux :
+
+image:cloud_backup_vm.png["Diagramme d'architecture de la sauvegarde dans le cloud pour les machines virtuelles."]

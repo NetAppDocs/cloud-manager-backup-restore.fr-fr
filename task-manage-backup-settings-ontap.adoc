@@ -1,0 +1,160 @@
+---
+sidebar: sidebar 
+permalink: task-manage-backup-settings-ontap.html 
+keywords: cloud backup, cloud backup service, storage keys, network bandwidth, auto backup, delete yearly snapshot, export snapshots 
+summary: 'Vous pouvez modifier de nombreux paramètres de sauvegarde au niveau du cluster que vous définissez lors de l"activation de Cloud Backup pour chaque système ONTAP. Vous pouvez également modifier certains paramètres appliqués comme paramètres de sauvegarde par défaut. Cela vous permet notamment de modifier les clés de stockage, le taux de transfert des sauvegardes vers le stockage objet ou non, l"exportation des copies Snapshot historiques sous forme de fichiers de sauvegarde, etc.' 
+---
+= Gestion des paramètres de sauvegarde au niveau du cluster
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez modifier de nombreux paramètres de sauvegarde au niveau du cluster que vous définissez lors de l'activation de Cloud Backup pour chaque système ONTAP. Vous pouvez également modifier certains paramètres appliqués comme paramètres de sauvegarde par défaut. Cela vous permet notamment de modifier les clés de stockage, le taux de transfert des sauvegardes vers le stockage objet ou non, l'exportation des copies Snapshot historiques sous forme de fichiers de sauvegarde, etc.
+
+Les paramètres de sauvegarde au niveau du cluster sont disponibles dans la page _Advanced Settings_.
+
+L'ensemble des paramètres de sauvegarde que vous pouvez modifier comprend :
+
+* Modification des clés de stockage qui donnent à votre système ONTAP l'autorisation d'accéder au stockage objet
+* Modification de l'IPspace ONTAP connecté au stockage objet
+* Modification de la bande passante réseau allouée pour charger les sauvegardes dans le stockage objet
+
+
+ifdef::aws[]
+
+* Changement de classe de stockage d'archivage (AWS uniquement)
+
+
+endif::aws[]
+
+* Modification du paramètre (et de la règle) de sauvegarde automatique pour les volumes futurs
+* Modification de l'inclusion ou non de copies Snapshot historiques dans vos fichiers de sauvegarde de base initiaux pour les volumes futurs
+* Modification de la suppression des snapshots « annuels » du système source
+
+
+
+
+== Afficher les paramètres de sauvegarde au niveau du cluster
+
+Vous pouvez afficher les paramètres de sauvegarde au niveau du cluster pour chaque environnement de travail.
+
+.Étapes
+. Dans le menu BlueXP, sélectionnez *protection > sauvegarde et récupération*.
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Une capture d'écran affichant le bouton Backup Settings (Paramètres de sauvegarde) vous permet de voir comment Backup est configuré pour tous vos environnements de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail et sélectionnez *Paramètres avancés*.
++
+image:screenshot_backup_advanced_settings_button.png["Capture d'écran affichant le bouton Paramètres avancés de la page Paramètres de sauvegarde."]
+
++
+La page _Paramètres avancés_ affiche les paramètres actuels de cet environnement de travail.
+
++
+image:screenshot_backup_advanced_settings_page.png["Capture d'écran présentant les valeurs des paramètres de sauvegarde avancés pour un environnement de travail spécifique."]
+
+
+
+Si vous devez apporter des modifications, développez simplement l'option et apportez les modifications nécessaires. Toutes les opérations de sauvegarde après la modification utiliseront les nouvelles valeurs.
+
+
+
+== Changer les clés de stockage pour que ONTAP puisse accéder au stockage cloud
+
+Si vous devez appliquer une politique d'entreprise régulièrement la rotation de toutes les références, par exemple tous les 6 mois ou un an, il s'agit de la façon dont vous synchroniserez la clé d'accès et la clé secrète de votre fournisseur cloud avec votre système ONTAP. Ainsi, vous pouvez mettre à jour vos identifiants du fournisseur cloud, puis modifier les clés de votre système ONTAP de sorte que les deux systèmes continuent de communiquer.
+
+Cette option n'est disponible que pour les systèmes ONTAP sur site et uniquement pour les sauvegardes vers Amazon S3, Google Cloud Storage et StorageGRID.
+
+image:screenshot_backup_edit_storage_key.png["Capture d'écran de l'entrée de la clé de stockage dans la page Paramètres avancés."]
+
+Il vous suffit d'entrer la nouvelle clé d'accès et la clé secrète, puis de cliquer sur *appliquer*.
+
+
+
+== Modifiez l'IPspace ONTAP connecté au stockage objet
+
+Vous pouvez modifier l'IPspace ONTAP connecté au stockage objet. Cette option est disponible uniquement lors de la sauvegarde des données depuis les systèmes ONTAP sur site ; elle n'est pas disponible pour les systèmes Cloud Volumes ONTAP.
+
+Ne doit pas être utilisé sur un système qui sauvegarde activement les données de volume dans le stockage objet. Il ne doit être utilisé que si un IPspace a été sélectionné lors de l'activation initiale de la sauvegarde sur un système ONTAP sur site.
+
+Consultez la documentation mise en route pour sauvegarder les données de vos systèmes ONTAP sur site vers votre fournisseur de cloud spécifique afin de vous assurer que la configuration de votre ONTAP est correctement configurée pour le nouvel IPspace. Par exemple :
+
+* Un LIF intercluster est nécessaire sur chaque nœud ONTAP qui héberge les volumes que vous souhaitez sauvegarder.
+* Le LIF doit être associé à l'IPspace que ONTAP doit utiliser pour se connecter au stockage objet.
+* Les LIFs intercluster des nœuds doivent pouvoir accéder au magasin d'objets.
+* Si vous utilisez un IPspace différent de celui de _default_, vous devrez peut-être créer une route statique pour accéder au stockage objet.
+
+
+image:screenshot_backup_edit_ipspace.png["Capture d'écran de l'entrée IPspace dans la page Advanced Settings."]
+
+Il vous suffit de sélectionner le nouvel IPspace et de cliquer sur *appliquer*. Ensuite, vous pourrez sélectionner les volumes à sauvegarder à partir d'agrégats dans cet IPspace.
+
+
+
+== Modifiez la bande passante réseau disponible pour charger les sauvegardes dans le stockage objet
+
+Lorsque vous activez Cloud Backup pour un environnement de travail, par défaut, ONTAP peut utiliser une quantité illimitée de bande passante pour transférer les données de sauvegarde depuis les volumes de l'environnement de travail vers le stockage objet. Si vous remarquez que le trafic de sauvegarde affecte les charges de travail normales des utilisateurs, vous pouvez limiter la quantité de bande passante réseau utilisée pendant le transfert. Vous pouvez choisir une valeur comprise entre 1 et 1,000 Mbit/s comme vitesse de transfert maximale.
+
+image:screenshot_backup_edit_transfer_rate.png["Capture d'écran de l'entrée de taux de transfert maximum dans la page Paramètres avancés."]
+
+Sélectionnez le bouton radio *Limited* et saisissez la bande passante maximale utilisable, ou sélectionnez *Unlimited* pour indiquer qu'il n'y a pas de limite.
+
+ifdef::aws[]
+
+
+
+== Modifier la classe de stockage d'archivage
+
+Si vous souhaitez modifier la classe de stockage d'archivage utilisée lorsque vos fichiers de sauvegarde sont stockés pendant un certain nombre de jours (en général plus de 30 jours), vous pouvez effectuer la modification ici. Pour utiliser cette nouvelle classe de stockage, toutes les stratégies de sauvegarde qui utilisent le stockage d'archivage sont immédiatement modifiées.
+
+Cette option est disponible pour les systèmes ONTAP et Cloud Volumes ONTAP sur site (avec ONTAP 9.10.1 ou version ultérieure) lorsque vous écrivez des fichiers de sauvegarde sur Amazon S3.
+
+Notez que vous pouvez uniquement passer de _S3 Glacier_ à _S3 Glacier Deep Archive_. Une fois que vous avez sélectionné Glacier Deep Archive, vous ne pouvez plus revenir à Glacier.
+
+image:screenshot_backup_edit_storage_class.png["Capture d'écran de l'entrée de la classe de stockage d'archivage dans la page Paramètres avancés."]
+
+link:concept-cloud-backup-policies.html#archival-storage-settings["En savoir plus sur les paramètres de stockage des archives"].link:reference-aws-backup-tiers.html["En savoir plus sur l'utilisation du stockage d'archives AWS"].
+
+endif::aws[]
+
+
+
+== Modifier le paramètre de sauvegarde automatique pour les volumes futurs
+
+Si vous n'avez pas activé la sauvegarde automatique des futurs volumes lorsque vous avez activé Cloud Backup, vous pouvez commencer à effectuer des sauvegardes automatiques de nouveaux volumes dans la section sauvegarde automatique. Vous pouvez également sélectionner la stratégie de sauvegarde qui sera appliquée à ces nouveaux volumes. L'affectation d'une règle de sauvegarde aux nouveaux volumes permet de garantir la protection de toutes vos données.
+
+Si vous avez activé la sauvegarde automatique des futurs volumes lorsque vous avez activé Cloud Backup, vous pouvez modifier la règle de sauvegarde qui sera utilisée pour les nouveaux volumes créés dans la section sauvegarde automatique.
+
+Notez que la règle que vous souhaitez appliquer aux nouveaux volumes doit déjà exister. link:task-manage-backups-ontap.html#adding-a-new-backup-policy["Découvrez comment créer une nouvelle stratégie de sauvegarde pour un environnement de travail"].
+
+image:screenshot_backup_edit_auto_backup.png["Capture d'écran de l'entrée sauvegarde automatique de la page Paramètres avancés."]
+
+Une fois activée, cette stratégie de sauvegarde sera appliquée à tout nouveau volume créé dans cet environnement de travail à l'aide de BlueXP, System Manager, de l'interface de ligne de commande ONTAP ou des API.
+
+
+
+== Indiquer si les copies Snapshot historiques sont exportées en tant que fichiers de sauvegarde
+
+S'il existe des copies Snapshot locales pour les volumes correspondant au libellé de planification des sauvegardes que vous utilisez dans cet environnement de travail (par exemple, quotidienne, hebdomadaire, etc.), vous pouvez exporter ces snapshots historiques vers le stockage objet sous forme de fichiers de sauvegarde. Vous pouvez ainsi initialiser vos sauvegardes dans le cloud en transférant vos anciennes copies Snapshot vers la copie de sauvegarde de base.
+
+Notez que cette option s'applique uniquement aux nouveaux fichiers de sauvegarde pour les nouveaux volumes et qu'elle n'est pas prise en charge avec les volumes de protection des données (DP).
+
+image:screenshot_backup_edit_export_snapshots.png["Capture d'écran de l'entrée Exporter des copies Snapshot existantes dans la page Paramètres avancés."]
+
+Il vous suffit d'indiquer si vous souhaitez exporter les copies Snapshot existantes, puis de cliquer sur *appliquer*.
+
+
+
+== Modifier si les snapshots « annuels » sont supprimés du système source
+
+Lorsque vous sélectionnez l'étiquette de sauvegarde « annuelle » pour une règle de sauvegarde pour l'un de vos volumes, la copie Snapshot créée est extrêmement volumineuse. Par défaut, ces snapshots annuels sont supprimés automatiquement du système source après leur transfert vers le stockage objet. Vous pouvez modifier ce comportement par défaut à partir de la section Suppression annuelle de l'instantané.
+
+image:screenshot_backup_edit_yearly_snap_delete.png["Capture d'écran de l'entrée IPspace dans la page Advanced Settings."]
+
+Sélectionnez *Disabled* et cliquez sur *Apply* si vous souhaitez conserver les instantanés annuels sur le système source.

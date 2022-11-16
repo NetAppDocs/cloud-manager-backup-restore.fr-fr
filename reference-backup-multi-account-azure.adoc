@@ -1,0 +1,135 @@
+---
+sidebar: sidebar 
+permalink: reference-backup-multi-account-azure.html 
+keywords: microsoft azure, azure, regions, blob, multiple accounts, multiple regions, backup 
+summary: 'Cloud Backup vous permet de créer des fichiers de sauvegarde dans un compte Azure différents de l"emplacement de vos volumes Cloud Volumes ONTAP source et différents du compte où réside BlueXP Connector.' 
+---
+= Configurer la sauvegarde pour l'accès à plusieurs comptes dans Azure
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Avec Cloud Backup, vous pouvez créer des fichiers de sauvegarde dans un compte Azure différents de l'emplacement de vos volumes Cloud Volumes ONTAP source. Et ces deux comptes peuvent être différents du compte où réside le connecteur BlueXP.
+
+Ces étapes sont requises uniquement lorsque vous l'êtes https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-backup-to-azure.html["Sauvegarde des données Cloud Volumes ONTAP dans le stockage Azure Blob"^].
+
+Suivez simplement les étapes ci-dessous pour configurer votre configuration de cette façon.
+
+
+
+== Configurez le peering de vnet entre comptes
+
+Notez que si vous souhaitez que BlueXP gère votre système Cloud Volumes ONTAP dans un autre compte/région, vous devez configurer VNet peering. Le peering de vnet n'est pas requis pour la connectivité du compte de stockage.
+
+. Connectez-vous au portail Azure et depuis domicile, sélectionnez Virtual Networks.
+. Sélectionnez l'abonnement que vous utilisez en tant qu'abonnement 1 et cliquez sur le vnet où vous souhaitez configurer le peering.
++
+image:screenshot_azure_peer1.png[""]
+
+. Sélectionnez *cbsnetwork* et, dans le panneau de gauche, cliquez sur *Peerings*, puis cliquez sur *Add*.
++
+image:screenshot_azure_peer2.png[""]
+
+. Entrez les informations suivantes sur la page peering, puis cliquez sur *Ajouter*.
++
+** Nom de la liaison de peering pour ce réseau : vous pouvez donner un nom quelconque afin d'identifier la connexion de peering.
+** Nom de la liaison de peering de réseau virtuel distant : entrez un nom pour identifier le vnet distant.
+** Conserver toutes les sélections comme valeurs par défaut.
+** Sous abonnement, sélectionnez l'abonnement 2.
+** Réseau virtuel, sélectionnez le réseau virtuel dans l'abonnement 2 auquel vous souhaitez configurer le peering.
++
+image:screenshot_azure_peer3.png[""]
+
+
+
+. Effectuez les mêmes étapes dans Subscription 2 VNet et spécifiez les détails de l'abonnement et de vnet distant de l'abonnement 1.
++
+image:screenshot_azure_peer4.png[""]
+
++
+Les paramètres de peering sont ajoutés.
+
++
+image:screenshot_azure_peer5.png[""]
+
+
+
+
+
+== Créez un terminal privé pour le compte de stockage
+
+Il est maintenant nécessaire de créer un terminal privé pour le compte de stockage. Dans cet exemple, le compte de stockage est créé dans l'abonnement 1 et le système Cloud Volumes ONTAP fonctionne dans l'abonnement 2.
+
+
+NOTE: Vous avez besoin de l'autorisation de contributeur réseau pour effectuer l'action suivante.
+
+[source, json]
+----
+{
+  "id": "/subscriptions/d333af45-0d07-4154-943dc25fbbce1b18/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7",
+  "properties": {
+    "roleName": "Network Contributor",
+    "description": "Lets you manage networks, but not access to them.",
+    "assignableScopes": [
+      "/"
+    ],
+    "permissions": [
+      {
+        "actions": [
+          "Microsoft.Authorization/*/read",
+          "Microsoft.Insights/alertRules/*",
+          "Microsoft.Network/*",
+          "Microsoft.ResourceHealth/availabilityStatuses/read",
+          "Microsoft.Resources/deployments/*",
+          "Microsoft.Resources/subscriptions/resourceGroups/read",
+          "Microsoft.Support/*"
+        ],
+        "notActions": [],
+        "dataActions": [],
+        "notDataActions": []
+      }
+    ]
+  }
+}
+----
+. Accédez au compte de stockage > réseau > connexions de noeuds finaux privés et cliquez sur *+ noeud final privé*.
++
+image:screenshot_azure_networking1.png[""]
+
+. Dans la page Private Endpoint _Basics_ :
++
+** Sélectionnez l'abonnement 2 (où le connecteur BlueXP et le système Cloud Volumes ONTAP sont déployés) et le groupe de ressources.
+** Entrez un nom de point final.
+** Sélectionnez la région.
++
+image:screenshot_azure_networking2.png[""]
+
+
+
+. Dans la page _Resource_, sélectionnez sous-ressource cible comme *blob*.
++
+image:screenshot_azure_networking3.png[""]
+
+. Dans la page Configuration :
++
+** Sélectionnez le réseau virtuel et le sous-réseau.
+** Cliquez sur le bouton radio *Oui* pour "intégrer à la zone DNS privée".
++
+image:screenshot_azure_networking4.png[""]
+
+
+
+. Dans la liste zone DNS privée, assurez-vous que la zone privée est sélectionnée dans la région correcte, puis cliquez sur *Revue + Créer*.
++
+image:screenshot_azure_networking5.png[""]
+
++
+Désormais, le compte de stockage (dans l'abonnement 1) a accès au système Cloud Volumes ONTAP exécuté dans l'abonnement 2.
+
+. Réessayez d'activer la sauvegarde dans le cloud sur le système Cloud Volumes ONTAP. Cette fois-ci, vous devriez réussir.
+

@@ -1,0 +1,16 @@
+---
+layout: astra 
+sidebar: sidebar 
+permalink: index.html 
+lead: Cloud Backup provides backup and restore capabilities for protection and long-term archive of your data. 
+summary: 'Cloud Backup inclut des fonctionnalités de sauvegarde et de restauration pour la protection et l"archivage à long terme de vos données.' 
+---
+= Documentation Cloud Backup
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+

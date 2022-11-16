@@ -1,0 +1,446 @@
+---
+sidebar: sidebar 
+permalink: task-manage-backups-ontap.html 
+keywords: cloud backup, cloud backup service, backup schedule, change schedule, change backup schedule, modify schedule, modify backup schedule, retention, backup retention, delete, delete backups, deleting, deleting backups, disable, disable backups, turn off backups, disable cloud backup, turn off cloud backup 
+summary: Vous pouvez gérer les sauvegardes de vos systèmes Cloud Volumes ONTAP et ONTAP sur site en modifiant la planification de sauvegarde, en créant de nouvelles stratégies de sauvegarde, en activant/désactivant les sauvegardes de volume, en pause des sauvegardes, en supprimant les sauvegardes, etc. 
+---
+= Gestion des sauvegardes de vos systèmes ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez gérer les sauvegardes de vos systèmes Cloud Volumes ONTAP et ONTAP sur site en modifiant la planification de sauvegarde, en créant de nouvelles stratégies de sauvegarde, en activant/désactivant les sauvegardes de volume, en pause des sauvegardes, en supprimant les sauvegardes, etc.
+
+
+CAUTION: Ne gérez ni ne modifiez pas de fichiers de sauvegarde directement depuis votre environnement cloud fournisseur. Cela peut corrompre les fichiers et entraîner une configuration non prise en charge.
+
+
+
+== Affichage des volumes en cours de sauvegarde
+
+Vous pouvez afficher la liste de tous les volumes actuellement sauvegardés dans le tableau de bord de sauvegarde.
+
+.Étapes
+. Dans le menu BlueXP, sélectionnez *protection > sauvegarde et récupération*.
+. Cliquez sur l'onglet *volumes* pour afficher la liste des volumes sauvegardés pour les systèmes Cloud Volumes ONTAP et ONTAP sur site.
++
+image:screenshot_backup_dashboard.png["Capture d'écran montrant tous les environnements de travail et les volumes qui ont des fichiers de sauvegarde."]
+
+
+
+Si vous recherchez des volumes spécifiques dans certains environnements de travail, vous pouvez affiner la liste par environnement de travail et volume, ou vous pouvez utiliser le filtre de recherche.
+
+
+
+== Activation et désactivation des sauvegardes des volumes
+
+Vous pouvez activer les sauvegardes de tout nouveau volume s'ils ne sont pas actuellement sauvegardés. Vous pouvez également activer les sauvegardes de tous les volumes que vous avez précédemment désactivés.
+
+Vous pouvez désactiver les sauvegardes pour les volumes de manière à ce qu'aucune sauvegarde supplémentaire ne soit générée. Cela désactive également la restauration des données de volume à partir d'un fichier de sauvegarde. Cette opération vous permet en fait d'interrompre l'ensemble des activités de sauvegarde et de restauration pendant une période donnée. Toutes les sauvegardes existantes ne seront pas supprimées. Ainsi, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que vos sauvegardes utilisent, sauf si vous link:deleting-all-backup-files-for-a-volume["supprimez les sauvegardes"].
+
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail et sélectionnez *gérer les volumes*.
++
+image:screenshot_backup_manage_volumes.png["Capture d'écran présentant le bouton gérer les volumes de la page Paramètres de sauvegarde."]
+
+. Cochez la case d'un volume ou des volumes que vous souhaitez modifier, puis cliquez sur *Activer* ou sur *Désactiver* selon que vous souhaitez démarrer ou arrêter les sauvegardes du volume.
++
+image:screenshot_backup_manage_volumes_page.png["La page gérer les volumes dans laquelle vous pouvez sélectionner ou désélectionner des volumes."]
+
+. Cliquez sur *Enregistrer* pour valider vos modifications.
+
+
+
+
+== Modification d'une stratégie de sauvegarde existante
+
+Vous pouvez modifier les attributs d'une stratégie de sauvegarde actuellement appliquée aux volumes d'un environnement de travail. La modification de la stratégie de sauvegarde affecte tous les volumes existants utilisant la règle.
+
+[NOTE]
+====
+* Si vous avez activé _DataLock et protection contre les attaques par ransomware_ dans la stratégie initiale lors de l'activation de Cloud Backup pour ce cluster, toutes les stratégies que vous modifiez doivent être configurées avec le même paramètre DataLock (gouvernance ou conformité). Et si vous n'avez pas activé _DataLock et protection contre les attaques par ransomware_ lors de l'activation de Cloud Backup, vous ne pouvez pas activer DataLock maintenant.
+* Lors de la création de sauvegardes sur AWS, si vous choisissez _S3 Glacier_ ou _S3 Glacier Deep Archive_ dans votre première stratégie de sauvegarde lors de l'activation de Cloud Backup, ce Tier sera le seul niveau d'archivage disponible lors de l'édition de stratégies de sauvegarde. Si vous avez sélectionné aucun niveau d'archivage dans votre première stratégie de sauvegarde, alors _S3 Glacier_ sera votre seule option d'archivage lors de la modification d'une stratégie.
+
+
+====
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Backup Settings de l'onglet volumes."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail dans lequel vous souhaitez modifier les paramètres de la stratégie, sélectionnez *gérer les stratégies*.
++
+image:screenshot_backup_modify_policy.png["Capture d'écran présentant l'option gérer les stratégies de la page Paramètres de sauvegarde."]
+
+. Dans la page _Manage Policies_, cliquez sur *Edit* pour la stratégie de sauvegarde que vous souhaitez modifier dans cet environnement de travail.
++
+Remarque vous pouvez cliquer sur image:button_down_caret.png[""] pour afficher tous les détails de la police.
+
++
+image:screenshot_backup_manage_policy_page_edit.png["Capture d'écran affichant le bouton Modifier la stratégie de la page gérer les stratégies."]
+
+. Dans la page _Edit Policy_, cliquez sur image:button_down_caret.png[""] Pour développer la section _Labels & Retention_ afin de modifier la planification et/ou la rétention des sauvegardes, puis cliquez sur *Enregistrer*.
++
+image:screenshot_backup_edit_policy.png["Capture d'écran présentant les paramètres de stratégie de sauvegarde dans lesquels vous pouvez modifier la planification de sauvegarde et les paramètres de conservation de sauvegarde."]
+
++
+Si votre cluster exécute ONTAP 9.10.1 ou version supérieure, vous pouvez également activer ou désactiver le Tiering des sauvegardes dans le stockage d'archivage après un certain nombre de jours.
+
++
+ifdef::aws[]
+
+
+
+link:reference-aws-backup-tiers.html["En savoir plus sur l'utilisation du stockage d'archives AWS"].
+
+endif::aws[]
+
+ifdef::azure[]
+
+link:reference-azure-backup-tiers.html["En savoir plus sur l'utilisation du stockage d'archives Azure"].
+
+endif::azure[]
+
++image:screenshot_backup_modify_policy_page2.png["Copie d'écran montrant les paramètres de Tiering d'archivage pour Cloud Backup."]
+
++ Notez que tous les fichiers de sauvegarde qui ont été hiérarchisés vers le stockage d'archivage sont conservés dans ce niveau si vous arrêtez le Tiering des sauvegardes vers l'archivage - ils ne sont pas automatiquement déplacés vers le niveau standard.
+
+
+
+== Ajout d'une nouvelle politique de sauvegarde
+
+Lorsque vous activez Cloud Backup pour un environnement de travail, tous les volumes que vous sélectionnez initialement sont sauvegardés à l'aide de la stratégie de sauvegarde par défaut que vous avez définie. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes ayant des objectifs de point de récupération différents, vous pouvez créer des règles supplémentaires pour ce cluster et les affecter à d'autres volumes.
+
+Si vous souhaitez appliquer une nouvelle stratégie de sauvegarde à certains volumes d'un environnement de travail, vous devez d'abord ajouter la stratégie de sauvegarde à l'environnement de travail. C'est alors possible  the policy assigned to existing volumes,appliquer la policy aux volumes de cet environnement de travail.
+
+[NOTE]
+====
+* Si vous avez activé _DataLock et protection contre les attaques par ransomware_ dans la stratégie initiale lors de l'activation de Cloud Backup pour ce cluster, toutes les stratégies supplémentaires que vous créez doivent être configurées avec le même paramètre DataLock (gouvernance ou conformité). Et si vous n'avez pas activé _DataLock et protection contre les attaques par ransomware_ lors de l'activation de Cloud Backup, vous ne pouvez pas créer de nouvelles stratégies qui utilisent DataLock.
+* Lors de la création de sauvegardes sur AWS, si vous choisissez _S3 Glacier_ ou _S3 Glacier Deep Archive_ dans votre première stratégie de sauvegarde lors de l'activation de Cloud Backup, ce Tier sera le seul niveau d'archivage disponible pour les futures stratégies de sauvegarde pour ce cluster. Si vous avez sélectionné aucun niveau d'archivage dans votre première stratégie de sauvegarde, alors _S3 Glacier_ sera votre seule option d'archivage pour les stratégies futures.
+
+
+====
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Backup Settings de l'onglet volumes."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail où vous souhaitez ajouter la nouvelle stratégie, sélectionnez *gérer les stratégies*.
++
+image:screenshot_backup_modify_policy.png["Capture d'écran présentant l'option gérer les stratégies de la page Paramètres de sauvegarde."]
+
+. Dans la page _Manage Policies_, cliquez sur *Add New Policy*.
++
+image:screenshot_backup_manage_policy_page_add.png["Capture d'écran affichant le bouton Ajouter une nouvelle stratégie de la page gérer les politiques."]
+
+. Dans la page _Ajouter une nouvelle stratégie_, cliquez sur image:button_down_caret.png[""] Pour développer la section _Labels & Retention_ afin de définir la planification et la conservation des sauvegardes, puis cliquez sur *Enregistrer*.
++
+image:screenshot_backup_add_new_policy.png["Capture d'écran présentant les paramètres de stratégie de sauvegarde dans lesquels vous pouvez ajouter la planification de sauvegarde et les paramètres de conservation de sauvegarde."]
+
++
+Si votre cluster exécute ONTAP 9.10.1 ou version supérieure, vous pouvez également activer ou désactiver le Tiering des sauvegardes dans le stockage d'archivage après un certain nombre de jours.
+
++
+ifdef::aws[]
+
+
+
+link:reference-aws-backup-tiers.html["En savoir plus sur l'utilisation du stockage d'archives AWS"].
+
+endif::aws[]
+
+ifdef::azure[]
+
+link:reference-azure-backup-tiers.html["En savoir plus sur l'utilisation du stockage d'archives Azure"].
+
+endif::azure[]
+
++image:screenshot_backup_modify_policy_page2.png["Copie d'écran montrant les paramètres de Tiering d'archivage pour Cloud Backup."]
+
+
+
+== Modification de la règle attribuée aux volumes existants
+
+Vous pouvez modifier la stratégie de sauvegarde attribuée à vos volumes existants si vous souhaitez modifier la fréquence des sauvegardes ou si vous souhaitez modifier la valeur de rétention.
+
+Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister.  a new backup policy,Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail.
+
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail où existent les volumes, sélectionnez *gérer les volumes*.
++
+image:screenshot_backup_manage_volumes.png["Capture d'écran présentant le bouton gérer les volumes de la page Paramètres de sauvegarde."]
+
+. Cochez la case pour un volume ou des volumes pour lesquels vous souhaitez modifier la règle, puis cliquez sur *Modifier la stratégie*.
++
+image:screenshot_backup_manage_volumes_page_change.png["La page gérer les volumes dans laquelle vous pouvez sélectionner ou désélectionner des volumes."]
+
+. Dans la page _change Policy_, sélectionnez la stratégie à appliquer aux volumes, puis cliquez sur *change Policy*.
++
+image:screenshot_backup_change_policy.png["Capture d'écran montrant comment sélectionner une nouvelle stratégie à appliquer aux volumes sélectionnés."]
+
++
+
+NOTE: Si vous avez activé _DataLock et protection contre les attaques par ransomware_ dans la stratégie initiale lors de l'activation de Cloud Backup pour ce cluster, vous ne verrez que les autres stratégies qui ont été configurées avec DataLock. Et si vous n'avez pas activé _DataLock et protection contre les attaques par ransomware_ lors de l'activation de Cloud Backup, vous ne verrez que d'autres stratégies qui n'ont pas configuré DataLock.
+
+. Cliquez sur *Enregistrer* pour valider vos modifications.
+
+
+
+
+== Création d'une sauvegarde de volume manuelle à tout moment
+
+Vous pouvez créer une sauvegarde à la demande à tout moment pour capturer l'état actuel du volume. Cela peut être utile si des modifications importantes ont été apportées à un volume et que vous ne souhaitez pas attendre la prochaine sauvegarde planifiée pour protéger ces données, ou si le volume n'est pas actuellement sauvegardé et que vous voulez capturer son état actuel.
+
+Le nom de la sauvegarde inclut l'horodatage afin que vous puissiez identifier votre sauvegarde à la demande à partir d'autres sauvegardes planifiées.
+
+Si vous avez activé _DataLock et protection contre les attaques par ransomware_ lors de l'activation de Cloud Backup pour ce cluster, la sauvegarde à la demande sera également configurée avec DataLock, et la période de conservation sera de 30 jours. Les analyses par ransomware ne sont pas prises en charge pour les sauvegardes ad hoc. link:concept-cloud-backup-policies.html#datalock-and-ransomware-protection["En savoir plus sur le verrouillage des données et la protection contre les attaques par ransomware"^].
+
+Notez que lors de la création d'une sauvegarde ad hoc, un Snapshot est créé sur le volume source. Cet instantané ne faisant pas partie d'une planification Snapshot normale, il ne sera pas désactivé. Vous pouvez supprimer manuellement cet instantané du volume source une fois la sauvegarde terminée. Ainsi, les blocs liés à cette copie Snapshot peuvent être libérés. Le nom de l'instantané commence par `cbs-snapshot-adhoc-`. https://docs.netapp.com/us-en/ontap/san-admin/delete-all-existing-snapshot-copies-volume-task.html["Reportez-vous à la section mode de suppression d'une copie Snapshot à l'aide ONTAP de l'interface de ligne de commandes de"^].
+
+
+NOTE: La sauvegarde de volumes à la demande n'est pas prise en charge sur les volumes de protection des données.
+
+.Étapes
+. Dans l'onglet *volumes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume et sélectionnez *Sauvegarder maintenant*.
++
+image:screenshot_backup_now_button.png["Copie d'écran affichant le bouton Backup Now (sauvegarde maintenant), disponible après la sélection d'un volume."]
+
+
+
+La colonne État de la sauvegarde de ce volume affiche « en cours » jusqu'à ce que la sauvegarde soit créée.
+
+
+
+== Affichage de la liste des sauvegardes pour chaque volume
+
+Vous pouvez afficher la liste de tous les fichiers de sauvegarde existants pour chaque volume. Cette page affiche des informations détaillées sur le volume source, l'emplacement de destination et les détails de la sauvegarde, tels que la dernière sauvegarde effectuée, la stratégie de sauvegarde actuelle, la taille du fichier de sauvegarde, etc.
+
+Cette page permet également d'effectuer les tâches suivantes :
+
+* Supprimez tous les fichiers de sauvegarde du volume
+* Supprimez les fichiers de sauvegarde individuels du volume
+* Téléchargez un rapport de sauvegarde pour le volume
+
+
+.Étapes
+. Dans l'onglet *volumes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
++
+image:screenshot_backup_view_backups_button.png["Capture d'écran affichant le bouton Détails et liste de sauvegarde disponible pour un seul volume."]
+
++
+La liste de tous les fichiers de sauvegarde s'affiche avec des informations détaillées sur le volume source, l'emplacement de destination et les détails de la sauvegarde.
+
++
+image:screenshot_backup_view_backups.png["Capture d'écran affichant la liste de tous les fichiers de sauvegarde pour un seul volume."]
+
+
+
+
+
+== Exécution d'une analyse par ransomware sur une sauvegarde de volume
+
+Le logiciel de protection par ransomware de NetApp analyse vos fichiers de sauvegarde pour détecter la preuve d'une attaque par ransomware lors de la création d'un fichier de sauvegarde, et lorsque les données d'un fichier de sauvegarde sont en cours de restauration. Vous pouvez également exécuter une analyse de protection par ransomware à la demande à tout moment pour vérifier la facilité d'utilisation d'un fichier de sauvegarde spécifique. Ceci peut être utile si vous avez eu un problème de ransomware sur un volume en particulier et que vous souhaitez vérifier que les sauvegardes de ce volume ne sont pas affectées.
+
+Cette fonctionnalité est disponible uniquement si la sauvegarde du volume a été créée à partir d'un système avec ONTAP 9.11.1 ou version ultérieure et si vous avez activé _DataLock et protection contre les attaques par ransomware_ dans la stratégie de sauvegarde.
+
+
+NOTE: Une analyse par ransomware requiert que le fichier de sauvegarde soit téléchargé dans votre environnement BlueXP (où le connecteur est installé). En cas de déploiement de votre connecteur sur site, vous pouvez donc prévoir des coûts de sortie supplémentaires de votre fournisseur de cloud. Nous vous recommandons donc de déployer le connecteur dans le cloud et d'utiliser la même région que le compartiment dans lequel vos sauvegardes sont stockées.
+
+.Étapes
+. Dans l'onglet *volumes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
++
+image:screenshot_backup_view_backups_button.png["Capture d'écran affichant le bouton Détails et liste de sauvegarde disponible pour un seul volume."]
+
++
+La liste de tous les fichiers de sauvegarde s'affiche.
+
+. Cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le fichier de sauvegarde de volume à analyser, cliquez sur *analyse de ransomware*.
++
+image:screenshot_scan_one_backup.png["Capture d'écran montrant comment exécuter une analyse par ransomware sur un seul fichier de sauvegarde."]
+
++
+La colonne analyse des attaques par ransomware indique que l'analyse est en cours.
+
+
+
+
+
+== Suppression de sauvegardes
+
+Cloud Backup vous permet de supprimer un seul fichier de sauvegarde, de supprimer toutes les sauvegardes d'un volume ou de supprimer toutes les sauvegardes de tous les volumes d'un environnement de travail. Vous pouvez supprimer toutes les sauvegardes si vous n'avez plus besoin des sauvegardes, ou si vous avez supprimé le volume source et que vous souhaitez supprimer toutes les sauvegardes.
+
+Notez que vous ne pouvez pas supprimer les fichiers de sauvegarde que vous avez verrouillés à l'aide de DataLock et de la protection contre les attaques par ransomware. L'option « Supprimer » n'est pas disponible dans l'interface utilisateur si vous avez sélectionné un ou plusieurs fichiers de sauvegarde verrouillés.
+
+
+CAUTION: Si vous prévoyez de supprimer un environnement ou un cluster de travail qui dispose de sauvegardes, vous devez supprimer les sauvegardes *avant* de supprimer le système. Cloud Backup ne supprime pas automatiquement les sauvegardes lorsque vous supprimez un système et l'interface utilisateur ne prend pas en charge la suppression des sauvegardes après la suppression du système. Vous continuerez d'être facturé pour les coûts de stockage objet pour les sauvegardes restantes.
+
+
+
+=== Suppression de tous les fichiers de sauvegarde d'un environnement de travail
+
+La suppression de toutes les sauvegardes d'un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d'un environnement de travail, vous pouvez désactiver les sauvegardes  Cloud Backup for a working environment,comme décrit ici.
+
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail où vous souhaitez supprimer toutes les sauvegardes et sélectionnez *Supprimer toutes les sauvegardes*.
++
+image:screenshot_delete_all_backups.png["Capture d'écran de la sélection du bouton Supprimer toutes les sauvegardes pour supprimer toutes les sauvegardes d'un environnement de travail."]
+
+. Dans la boîte de dialogue de confirmation, entrez le nom de l'environnement de travail et cliquez sur *Supprimer*.
+
+
+
+
+=== Suppression de tous les fichiers de sauvegarde d'un volume
+
+La suppression de toutes les sauvegardes d'un volume désactive également les futures sauvegardes de ce volume.
+
+C'est possible  and disabling backups of volumes,relancez les sauvegardes pour le volume À tout moment à partir de la page gérer les sauvegardes.
+
+.Étapes
+. Dans l'onglet *volumes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
++
+image:screenshot_backup_view_backups_button.png["Capture d'écran affichant le bouton Détails et liste de sauvegarde disponible pour un seul volume."]
+
++
+La liste de tous les fichiers de sauvegarde s'affiche.
+
++
+image:screenshot_backup_view_backups.png["Capture d'écran affichant la liste de tous les fichiers de sauvegarde pour un seul volume."]
+
+. Cliquez sur *actions* > *Supprimer toutes les sauvegardes*.
++
+image:screenshot_delete_we_backups.png["Capture d'écran indiquant comment supprimer tous les fichiers de sauvegarde d'un volume."]
+
+. Dans la boîte de dialogue de confirmation, entrez le nom du volume et cliquez sur *Supprimer*.
+
+
+
+
+=== Suppression d'un fichier de sauvegarde unique pour un volume
+
+Vous pouvez supprimer un seul fichier de sauvegarde. Cette fonctionnalité n'est disponible que si la sauvegarde du volume a été créée à partir d'un système avec ONTAP 9.8 ou version ultérieure.
+
+.Étapes
+. Dans l'onglet *volumes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
++
+image:screenshot_backup_view_backups_button.png["Capture d'écran affichant le bouton Détails et liste de sauvegarde disponible pour un seul volume."]
+
++
+La liste de tous les fichiers de sauvegarde s'affiche.
+
++
+image:screenshot_backup_view_backups.png["Capture d'écran affichant la liste de tous les fichiers de sauvegarde pour un seul volume."]
+
+. Cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le fichier de sauvegarde de volume que vous souhaitez supprimer, cliquez sur *Supprimer*.
++
+image:screenshot_delete_one_backup.png["Capture d'écran indiquant comment supprimer un seul fichier de sauvegarde."]
+
+. Dans la boîte de dialogue de confirmation, cliquez sur *Supprimer*.
+
+
+
+
+== Suppression des relations de sauvegarde de volume
+
+La suppression de la relation de sauvegarde d'un volume vous fournit un mécanisme d'archivage si vous souhaitez arrêter la création de nouveaux fichiers de sauvegarde et supprimer le volume source, mais conserver tous les fichiers de sauvegarde existants. Cela vous permet de restaurer ultérieurement le volume à partir du fichier de sauvegarde, si nécessaire, tout en libérant de l'espace du système de stockage source.
+
+Vous n'avez pas nécessairement besoin de supprimer le volume source. Vous pouvez supprimer la relation de sauvegarde d'un volume et conserver le volume source. Dans ce cas, vous pouvez activer la sauvegarde sur le volume ultérieurement. La copie de sauvegarde de base d'origine continue d'être utilisée dans ce cas. Une nouvelle copie de sauvegarde de base n'est pas créée et exportée vers le cloud. Notez que si vous réactivez une relation de sauvegarde, la stratégie de sauvegarde par défaut est attribuée au volume.
+
+Cette fonction n'est disponible que si votre système exécute ONTAP 9.12.1 ou une version ultérieure.
+
+Vous ne pouvez pas supprimer le volume source de l'interface utilisateur de Cloud Backup. Cependant, vous pouvez ouvrir la page Détails du volume sur la toile, et https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-manage-volumes.html#manage-volumes["supprimez le volume de ce site"].
+
+
+NOTE: Une fois la relation supprimée, vous ne pouvez pas supprimer des fichiers de sauvegarde de volume individuels. Vous pouvez cependant link:task-manage-backups-ontap.html#deleting-all-backup-files-for-a-volume["supprimez toutes les sauvegardes du volume"] si vous souhaitez supprimer tous les fichiers de sauvegarde.
+
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail et sélectionnez *gérer les volumes*.
++
+image:screenshot_backup_manage_volumes.png["Capture d'écran présentant le bouton gérer les volumes de la page Paramètres de sauvegarde."]
+
+. Cochez la case d'un volume ou de volumes que vous souhaitez supprimer la relation de sauvegarde, puis cliquez sur *Supprimer la relation*.
++
+image:screenshot_delete_relationship.png["Capture d'écran montrant comment supprimer la relation de sauvegarde pour plusieurs volumes."]
+
+. Cliquez sur *Enregistrer* pour valider vos modifications.
+
+
+Vous pouvez également supprimer la relation de sauvegarde d'un volume unique sur la page volumes.
+
+image:screenshot_delete_relationship_single.png["Copie d'écran montrant comment supprimer la relation de sauvegarde d'un seul volume."]
+
+Lorsque vous affichez la liste des sauvegardes pour chaque volume, vous verrez l'« état de la relation » répertorié comme *relation supprimée*.
+
+image:screenshot_backup_view_no_relationship.png["Capture d'écran affichant le statut supprimé de la relation après la suppression d'une relation de sauvegarde de volume."]
+
+
+
+== Désactivation de Cloud Backup pour un environnement de travail
+
+La désactivation de Cloud Backup pour un environnement de travail désactive les sauvegardes de chaque volume du système et désactive également la restauration d'un volume. Les sauvegardes existantes ne seront pas supprimées. Cela ne désinscrit pas le service de sauvegarde de cet environnement de travail, car il vous permet de suspendre l'ensemble de l'activité de sauvegarde et de restauration pendant une période donnée.
+
+Notez que vous continuerez d'être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous  all backup files for a working environment,supprimez les sauvegardes.
+
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail dans lequel vous souhaitez désactiver les sauvegardes et sélectionnez *Désactiver la sauvegarde*.
++
+image:screenshot_disable_backups.png["Capture d'écran du bouton Désactiver la sauvegarde pour un environnement de travail."]
+
+. Dans la boîte de dialogue de confirmation, cliquez sur *Désactiver*.
+
+
+
+NOTE: Un bouton *Activer la sauvegarde* apparaît pour cet environnement de travail alors que la sauvegarde est désactivée. Vous pouvez cliquer sur ce bouton lorsque vous souhaitez réactiver la fonctionnalité de sauvegarde pour cet environnement de travail.
+
+
+
+== Annulation de l'enregistrement de Cloud Backup pour un environnement de travail
+
+Vous pouvez annuler l'enregistrement de Cloud Backup pour un environnement de travail si vous ne souhaitez plus utiliser la fonctionnalité de sauvegarde et que vous souhaitez interrompre la facturation des sauvegardes dans cet environnement de travail. Cette fonction est généralement utilisée lorsque vous prévoyez de supprimer un environnement de travail et que vous souhaitez annuler le service de sauvegarde.
+
+Vous pouvez également utiliser cette fonction si vous souhaitez modifier le magasin d'objets de destination dans lequel vos sauvegardes de cluster sont stockées. Une fois que vous désenregistrez Cloud Backup pour l'environnement de travail, vous pouvez activer Cloud Backup pour ce cluster en utilisant les informations du nouveau fournisseur cloud.
+
+Avant de pouvoir annuler l'enregistrement de Cloud Backup, vous devez effectuer les opérations suivantes dans cet ordre :
+
+* Désactivez Cloud Backup pour l'environnement de travail
+* Supprimer toutes les sauvegardes de cet environnement de travail
+
+
+L'option de désenregistrer n'est pas disponible tant que ces deux actions ne sont pas terminées.
+
+.Étapes
+. Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail où vous souhaitez annuler l'enregistrement du service de sauvegarde et sélectionnez *Annuler l'enregistrement*.
++
+image:screenshot_backup_unregister.png["Capture d'écran du bouton Unregister backup pour un environnement de travail."]
+
+. Dans la boîte de dialogue de confirmation, cliquez sur *Annuler l'enregistrement*.
+

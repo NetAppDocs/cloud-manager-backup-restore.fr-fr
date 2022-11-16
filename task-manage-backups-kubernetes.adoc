@@ -1,0 +1,266 @@
+---
+sidebar: sidebar 
+permalink: task-manage-backups-kubernetes.html 
+keywords: cloud backup, cloud backup service, backup schedule, change schedule, change backup schedule, modify schedule, modify backup schedule, retention, backup retention, delete, delete backups, deleting, deleting backups, disable, disable backups, turn off backups, disable cloud backup, turn off cloud backup 
+summary: Vous pouvez gérer les sauvegardes de vos systèmes Kubernetes en modifiant la planification des sauvegardes, en activant/désactivant les sauvegardes de volumes, en supprimant les sauvegardes, etc. 
+---
+= Gestion des sauvegardes pour vos systèmes Kubernetes
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez gérer les sauvegardes de vos systèmes Kubernetes en modifiant la planification des sauvegardes, en activant/désactivant les sauvegardes de volumes, en supprimant les sauvegardes, etc.
+
+
+CAUTION: Ne gérez ni ne modifiez pas de fichiers de sauvegarde directement depuis votre environnement cloud fournisseur. Cela peut corrompre les fichiers et entraîner une configuration non prise en charge.
+
+
+
+== Affichage des volumes en cours de sauvegarde
+
+Vous pouvez afficher la liste de tous les volumes actuellement sauvegardés par Cloud Backup.
+
+.Étapes
+. Dans le menu BlueXP, sélectionnez *protection > sauvegarde et récupération*.
+. Cliquez sur l'onglet *Kubernetes* pour afficher la liste des volumes persistants pour les systèmes Kubernetes.
++
+image:screenshot_backup_dashboard_k8s.png["Capture d'écran montrant tous les environnements de travail et les volumes qui ont des fichiers de sauvegarde."]
+
+
+
+Si vous recherchez des volumes spécifiques dans certains clusters, vous pouvez affiner la liste par cluster et volume ou utiliser le filtre de recherche.
+
+
+
+== Activation et désactivation des sauvegardes des volumes
+
+Vous pouvez arrêter la sauvegarde d'un volume si vous n'avez pas besoin de copies de sauvegarde de ce volume et si vous ne voulez pas payer pour le coût de stockage des sauvegardes. Vous pouvez également ajouter un nouveau volume à la liste des sauvegardes si ce n'est pas actuellement le cas.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button_k8s.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le cluster Kubernetes et sélectionnez *gérer les volumes persistants*.
++
+image:screenshot_backup_manage_volumes_k8s.png["Capture d'écran présentant le bouton gérer les volumes persistants de la page Paramètres de sauvegarde."]
+
+. Cochez la case d'un volume ou des volumes que vous souhaitez modifier, puis cliquez sur *Activer* ou sur *Désactiver* selon que vous souhaitez démarrer ou arrêter les sauvegardes du volume.
++
+image:screenshot_backup_manage_volumes_page_k8s.png["La page gérer les volumes dans laquelle vous pouvez sélectionner ou désélectionner des volumes."]
+
+. Cliquez sur *Enregistrer* pour valider vos modifications.
+
+
+*Remarque :* lors de l'arrêt de la sauvegarde d'un volume, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que les sauvegardes utilisent, sauf si vous  backups,supprimez les sauvegardes.
+
+
+
+== Modification d'une stratégie de sauvegarde existante
+
+Vous pouvez modifier les attributs d'une stratégie de sauvegarde actuellement appliquée aux volumes d'un environnement de travail. La modification de la stratégie de sauvegarde affecte tous les volumes existants utilisant la règle.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button_k8s.png["Capture d'écran affichant le bouton Backup Settings de l'onglet volumes."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail dans lequel vous souhaitez modifier les paramètres, sélectionnez *gérer les stratégies*.
++
+image:screenshot_backup_modify_policy_k8s.png["Capture d'écran présentant l'option gérer les stratégies de la page Paramètres de sauvegarde."]
+
+. Dans la page _Manage Policies_, cliquez sur *Edit Policy* pour la stratégie de sauvegarde que vous souhaitez modifier dans cet environnement de travail.
++
+image:screenshot_backup_manage_policy_page_edit_k8s.png["Capture d'écran affichant le bouton Modifier la stratégie de la page gérer les stratégies."]
+
+. Dans la page _Edit Policy_, modifiez la planification et la rétention des sauvegardes et cliquez sur *Save*.
++
+image:screenshot_backup_edit_policy_k8s.png["Capture d'écran présentant les paramètres de stratégie de sauvegarde dans lesquels vous pouvez modifier la planification de sauvegarde et les paramètres de conservation de sauvegarde."]
+
+
+
+
+
+== Définition d'une stratégie de sauvegarde à attribuer aux nouveaux volumes
+
+Si vous n'avez pas sélectionné l'option permettant d'attribuer automatiquement une stratégie de sauvegarde aux volumes nouvellement créés lorsque vous avez activé Cloud Backup pour la première fois sur votre cluster Kubernetes, vous pouvez choisir cette option ultérieurement dans la page _Backup Settings_. L'affectation d'une règle de sauvegarde aux nouveaux volumes permet de garantir la protection de toutes vos données.
+
+Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister.  a new backup policy,Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail.
+
+Vous pouvez également désactiver ce paramètre afin que les volumes nouvellement créés ne soient pas sauvegardés automatiquement. Dans ce cas, vous devrez activer manuellement les sauvegardes pour tous les volumes que vous souhaitez effectuer ultérieurement.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button_k8s.png["La copie d'écran affiche le bouton Backup Settings, disponible après la sélection d'un cluster Kubernetes."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le cluster Kubernetes où les volumes existent, sélectionnez *sauvegarde automatique de nouveaux volumes*.
++
+image:screenshot_auto_backup_new_volumes_k8s.png["Capture d'écran de la sélection de l'option sauvegarde automatique de nouveaux volumes sur la page Paramètres de sauvegarde."]
+
+. Cochez la case « sauvegarde automatique des volumes persistants futurs... », choisissez la stratégie de sauvegarde que vous souhaitez appliquer aux nouveaux volumes, puis cliquez sur *Enregistrer*.
++
+image:screenshot_auto_backup_k8s.png["Copie d'écran montrant comment sélectionner une règle de sauvegarde à attribuer à tous les futurs volumes du cluster Kubernetes."]
+
+
+
+Désormais, cette règle de sauvegarde sera appliquée à tout nouveau volume créé dans ce cluster Kubernetes.
+
+
+
+== Affichage de la liste des sauvegardes pour chaque volume
+
+Vous pouvez afficher la liste de tous les fichiers de sauvegarde existants pour chaque volume. Cette page affiche des informations détaillées sur le volume source, l'emplacement de destination et les détails de la sauvegarde, tels que la dernière sauvegarde effectuée, la stratégie de sauvegarde actuelle, la taille du fichier de sauvegarde, etc.
+
+Cette page permet également d'effectuer les tâches suivantes :
+
+* Supprimez tous les fichiers de sauvegarde du volume
+* Supprimez les fichiers de sauvegarde individuels du volume
+* Téléchargez un rapport de sauvegarde pour le volume
+
+
+.Étapes
+. Dans l'onglet *Kubernetes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
++
+image:screenshot_backup_view_k8s_backups_button.png["Capture d'écran affichant le bouton Détails et liste de sauvegarde disponible pour un seul volume."]
+
++
+La liste de tous les fichiers de sauvegarde s'affiche avec des informations détaillées sur le volume source, l'emplacement de destination et les détails de la sauvegarde.
+
++
+image:screenshot_backup_view_k8s_backups.png["Capture d'écran affichant la liste de tous les fichiers de sauvegarde pour un seul volume."]
+
+
+
+
+
+== Suppression de sauvegardes
+
+Cloud Backup vous permet de supprimer un seul fichier de sauvegarde, de supprimer toutes les sauvegardes d'un volume ou de supprimer toutes les sauvegardes de tous les volumes d'un cluster Kubernetes. Vous pouvez supprimer toutes les sauvegardes si vous n'avez plus besoin des sauvegardes ou si vous avez supprimé le volume source et que vous souhaitez supprimer toutes les sauvegardes.
+
+
+CAUTION: Si vous prévoyez de supprimer un environnement ou un cluster de travail qui dispose de sauvegardes, vous devez supprimer les sauvegardes *avant* de supprimer le système. Cloud Backup ne supprime pas automatiquement les sauvegardes lorsque vous supprimez un système et l'interface utilisateur ne prend pas en charge la suppression des sauvegardes après la suppression du système. Vous continuerez d'être facturé pour les coûts de stockage objet pour les sauvegardes restantes.
+
+
+
+=== Suppression de tous les fichiers de sauvegarde d'un environnement de travail
+
+La suppression de toutes les sauvegardes d'un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d'un environnement de travail, vous pouvez désactiver les sauvegardes  Cloud Backup for a working environment,comme décrit ici.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button_k8s.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le cluster Kubernetes où vous voulez supprimer toutes les sauvegardes et sélectionnez *Supprimer toutes les sauvegardes*.
++
+image:screenshot_delete_all_backups_k8s.png["Capture d'écran de la sélection du bouton Supprimer toutes les sauvegardes pour supprimer toutes les sauvegardes d'un environnement de travail."]
+
+. Dans la boîte de dialogue de confirmation, entrez le nom de l'environnement de travail et cliquez sur *Supprimer*.
+
+
+
+
+=== Suppression de tous les fichiers de sauvegarde d'un volume
+
+La suppression de toutes les sauvegardes d'un volume désactive également les futures sauvegardes de ce volume.
+
+C'est possible  and disabling backups of volumes,relancez les sauvegardes pour le volume À tout moment à partir de la page gérer les sauvegardes.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
++
+image:screenshot_backup_view_k8s_backups_button.png["Capture d'écran affichant le bouton Détails et liste de sauvegarde disponible pour un seul volume."]
+
++
+La liste de tous les fichiers de sauvegarde s'affiche.
+
++
+image:screenshot_backup_view_backups_k8s.png["Capture d'écran affichant la liste de tous les fichiers de sauvegarde pour un seul volume."]
+
+. Cliquez sur *actions* > *Supprimer toutes les sauvegardes*.
++
+image:screenshot_delete_we_backups.png["Capture d'écran indiquant comment supprimer tous les fichiers de sauvegarde d'un volume."]
+
+. Dans la boîte de dialogue de confirmation, entrez le nom du volume et cliquez sur *Supprimer*.
+
+
+
+
+=== Suppression d'un fichier de sauvegarde unique pour un volume
+
+Vous pouvez supprimer un seul fichier de sauvegarde. Cette fonctionnalité n'est disponible que si la sauvegarde du volume a été créée à partir d'un système avec ONTAP 9.8 ou version ultérieure.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
++
+image:screenshot_backup_view_k8s_backups_button.png["Capture d'écran affichant le bouton Détails et liste de sauvegarde disponible pour un seul volume."]
+
++
+La liste de tous les fichiers de sauvegarde s'affiche.
+
++
+image:screenshot_backup_view_backups_k8s.png["Capture d'écran affichant la liste de tous les fichiers de sauvegarde pour un seul volume."]
+
+. Cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le fichier de sauvegarde de volume que vous souhaitez supprimer, cliquez sur *Supprimer*.
++
+image:screenshot_delete_one_backup_k8s.png["Capture d'écran indiquant comment supprimer un seul fichier de sauvegarde."]
+
+. Dans la boîte de dialogue de confirmation, cliquez sur *Supprimer*.
+
+
+
+
+== Désactivation de Cloud Backup pour un environnement de travail
+
+La désactivation de Cloud Backup pour un environnement de travail désactive les sauvegardes de chaque volume du système. Elle désactive également la restauration d'un volume. Les sauvegardes existantes ne seront pas supprimées. Cela ne désinscrit pas le service de sauvegarde de cet environnement de travail, car il vous permet de suspendre l'ensemble de l'activité de sauvegarde et de restauration pendant une période donnée.
+
+Notez que vous continuerez d'être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous  all backup files for a working environment,supprimez les sauvegardes.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button_k8s.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour l'environnement de travail ou le cluster Kubernetes, où vous souhaitez désactiver les sauvegardes et sélectionner *Désactiver la sauvegarde*.
++
+image:screenshot_disable_backups_k8s.png["Capture d'écran du bouton Désactiver la sauvegarde pour un environnement de travail."]
+
+. Dans la boîte de dialogue de confirmation, cliquez sur *Désactiver*.
+
+
+
+NOTE: Un bouton *Activer la sauvegarde* apparaît pour cet environnement de travail alors que la sauvegarde est désactivée. Vous pouvez cliquer sur ce bouton lorsque vous souhaitez réactiver la fonctionnalité de sauvegarde pour cet environnement de travail.
+
+
+
+== Annulation de l'enregistrement de Cloud Backup pour un environnement de travail
+
+Vous pouvez annuler l'enregistrement de Cloud Backup pour un environnement de travail si vous ne souhaitez plus utiliser la fonctionnalité de sauvegarde et que vous souhaitez interrompre la facturation des sauvegardes dans cet environnement de travail. Cette fonctionnalité est généralement utilisée lorsque vous prévoyez de supprimer un cluster Kubernetes et que vous souhaitez annuler le service de sauvegarde.
+
+Vous pouvez également utiliser cette fonction si vous souhaitez modifier le magasin d'objets de destination dans lequel vos sauvegardes de cluster sont stockées. Une fois que vous désenregistrez Cloud Backup pour l'environnement de travail, vous pouvez activer Cloud Backup pour ce cluster en utilisant les informations du nouveau fournisseur cloud.
+
+Avant de pouvoir annuler l'enregistrement de Cloud Backup, vous devez effectuer les opérations suivantes dans cet ordre :
+
+* Désactivez Cloud Backup pour l'environnement de travail
+* Supprimer toutes les sauvegardes de cet environnement de travail
+
+
+L'option de désenregistrer n'est pas disponible tant que ces deux actions ne sont pas terminées.
+
+.Étapes
+. Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.
++
+image:screenshot_backup_settings_button_k8s.png["Capture d'écran affichant le bouton Paramètres de sauvegarde disponible après la sélection d'un environnement de travail."]
+
+. Dans la page _Backup Settings_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le cluster Kubernetes où vous souhaitez annuler l'enregistrement du service de sauvegarde et sélectionnez *Unregister*.
++
+image:screenshot_backup_unregister.png["Capture d'écran du bouton Unregister backup pour un environnement de travail."]
+
+. Dans la boîte de dialogue de confirmation, cliquez sur *Annuler l'enregistrement*.
+

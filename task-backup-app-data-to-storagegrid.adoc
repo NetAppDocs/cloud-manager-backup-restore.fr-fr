@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: task-backup-app-data-to-storagegrid.html 
+keywords: backing up, back up, backup, backup application data, Google Cloud, GCP, Cloud Backup, cloud backup service, Oracle database, Microsoft SQL Server database, SAP HANA database 
+summary: 'Réalisez quelques étapes de sauvegarde des données d"applications d"ONTAP vers GCP.' 
+---
+= Sauvegardez les données applicatives sur site dans StorageGRID
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez sauvegarder les données applicatives de ONTAP vers StorageGRID en intégrant Cloud Backup pour les applications avec BlueXP et SnapCenter sur site.
+
+Vous pouvez protéger une ou plusieurs applications simultanément vers StorageGRID à l'aide d'une seule règle.
+
+
+IMPORTANT: Vous ne pouvez protéger qu'une seule application à la fois si vous utilisez l'interface graphique BlueXP. Toutefois, si vous utilisez des API REST, vous pouvez protéger plusieurs applications simultanément.
+
+*Ce dont vous aurez besoin*
+
+Lorsque vous sauvegardez des données dans StorageGRID, un connecteur doit être disponible sur site. Vous devrez soit installer un nouveau connecteur, soit vérifier que le connecteur actuellement sélectionné réside sur site. Le connecteur peut être installé sur un site avec ou sans accès à Internet.
+
+Pour plus d'informations, reportez-vous à la section link:task-backup-onprem-private-cloud.html#creating-or-switching-connectors["Créer des connecteurs pour StorageGRID"].
+
+*Étapes*
+
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *applications*.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à l'application et cliquer sur *Activer la sauvegarde*.
+. Dans la page attribuer une stratégie, sélectionnez la stratégie et cliquez sur *Suivant*.
+. Ajouter l'environnement de travail.
++
+Configurer le cluster ONTAP qui héberge le SVM sur lequel l'application est en cours d'exécution. Une fois l'environnement de travail ajouté pour l'une des applications, il peut être réutilisé pour toutes les autres applications qui résident sur le même cluster ONTAP.
+
++
+.. Sélectionner le SVM et cliquer sur *Ajouter un environnement de travail*.
+.. Dans l'assistant Ajouter un environnement de travail :
++
+... Spécifier l'adresse IP du cluster ONTAP
+... Spécifiez les informations d'identification admin.
++
+Cloud Backup pour applications ne prend en charge que les administrateurs de cluster.
+
+
+
+.. Cliquez sur *Ajouter un environnement de travail*.
+
+
+. Sélectionnez *StorageGRID*.
++
+.. Spécifiez le FQDN du serveur StorageGRID et le port sur lequel le serveur StorageGRID s'exécute.
++
+Entrez les détails au format FQDN:PORT.
+
+.. Dans le champ clé d'accès, spécifiez la clé.
+.. Dans le champ clé secrète, spécifiez le mot de passe.
+.. Spécifiez l'espace IP.
+
+
+. Vérifiez les détails et cliquez sur *Activer la sauvegarde*.
+

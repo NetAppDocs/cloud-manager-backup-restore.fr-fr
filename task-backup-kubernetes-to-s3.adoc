@@ -1,0 +1,216 @@
+---
+sidebar: sidebar 
+permalink: task-backup-kubernetes-to-s3.html 
+keywords: backing up, back up, backup, back up kubernetes volumes, persistent volumes, PV, persistence volume claim, PVC, aws, aws s3, amazon s3, s3 bucket, back up volumes, cloud backup, eks, kubernetes 
+summary: Procédez comme suit pour sauvegarder les données à partir de volumes persistants sur des clusters EKS Kubernetes vers un stockage Amazon S3. 
+---
+= Sauvegarde des données de volume persistant Kubernetes dans Amazon S3
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Procédez comme suit pour sauvegarder les données à partir de volumes persistants sur des clusters EKS Kubernetes vers un stockage Amazon S3.
+
+
+
+== Démarrage rapide
+
+Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux sections restantes pour obtenir plus de détails.
+
+.<span class=« image »><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"[] alt=« one »></span> revoir les prérequis
+* Vous avez découvert le cluster Kubernetes en tant qu'environnement de travail BlueXP.
++
+** Trident doit être installé sur le cluster, et la version de Trident doit être égale ou supérieure à 21.1.
+** Toutes les demandes de volume persistant qui seront utilisées pour créer des volumes persistants que vous souhaitez sauvegarder doivent avoir une « politique des snapshots » définie sur « par défaut ».
+** Le cluster doit utiliser Cloud Volumes ONTAP sur AWS pour le stockage interne de son système.
+** Le système Cloud Volumes ONTAP doit exécuter ONTAP 9.7P5 ou une version ultérieure.
+
+
+* Vous disposez d'un abonnement valide au fournisseur cloud pour l'espace de stockage où vos sauvegardes seront stockées.
+* Vous avez souscrit au https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4?sr=0-8&ref_=beagle&applicationId=AWSMPContessa["Offre de sauvegarde BlueXP Marketplace"], un https://aws.amazon.com/marketplace/pp/B086PDWSS8["Contrat annuel AWS"], ou vous avez acheté link:task-licensing-cloud-backup.html#use-a-cloud-backup-byol-license["et activé"] Licence Cloud Backup BYOL de NetApp.
+* Le rôle IAM qui fournit le connecteur BlueXP avec des autorisations inclut des autorisations S3 à partir de la dernière version https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-aws.html["Politique BlueXP"^].
+
+
+[role="quick-margin-para"]
+Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite, puis suivez l'assistant d'installation.
+
+[role="quick-margin-para"]
+image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Enable, disponible après la sélection d'un environnement de travail."]
+
+[role="quick-margin-para"]
+La règle par défaut sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes de chaque volume. Vous pouvez passer aux sauvegardes toutes les heures, tous les jours, hebdomadaires ou mensuelles ou sélectionner l'une des règles définies par le système et qui offrent plus d'options. Vous pouvez également modifier le nombre de copies de sauvegarde à conserver.
+
+[role="quick-margin-para"]
+image:screenshot_backup_policy_k8s_aws.png["Capture d'écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification de sauvegarde et la période de conservation."]
+
+[role="quick-margin-para"]
+Identifiez les volumes à sauvegarder dans la page Sélectionner les volumes. Un compartiment S3 est créé automatiquement dans le même compte et la même région AWS que le système Cloud Volumes ONTAP, et les fichiers de sauvegarde y sont stockés.
+
+
+
+== De formation
+
+Avant de commencer à sauvegarder des volumes persistants de Kubernetes vers S3, lisez les sections suivantes pour vérifier que la configuration est prise en charge.
+
+L'image suivante montre chaque composant et les connexions que vous devez préparer entre eux :
+
+image:diagram_cloud_backup_k8s_cvo_aws.png["Un diagramme montrant comment Cloud Backup communique avec les volumes des systèmes source et le stockage de destination où sont situés les fichiers de sauvegarde."]
+
+Notez que le terminal VPC est facultatif.
+
+Exigences relatives aux clusters Kubernetes::
++
+--
+* Vous avez découvert le cluster Kubernetes en tant qu'environnement de travail BlueXP. https://docs.netapp.com/us-en/cloud-manager-kubernetes/task/task-kubernetes-discover-aws.html["Découvrez comment découvrir le cluster Kubernetes"^].
+* Trident doit être installé sur le cluster, et la version de Trident doit être au moins 21.1. Voir https://docs.netapp.com/us-en/cloud-manager-kubernetes/task/task-k8s-manage-trident.html["Comment installer Trident"^] ou https://docs.netapp.com/us-en/trident/trident-managing-k8s/upgrade-trident.html["Comment mettre à niveau la version de Trident"^].
+* Le cluster doit utiliser Cloud Volumes ONTAP sur AWS pour le stockage interne de son système.
+* Le système Cloud Volumes ONTAP doit se trouver dans la même région AWS que le cluster Kubernetes et doit exécuter ONTAP 9.7P5 ou version ultérieure (ONTAP 9.8P11 et version ultérieure est recommandée).
++
+Notez que les clusters Kubernetes situés dans des emplacements sur site ne sont pas pris en charge. Seuls les clusters Kubernetes dans les déploiements cloud qui utilisent des systèmes Cloud Volumes ONTAP sont pris en charge.
+
+* Pour créer les volumes persistants que vous souhaitez sauvegarder, tous les objets utilisés pour la demande de volume persistant doivent avoir une « politique des snapshots » définie sur « par défaut ».
++
+Vous pouvez le faire pour les ESV individuels en ajoutant `snapshotPolicy` sous annotations :
+
++
+[source, json]
+----
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: full
+  annotations:
+    trident.netapp.io/snapshotPolicy: "default"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1000Mi
+  storageClassName: silver
+----
++
+Vous pouvez effectuer cette opération pour tous les ESV associés à un stockage back-end particulier en ajoutant le `snapshotPolicy` champ sous valeurs par défaut dans `backend.json` fichier :
+
++
+[source, json]
+----
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: backend-tbc-ontap-nas-advanced
+spec:
+  version: 1
+  storageDriverName: ontap-nas
+  managementLIF: 10.0.0.1
+  dataLIF: 10.0.0.2
+  backendName: tbc-ontap-nas-advanced
+  svm: trident_svm
+  credentials:
+    name: backend-tbc-ontap-nas-advanced-secret
+  limitAggregateUsage: 80%
+  limitVolumeSize: 50Gi
+  nfsMountOptions: nfsvers=4
+  defaults:
+    spaceReserve: volume
+    exportPolicy: myk8scluster
+    snapshotPolicy: default
+    snapshotReserve: '10'
+  deletionPolicy: retain
+----
+
+
+--
+Conditions de licence:: Pour le modèle de licence PAYGO, un abonnement est disponible sur AWS Marketplace et permet de déployer Cloud Volumes ONTAP et Cloud Backup. Vous devez le faire https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4?sr=0-8&ref_=beagle&applicationId=AWSMPContessa["Abonnez-vous à cet abonnement BlueXP"^] Avant d'activer Cloud Backup. La facturation pour Cloud Backup s'effectue via cet abonnement.
++
+--
+Pour bénéficier d'un contrat annuel qui vous permet de sauvegarder à la fois les données Cloud Volumes ONTAP et les données ONTAP sur site, vous devez vous abonner à la https://aws.amazon.com/marketplace/pp/B086PDWSS8["Page AWS Marketplace"^] puis https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-adding-aws-accounts.html["Associez l'abonnement à vos identifiants AWS"^].
+
+Pour un contrat annuel qui vous permet de regrouper Cloud Volumes ONTAP et Cloud Backup, vous devez définir le contrat annuel lors de la création d'un environnement de travail Cloud Volumes ONTAP. Avec cette option, vous ne pouvez pas sauvegarder les données sur site.
+
+Pour les licences BYOL, vous avez besoin du numéro de série NetApp qui permet d'utiliser le service pendant la durée et la capacité du contrat. link:task-licensing-cloud-backup.html#use-a-cloud-backup-byol-license["Découvrez comment gérer vos licences BYOL"].
+
+Vous devez également disposer d'un compte AWS pour l'espace de stockage où vos sauvegardes seront stockées.
+
+--
+Régions AWS prises en charge:: Cloud Backup est pris en charge dans toutes les régions AWS https://cloud.netapp.com/cloud-volumes-global-regions["Dans ce cas, Cloud Volumes ONTAP est pris en charge"^].
+Autorisations AWS Backup requises:: Le rôle IAM qui fournit à BlueXP des autorisations doit inclure des autorisations S3 à partir des dernières https://mysupport.netapp.com/site/info/cloud-manager-policies["Politique BlueXP"^].
++
+--
+Voici les autorisations S3 spécifiques de la règle :
+
+[source, json]
+----
+{
+            "Sid": "backupPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteBucket",
+                "s3:GetLifecycleConfiguration",
+                "s3:PutLifecycleConfiguration",
+                "s3:PutBucketTagging",
+                "s3:ListBucketVersions",
+                "s3:GetObject",
+                "s3:DeleteObject",
+                "s3:ListBucket",
+                "s3:ListAllMyBuckets",
+                "s3:GetBucketTagging",
+                "s3:GetBucketLocation",
+                "s3:GetBucketPolicyStatus",
+                "s3:GetBucketPublicAccessBlock",
+                "s3:GetBucketAcl",
+                "s3:GetBucketPolicy",
+                "s3:PutBucketPublicAccessBlock"
+            ],
+            "Resource": [
+                "arn:aws:s3:::netapp-backup-*"
+            ]
+        },
+----
+--
+
+
+
+
+== Activation de Cloud Backup
+
+Activation de Cloud Backup à tout moment directement depuis l'environnement de travail Kubernetes.
+
+.Étapes
+. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite.
++
+Si la destination Amazon S3 pour vos sauvegardes existe en tant qu'environnement de travail sur la Canvas, vous pouvez faire glisser le cluster Kubernetes vers l'environnement de travail Amazon S3 pour lancer l'assistant d'installation.
+
++
+image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Settings, disponible après la sélection d'un environnement de travail."]
+
+. Entrez les détails de la stratégie de sauvegarde et cliquez sur *Suivant*.
++
+Vous pouvez définir le planning de sauvegarde et choisir le nombre de sauvegardes à conserver.
+
++
+image:screenshot_backup_policy_k8s_aws.png["Capture d'écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification et la conservation des sauvegardes."]
+
+. Sélectionnez les volumes persistants que vous souhaitez sauvegarder.
++
+** Pour sauvegarder tous les volumes, cochez la case de la ligne de titre (image:button_backup_all_volumes.png[""]).
+** Pour sauvegarder des volumes individuels, cochez la case de chaque volume (image:button_backup_1_volume.png[""]).
++
+image:screenshot_backup_select_volumes_k8s.png["Capture d'écran de la sélection des volumes persistants qui seront sauvegardés."]
+
+
+
+. Si vous souhaitez que la sauvegarde soit activée pour tous les volumes actuels et futurs, ne cochez pas la case "sauvegarde automatique des volumes futurs…​". Si vous désactivez ce paramètre, vous devrez activer manuellement les sauvegardes pour les volumes futurs.
+. Cliquez sur *Activer la sauvegarde* et Cloud Backup commence à effectuer les sauvegardes initiales de chaque volume sélectionné.
+
+
+Un compartiment S3 est créé automatiquement dans le même compte et la même région AWS que le système Cloud Volumes ONTAP, et les fichiers de sauvegarde y sont stockés.
+
+Le tableau de bord Kubernetes s'affiche pour vous permettre de contrôler l'état des sauvegardes.
+
+C'est possible link:task-manage-backups-kubernetes.html["démarrer et arrêter les sauvegardes de volumes ou modifier le planning de sauvegarde"^]. Vous pouvez également link:task-restore-backups-kubernetes.html#restoring-volumes-from-a-kubernetes-backup-file["restaurez des volumes entiers à partir d'un fichier de sauvegarde"^] En tant que nouveau volume sur le même cluster Kubernetes ou un autre cluster dans AWS (dans la même région).

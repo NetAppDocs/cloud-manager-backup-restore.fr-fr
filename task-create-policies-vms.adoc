@@ -1,0 +1,69 @@
+---
+sidebar: sidebar 
+permalink: task-create-policies-vms.html 
+keywords: create policy, protection policies, predefined policies, custom policies 
+summary: Sauvegardez vos datastores ONTAP sur site dans AWS. 
+---
+= Créez une règle pour sauvegarder des machines virtuelles
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez créer une stratégie ou utiliser l'une des stratégies prédéfinies suivantes disponibles dans BlueXP.
+
+|===
+| Nom de la règle | Étiquette | Valeur de conservation 
+
+
+ a| 
+1 an de LTR quotidien
+ a| 
+Tous les jours
+ a| 
+366
+
+
+
+ a| 
+5 ans de LTR quotidien
+ a| 
+Tous les jours
+ a| 
+1830
+
+
+
+ a| 
+LTR hebdomadaire de 7 ans
+ a| 
+Hebdomadaire
+ a| 
+370
+
+
+
+ a| 
+10 ans de LTR mensuel
+ a| 
+Tous les mois
+ a| 
+120
+
+|===
+Vous devez créer des stratégies si vous ne souhaitez pas modifier les stratégies prédéfinies.
+
+.Étapes
+. Sur la page machines virtuelles, dans la liste déroulante Paramètres, sélectionnez *stratégies*.
+. Cliquez sur *Créer une stratégie*.
+. Spécifiez un nom de stratégie.
+. Spécifiez la planification et les informations de conservation.
++
+Par défaut, la source de sauvegarde est sélectionnée comme source principale.
+
+. Cliquez sur *Créer*.
+

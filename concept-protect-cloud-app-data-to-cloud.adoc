@@ -1,0 +1,134 @@
+---
+sidebar: sidebar 
+permalink: concept-protect-cloud-app-data-to-cloud.html 
+keywords: backing up, back up, backup, backup application data, Amazon EC2, Amazon Web services, Amazon FSx, Cloud Backup, Oracle database, requirements, prerequisites, Cloud Manager, BlueXP 
+summary: Cloud Backup pour les applications activées dans NetApp BlueXP offre des sauvegardes et des restaurations efficaces et cohérentes avec les applications, basées sur des règles et des bases de données Oracle® résidant sur Amazon FSX pour NetApp ONTAP. 
+---
+= Protégez vos données applicatives cloud natives
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Cloud Backup pour applications est un service SaaS qui fournit des fonctionnalités de protection des données pour les applications exécutées sur NetApp Cloud Storage. Cloud Backup pour les applications activées dans NetApp BlueXP (anciennement Cloud Manager) offre des fonctionnalités de sauvegarde et de restauration efficaces et cohérentes avec les applications, basées sur des règles, et des bases de données Oracle résidant sur Amazon FSX pour NetApp ONTAP.
+
+
+
+== Architecture
+
+L'architecture Cloud Backup pour applications comprend plusieurs composants :
+
+* Cloud Backup pour les applications est un ensemble de services de protection des données hébergés à la demande par NetApp et basés sur la plateforme SaaS BlueXP.
++
+Il orchestre les workflows de protection des données pour les applications qui résident sur NetApp Cloud Storage.
+
+* L'interface utilisateur Cloud Backup pour applications est intégrée à l'interface utilisateur BlueXP.
++
+L'interface utilisateur de Cloud Backup pour les applications offre de nombreuses fonctionnalités de gestion du stockage et des données.
+
+* BlueXP Connector est un composant de BlueXP qui s'exécute dans votre réseau cloud et interagit avec les systèmes de fichiers de stockage Amazon FSX et le plug-in SnapCenter pour Oracle fonctionnant sur des hôtes de base de données Oracle.
+* Le plug-in SnapCenter pour Oracle est un composant qui s'exécute sur chaque hôte de la base de données Oracle. Il interagit avec les bases de données Oracle exécutées sur l'hôte tout en exécutant des opérations de protection des données.
++
+L'image suivante montre chaque composant et les connexions que vous devez préparer entre eux :
+
++
+image:diagram_nativecloud_backup_app.png["Un diagramme montrant comment Cloud Backup communique avec différents composants"]
+
++
+Pour toute demande initiée par l'utilisateur, l'interface utilisateur Cloud Backup pour applications communique avec le service BlueXP SaaS qui, lors de la validation de la demande, traite la même chose. Si la demande consiste à exécuter un workflow tel qu'une sauvegarde ou une restauration, le service SaaS lance le flux de travail et, le cas échéant, transmet l'appel au connecteur BlueXP. Le connecteur communique ensuite avec Amazon FSX pour NetApp ONTAP et le plug-in SnapCenter pour Oracle dans le cadre de l'exécution des tâches du flux de travail.
+
++
+Le connecteur peut être déployé sur le même VPC que les bases de données Oracle, ou dans un autre. Si le connecteur et les bases de données Oracle se trouvent sur un autre réseau, vous devez établir une connectivité réseau entre eux.
+
+
+
+
+IMPORTANT: Cloud Backup pour les applications l'infrastructure est résiliente aux défaillances de zone de disponibilité dans une région. Il prend désormais en charge les défaillances régionales en basculant vers une nouvelle région, ce qui entraîne une interruption de l'activité d'environ 2 heures.
+
+
+
+== Configurations compatibles
+
+* Système d'exploitation :
++
+** RHEL 7.5 ou version ultérieure et 8.x
+** OL 7.5 ou version ultérieure et 8.x
+
+
+* Système de stockage : Amazon FSX pour ONTAP
+* Dispositions de stockage : NFS v3 et v4.1 (dNFS est pris en charge) et iSCSI avec ASM (ASMFD, ASMLib et ASMUdev)
+* Applications : Oracle Standard et Oracle Enterprise – autonome (ancienne génération et architecture mutualisée, CDB et PDB)
+* Versions Oracle : 12cR2, 18c et 19c
+
+
+
+
+== Caractéristiques
+
+* Découverte automatique des bases de données Oracle
+* Sauvegarde des bases de données Oracle résidant sur Amazon FSX pour NetApp ONTAP
++
+** Sauvegarde complète (données + contrôle + fichiers journaux d'archive)
+** Sauvegarde à la demande
+** Sauvegarde planifiée en fonction des règles personnalisées ou définies par le système
++
+Vous pouvez spécifier différentes fréquences d'horaires, telles que les heures, les jours, les semaines et les mois dans la police.
+
+
+
+* Conservation des sauvegardes en fonction de la stratégie appliquée
+* Restauration de la base de données Oracle complète (fichiers de données + fichier de contrôle) à partir de la sauvegarde spécifiée
+* Restauration des fichiers de données uniquement et des fichiers de contrôle uniquement à partir de la sauvegarde spécifiée
+* Récupération de la base de données Oracle avec jusqu'à SCN, jusqu'au moment, tous les journaux disponibles et aucune option de récupération
+* La surveillance des sauvegardes et autres tâches
+* Affichage du récapitulatif de protection sur le tableau de bord
+* Envoi d'alertes par e-mail
+
+
+
+
+== Limites
+
+* Ne prend pas en charge les versions 11g et 21c d'Oracle
+* Ne prend pas en charge les opérations de montage, de clonage, de catalogue et de vérification des sauvegardes
+* Ne prend pas en charge Oracle sur RAC et Data Guard
+* Limites des sauvegardes :
++
+** Ne prend pas en charge les sauvegardes de données en ligne ou de journaux uniquement
+** Ne prend pas en charge les sauvegardes hors ligne
+** Ne prend pas en charge la sauvegarde de la base de données Oracle résidant sur des points de montage récursifs
+** Ne prend pas en charge les snapshots de groupes de cohérence pour les bases de données Oracle résidant sur plusieurs groupes de disques ASM avec chevauchement des volumes FSX
+** Si vos bases de données Oracle sont configurées sur ASM, assurez-vous que les noms de vos SVM sont uniques sur les systèmes FSX. Si vous disposez du même nom de SVM sur les systèmes FSX, la sauvegarde des bases de données Oracle résidant sur ces SVM ne est pas prise en charge.
+
+
+* Limites en matière de restauration :
++
+** Ne prend pas en charge les restaurations granulaires, par exemple la restauration des espaces de stockage et des bases de données de niveau fichier
+** Prend uniquement en charge la restauration sur place des bases de données Oracle sur des mises en page NAS et SAN
+** Ne prend pas en charge la restauration du fichier de contrôle uniquement ou des fichiers de données + fichier de contrôle des bases de données Oracle sur des dispositions SAN
+** Dans la disposition SAN, l'opération de restauration échoue si le plug-in SnapCenter pour Oracle trouve des fichiers étrangers autres que les fichiers de données Oracle sur le groupe de disques ASM. Les fichiers étrangers peuvent être de type un ou plusieurs des types suivants :
++
+*** Paramètre
+*** Mot de passe
+*** journal d'archivage
+*** journal en ligne
+*** Fichier de paramètres ASM.
++
+Vous devez cocher la case forcer la restauration sur place pour remplacer le paramètre de type, le mot de passe et le journal d'archivage des fichiers étrangers.
+
++
+
+NOTE: S'il existe d'autres types de fichiers étrangers, l'opération de restauration échoue et la base de données ne peut pas être récupérée. Si vous disposez d'un autre type de fichier étranger, vous devez les supprimer ou les déplacer vers un autre emplacement avant d'effectuer l'opération de restauration.
+
++
+Le message d'échec en raison de la présence de fichiers étrangers ne s'affiche pas sur la page de travail dans l'interface utilisateur en raison d'un problème connu. Vérifiez les journaux de connecteurs en cas de défaillance lors de l'étape de pré-restauration SAN pour connaître la cause du problème.
+
+
+
+
+
+

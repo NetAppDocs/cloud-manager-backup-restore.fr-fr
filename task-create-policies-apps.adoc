@@ -1,0 +1,79 @@
+---
+sidebar: sidebar 
+permalink: task-create-policies-apps.html 
+keywords: policy, create, pre-canned polices, custom policies, protection policies 
+summary: 'Utilisez les stratégies prédéfinies ou créez vos propres stratégies pour protéger l"application.' 
+---
+= Créez une règle pour sauvegarder les applications
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez soit utiliser l'une des règles prédéfinies, soit créer une règle personnalisée pour sauvegarder les données applicatives dans le cloud. Vous pouvez créer des stratégies si vous ne souhaitez pas modifier les stratégies prédéfinies.
+
+Les règles prédéfinies sont les suivantes :
+
+|===
+| Nom de la règle | Étiquette | Valeur de conservation 
+
+
+ a| 
+1 an de LTR quotidien
+ a| 
+Tous les jours
+ a| 
+366
+
+
+
+ a| 
+5 ans de LTR quotidien
+ a| 
+Tous les jours
+ a| 
+1830
+
+
+
+ a| 
+LTR hebdomadaire de 7 ans
+ a| 
+Hebdomadaire
+ a| 
+370
+
+
+
+ a| 
+10 ans de LTR mensuel
+ a| 
+Tous les mois
+ a| 
+120
+
+|===
+*Étapes*
+
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *applications*.
+. Dans la liste déroulante Paramètres, cliquez sur *stratégies* > *Créer une stratégie*.
+. Dans la section Détails de la stratégie, spécifiez le nom de la stratégie.
+. Dans la section Retention, sélectionnez l'un des types de rétention et indiquez le nombre de sauvegardes à conserver.
+. Sélectionnez primaire ou secondaire comme source de stockage de sauvegarde.
+. (Facultatif) si vous souhaitez transférer des sauvegardes du magasin d'objets vers le stockage d'archives après un certain nombre de jours pour l'optimisation des coûts, cochez la case *Tier backups to Archival*.
++
+Vous pouvez déplacer les sauvegardes d'un magasin d'objets vers le stockage d'archivage uniquement si vous utilisez ONTAP 9.10.1 ou version ultérieure et Amazon Web Services ou Azure comme fournisseur cloud. Vous devez configurer le niveau d'accès d'archivage pour chaque fournisseur de cloud.
+
+. Cliquez sur *Créer*.
++
+Vous pouvez modifier, copier et supprimer les stratégies personnalisées.
+
++
+
+NOTE: Vous ne pouvez pas modifier ou supprimer une stratégie associée à une application.
+
+

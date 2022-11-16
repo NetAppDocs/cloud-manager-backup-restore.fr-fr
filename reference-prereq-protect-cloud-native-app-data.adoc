@@ -1,0 +1,120 @@
+---
+sidebar: sidebar 
+permalink: reference-prereq-protect-cloud-native-app-data.html 
+keywords: Cloud Manager, FSx for ONTAP, working environment, Connector, AWS, deploy Oracle plug-in, BlueXP 
+summary: Complétez les prérequis avant de créer des sauvegardes. 
+---
+= Prérequis
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous devez avoir accès à BlueXP, créer un compte BlueXP, créer l'environnement de travail et un connecteur, et déployer le plug-in SnapCenter pour Oracle.
+
+
+
+== Accéder à BlueXP
+
+Vous devriez https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-logging-in.html["Connectez-vous à BlueXP"^], puis configurez un https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-setting-up-netapp-accounts.html["Compte NetApp"^].
+
+
+
+== Créer un environnement de travail FSX pour ONTAP
+
+Vous devez créer les environnements de travail Amazon FSX pour ONTAP dans lesquels vos bases de données sont hébergées. Pour plus d'informations, reportez-vous à la section link:https://docs.netapp.com/us-en/cloud-manager-fsx-ontap/start/task-getting-started-fsx.html["Commencez avec Amazon FSX pour ONTAP"] et link:https://docs.netapp.com/us-en/cloud-manager-fsx-ontap/use/task-creating-fsx-working-environment.html["Créer et gérer un environnement de travail Amazon FSX pour ONTAP"].
+
+Vous pouvez créer NetApp FSX à l'aide de BlueXP ou d'AWS. Si vous avez créé à l'aide d'AWS, vous devriez découvrir FSX pour les systèmes ONTAP dans BlueXP.
+
+
+
+== Créer un connecteur
+
+Un administrateur de comptes doit déployer un connecteur dans AWS qui permet à BlueXP de gérer les ressources et les processus au sein de votre environnement de cloud public.
+
+Pour plus d'informations, reportez-vous à la section link:https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-aws.html["Création d'un connecteur dans AWS à partir de BlueXP"].
+
+* Vous devez utiliser le même connecteur pour gérer à la fois l'environnement de travail FSX et les bases de données Oracle.
+* Si vous disposez de l'environnement de travail FSX et des bases de données Oracle dans le même VPC, vous pouvez déployer le connecteur dans le même VPC.
+* Si vous disposez de l'environnement de travail FSX et des bases de données Oracle dans différents VPC :
++
+** Si des charges de travail NAS (NFS) sont configurées sur FSX, vous pouvez créer le connecteur sur l'un des VPC.
+** Si seules des charges de travail SAN sont configurées et que vous ne prévoyez pas d'utiliser des charges de travail NAS (NFS), vous devez créer le connecteur dans le VPC où le système FSX est créé.
++
+
+NOTE: Pour utiliser des charges de travail NAS (NFS), vous devez disposer d'une passerelle de transit entre le VPC de la base de données Oracle et le VPC FSX. L'adresse IP NFS qui est une adresse IP flottante est accessible depuis un autre VPC uniquement via la passerelle de transit. Nous ne pouvons pas accéder aux adresses IP flottantes en peering des VPC.
+
+
+
+
+
+Après avoir créé le connecteur, cliquez sur *Storage* > *Canvas* > *Mes environnements de travail* > *Ajouter un environnement de travail* et suivez les invites pour ajouter l'environnement de travail. Assurez-vous que le connecteur est connecté aux hôtes de base de données Oracle et à l'environnement de travail FSX. Le connecteur doit pouvoir se connecter à l'adresse IP de gestion du cluster de l'environnement de travail FSX.
+
+
+IMPORTANT: Après avoir créé le connecteur, cliquez sur *Connector > Manage Connectors*, sélectionnez le nom du connecteur et copiez l'ID du connecteur.
+
+
+
+== Déploiement du plug-in SnapCenter pour Oracle
+
+Vous devez déployer le plug-in SnapCenter pour Oracle sur chacun des hôtes de la base de données Oracle. Selon que l'authentification basée sur la clé SSH est activée ou non sur l'hôte Oracle, vous pouvez suivre l'une des méthodes de déploiement du plug-in.
+
+
+NOTE: Assurez-vous que JAVA 8 est installé sur chacun des hôtes de base de données Oracle et que LA variable JAVA_HOME est correctement définie.
+
+
+
+=== Déploiement dans des plug-ins à l'aide de l'authentification basée sur des clés SSH
+
+Si l'authentification basée sur la clé SSH est activée sur l'hôte Oracle, vous pouvez effectuer les étapes suivantes pour déployer le plug-in. Avant d'effectuer les étapes, assurez-vous que la connexion SSH au connecteur est activée.
+
+. Connectez-vous à la machine virtuelle de Connector en tant qu'utilisateur non root.
+. Obtenez le chemin de montage de base.
+`sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`
+. Déployez le plug-in.
++
+`sudo <base_mount_path>/scripts/oracle_plugin_copy_and_install.sh --host <host_name> --sshkey <ssh_key_file> --username <user_name> --port <ssh_port> --pluginport <plugin_port> --installdir <install_dir>`
+
++
+** Host_name est le nom de l'hôte Oracle et il s'agit d'un paramètre obligatoire.
+** ssh_key_file est une clé SSH utilisée pour la connexion à l'hôte Oracle. Il s'agit d'un paramètre obligatoire.
+** User_NAME : utilisateur avec privilèges SSH sur l'hôte Oracle et il s'agit d'un paramètre facultatif. La valeur par défaut est EC2-user.
+** ssh_port : port SSH sur l'hôte Oracle et il s'agit d'un paramètre facultatif. La valeur par défaut est 22
+** Plugin_port : port utilisé par le plug-in et il s'agit d'un paramètre facultatif. La valeur par défaut est 8145
+** Dossier_installation : répertoire dans lequel le plug-in sera déployé et il s'agit d'un paramètre facultatif. La valeur par défaut est /opt.
+
+
+
+
+Par exemple : `sudo /var/lib/docker/volumes/service-manager-2_cloudmanager_scs_cloud_volume/_data/scripts/oracle_plugin_copy_and_install.sh --host xxx.xx.x.x  --sshkey /keys/netapp-ssh.ppk`
+
+
+
+=== Déploiement manuel du plug-in
+
+Si l'authentification basée sur la clé SSH n'est pas activée sur l'hôte Oracle, effectuez les étapes manuelles suivantes pour déployer le plug-in.
+
+. Connectez-vous à la machine virtuelle du connecteur.
+. Téléchargez le binaire du plug-in hôte SnapCenter Linux.
+`sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'`
+. Obtenez le chemin de montage de base.
+`sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`
+. Obtenez le chemin binaire du plug-in téléchargé.
+`sudo ls <base_mount_path> $(sudo docker ps|grep -Po "cloudmanager_scs_cloud:.*? "|sed -e 's/ *$//'|cut -f2 -d":")/sc-linux-host-plugin/snapcenter_linux_host_plugin_scs.bin`
+. Copiez _snapcenter_linux_host_plugin_scs.bin_ vers chacun des hôtes de base de données Oracle à l'aide de scp ou d'autres méthodes alternatives.
+. Sur l'hôte de la base de données Oracle, exécutez la commande suivante pour activer les autorisations d'exécution pour le binaire.
+`chmod +x snapcenter_linux_host_plugin_scs.bin`
+. Déployez le plug-in Oracle en tant qu'utilisateur root.
+`./snapcenter_linux_host_plugin_scs.bin -i silent`
+. Copiez _certificate.p12_ de _<base_mount_path>/client/certificat/_ chemin de la machine virtuelle du connecteur vers _/var/opt/snapcenter/spl/etc/_ sur l'hôte du plug-in.
++
+.. Accédez à _/var/opt/snapcenter/spl/etc_ et exécutez la commande keytool pour importer le certificat.
+`keytool -v -importkeystore -srckeystore certificate.p12 -srcstoretype PKCS12 -destkeystore keystore.jks -deststoretype JKS -srcstorepass snapcenter -deststorepass snapcenter -srcalias agentcert -destalias agentcert -noprompt`
+.. Redémarrer SPL : `systemctl restart spl`
+
+
+

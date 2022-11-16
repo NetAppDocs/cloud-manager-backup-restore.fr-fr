@@ -1,0 +1,69 @@
+---
+sidebar: sidebar 
+permalink: task-restore-backups-kubernetes.html 
+keywords: restoring, restore, restore volumes, cloud backup, volume restore, persistent volume 
+summary: 'Les sauvegardes sont stockées dans un magasin d"objets de votre compte cloud, de sorte que vous puissiez restaurer les données à partir d"un point dans le temps spécifique. Vous pouvez restaurer un volume persistant Kubernetes entier à partir d"un fichier de sauvegarde enregistré.' 
+---
+= Restauration de données Kubernetes à partir de fichiers de sauvegarde
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Les sauvegardes sont stockées dans un magasin d'objets de votre compte cloud, de sorte que vous puissiez restaurer les données à partir d'un point dans le temps spécifique. Vous pouvez restaurer un volume persistant Kubernetes entier à partir d'un fichier de sauvegarde enregistré.
+
+Vous pouvez restaurer un volume persistant (comme un nouveau volume) vers le même environnement de travail ou vers un autre environnement de travail qui utilise le même compte cloud.
+
+
+
+== Environnements de travail et fournisseurs de stockage objet pris en charge
+
+Vous pouvez restaurer un volume à partir d'un fichier de sauvegarde Kubernetes vers les environnements de travail suivants :
+
+[cols="40,40"]
+|===
+| Emplacement du fichier de sauvegarde | Destination Environnement de travail ifdef::aws[] 
+
+
+| Amazon S3 | Cluster Kubernetes dans AWS endif::aws[] ifdef::Azure[] 
+
+
+| Blob d'Azure | Cluster Kubernetes dans Azure endif::Azure[] ifdef::gcp[] 
+
+
+| Google Cloud Storage | Cluster Kubernetes dans Google endif::gcp[] 
+|===
+
+
+== Restauration de volumes à partir d'un fichier de sauvegarde Kubernetes
+
+Lorsque vous restaurez un volume persistant à partir d'un fichier de sauvegarde, BlueXP crée un _nouveau_ volume en utilisant les données de la sauvegarde. Vous pouvez restaurer les données sur un volume du même cluster Kubernetes ou sur un autre cluster Kubernetes situé dans le même compte cloud que le cluster Kubernetes source.
+
+Avant de commencer, vous devez connaître le nom du volume que vous souhaitez restaurer et la date du fichier de sauvegarde que vous souhaitez utiliser pour créer le volume récemment restauré.
+
+.Étapes
+. Dans le menu BlueXP, sélectionnez *protection > sauvegarde et récupération*.
+. Cliquez sur l'onglet *Kubernetes* pour afficher le tableau de bord Kubernetes.
++
+image:screenshot_backup_view_k8s_backups_button.png["Capture d'écran du tableau de bord Kubernetes avec la liste de tous les clusters et volumes Kubernetes en cours de sauvegarde."]
+
+. Recherchez le volume à restaurer, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"], Puis cliquez sur *Détails et liste de sauvegarde*.
++
+La liste de tous les fichiers de sauvegarde de ce volume s'affiche avec des informations détaillées sur le volume source, l'emplacement de destination et les détails de la sauvegarde.
+
++
+image:screenshot_backup_view_k8s_backups.png["Copie d'écran de toutes les sauvegardes disponibles pour un volume source unique."]
+
+. Recherchez le fichier de sauvegarde spécifique à restaurer en fonction de l'horodatage, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"], Puis *Restaurer*.
+. Dans la page _Select destination_, sélectionnez la _Kubernetes cluster_ où vous voulez restaurer le volume, la _namespace_, la _Storage Class_ et le nouveau _persistent volume name_.
++
+image:screenshot_restore_k8s_volume.png["Capture d'écran concernant les informations de destination dans lesquelles le volume persistant sera restauré."]
+
+. Cliquez sur *Restore* et vous revenez au tableau de bord Kubernetes pour vérifier la progression de l'opération de restauration.
+
+
+BlueXP crée un nouveau volume dans le cluster Kubernetes en fonction de la sauvegarde que vous avez sélectionnée. C'est possible link:task-manage-backups-kubernetes.html["gérez les paramètres de sauvegarde de ce nouveau volume"] selon les besoins.

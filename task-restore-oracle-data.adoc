@@ -1,0 +1,100 @@
+---
+sidebar: sidebar 
+permalink: task-restore-oracle-data.html 
+keywords: restore, Azure, Amazon Web services, Oracle database 
+summary: Vous pouvez restaurer la base de données Oracle du cloud vers le serveur SnapCenter sur site. 
+---
+= Restaurez la base de données Oracle
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez uniquement restaurer la base de données Oracle sur le même hôte SnapCenter Server, le même SVM ou sur le même hôte de base de données. Pour une base de données RAC, les données sont restaurées vers le nœud sur site sur lequel la sauvegarde a été créée.
+
+
+NOTE: La restauration des sauvegardes secondaires via le stockage primaire est prise en charge.
+
+Seule la base de données complète avec restauration du fichier de contrôle est prise en charge. Si les journaux d'archive ne sont pas présents dans l'AFS, vous devez spécifier l'emplacement qui contient les journaux d'archive requis pour la récupération.
+
+
+IMPORTANT: La restauration de fichiers uniques (SFR) n'est pas prise en charge.
+
+*Ce dont vous aurez besoin*
+
+Si vous souhaitez restaurer une sauvegarde déplacée vers un magasin d'objets à partir d'un stockage secondaire, vous devez ajouter les informations relatives à l'environnement de travail principal et définir l'espace IP. Pour plus d'informations, voir link:task-manage-app-backups.html#set-ip-space-of-the-primary-working-environment["Définissez l'espace IP de l'environnement de travail principal"].
+
+*Étapes*
+
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *applications*.
+. Dans le champ *Filter by*, sélectionnez le filtre *Type* et sélectionnez *Oracle* dans la liste déroulante.
+. Cliquez sur *View Details* correspondant à la base de données à restaurer et cliquez sur *Restore*.
+. Sur la page Type de restauration, effectuez les opérations suivantes :
++
+.. Sélectionnez *Etat de la base de données* si vous souhaitez modifier l'état de la base de données à l'état requis pour effectuer les opérations de restauration et de récupération.
++
+Les différents États d'une base de données de niveau supérieur à inférieur sont ouverts, montés, démarrés et shutdown. Vous devez cocher cette case si la base de données est dans un état plus élevé mais que l'état doit être inférieur pour effectuer une opération de restauration. Si la base de données est dans un état inférieur mais que l'état doit être supérieur pour effectuer l'opération de restauration, l'état de la base de données est automatiquement modifié, même si vous ne cochez pas la case.
+
++
+Si une base de données est à l'état ouvert et que pour restaurer la base de données doit être à l'état monté, l'état de la base de données n'est modifié que si vous cochez cette case.
+
+.. Sélectionnez *fichiers de contrôle* si vous souhaitez restaurer le fichier de contrôle avec la base de données complète.
+.. Si le snapshot est en stockage d'archivage, spécifiez la priorité de restauration des données à partir du stockage d'archivage.
+
+
+. Sur la page étendue de la récupération, effectuez les opérations suivantes :
++
+.. Spécifier le périmètre de restauration.
++
+|===
+| Si... | Procédez comme ça... 
+
+
+ a| 
+Que vous souhaitez restaurer à la dernière transaction
+ a| 
+Sélectionnez *tous les journaux*.
+
+
+
+ a| 
+Que vous souhaitez récupérer à un numéro de changement de système (SCN) spécifique
+ a| 
+Sélectionnez *jusqu'à ce que SCN (numéro de changement du système)*.
+
+
+
+ a| 
+Veulent restaurer des données et un temps spécifique
+ a| 
+Sélectionnez *Date et heure*.
+
+Vous devez spécifier la date et l'heure du fuseau horaire de l'hôte de la base de données.
+
+
+
+ a| 
+Ne pas récupérer
+ a| 
+Sélectionnez *pas de récupération*.
+
+
+
+ a| 
+Vous souhaitez spécifier les emplacements de journaux d'archives externes
+ a| 
+Si les journaux d'archive ne sont pas présents dans l'AFS, vous devez spécifier l'emplacement qui contient les journaux d'archive requis pour la récupération.
+
+|===
+.. Cochez la case si vous souhaitez ouvrir la base de données après la récupération.
++
+Dans une configuration RAC, seule l'instance RAC utilisée pour la restauration s'ouvre après une restauration.
+
+
+
+. Vérifiez les détails et cliquez sur *Restaurer*.
+

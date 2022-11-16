@@ -1,0 +1,41 @@
+---
+sidebar: sidebar 
+permalink: task-register-snapCenter-plug-in-for-vmware-vsphere.html 
+keywords: register, registration, SnapCenter Plug-in for VMware vSphere 
+summary: Enregistrez le plug-in SnapCenter pour VMware vSphere dans BlueXP. 
+---
+= Enregistrez le plug-in SnapCenter pour VMware vSphere
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Nous vous recommandons d'enregistrer le plug-in SnapCenter pour VMware vSphere dans BlueXP pour les datastores et les machines virtuelles à afficher dans BlueXP. Seul un utilisateur disposant d'un accès administratif peut enregistrer le plug-in SnapCenter pour VMware vSphere.
+
+
+NOTE: Vous pouvez enregistrer plusieurs plug-in SnapCenter pour VMware vSphere. Cependant, une fois enregistré, vous ne pouvez pas supprimer le plug-in SnapCenter pour VMware vSphere.
+
+.Étapes
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *machines virtuelles*.
+. Dans la liste déroulante *Paramètres*, cliquez sur *Plug-in SnapCenter pour VMware vSphere*.
+. Cliquez sur *Enregistrer le plug-in SnapCenter pour VMware vSphere*.
+. Spécifiez les informations suivantes :
++
+.. Dans le champ Plug-in SnapCenter pour VMware vSphere, spécifiez le FQDN ou l'adresse IP du plug-in SnapCenter pour VMware vSphere.
+.. Dans le champ Port, spécifiez le numéro de port sur lequel le plug-in SnapCenter pour VMware vSphere s'exécute.
++
+Assurez-vous que le port est ouvert pour la communication entre le plug-in SnapCenter pour VMware vSphere et Cloud Backup pour les machines virtuelles.
+
+.. Dans le champ Nom d'utilisateur et Mot de passe, indiquez les informations d'identification de l'utilisateur ayant le rôle d'administrateur.
+
+
+. Cliquez sur *Enregistrer*.
+
+
+*Après la fin*
+
+Cliquez sur *sauvegarde et restauration* > *machines virtuelles* pour afficher tous les datastores et toutes les machines virtuelles qui peuvent être protégés à l'aide du plug-in SnapCenter enregistré pour VMware vSphere.

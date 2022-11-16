@@ -1,0 +1,83 @@
+---
+sidebar: sidebar 
+permalink: task-register-snapcenter-server.html 
+keywords: SnapCenter Server, register 
+summary: Procédez comme suit pour enregistrer le serveur SnapCenter. 
+---
+= Enregistrez SnapCenter Server
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Seul un utilisateur doté du rôle SnapCenterAdmin peut enregistrer l'hôte sur lequel SnapCenter Server 4.6 ou version ultérieure est exécuté. Vous pouvez enregistrer plusieurs hôtes SnapCenter Server.
+
+*Étapes*
+
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *applications*.
+. Dans la liste déroulante *Paramètres*, cliquez sur *serveurs SnapCenter*.
+. Cliquez sur *Enregistrer le serveur SnapCenter*.
+. Spécifiez les informations suivantes :
++
+.. Dans le champ serveur SnapCenter, spécifiez le FQDN ou l'adresse IP de l'hôte du serveur SnapCenter.
+.. Dans le champ Port, spécifiez le numéro de port sur lequel le serveur SnapCenter s'exécute.
++
+Assurez-vous que le port est ouvert pour la communication entre le serveur SnapCenter et la sauvegarde dans le cloud pour les applications.
+
+.. Dans le champ balises, spécifiez un nom de site, un nom de ville ou tout nom personnalisé avec lequel vous souhaitez marquer le serveur SnapCenter.
++
+Les balises sont séparées par une virgule.
+
+.. Dans le champ Nom d'utilisateur et Mot de passe, spécifiez les informations d'identification de l'utilisateur avec le rôle SnapCenterAdmin.
+
+
+. Cliquez sur *Enregistrer*.
+
+
+*Après la fin*
+
+Cliquez sur *Backup & Restore* > *applications* pour afficher toutes les applications protégées à l'aide de l'hôte serveur SnapCenter enregistré.
+
+Par défaut, les applications sont automatiquement découvertes tous les jours à minuit. Vous pouvez configurer le planning pour détecter les applications.
+
+
+NOTE: Pour les bases de données SQL Server, la colonne Nom de l'application affiche le nom au format _nom_de_l'application (nom de l'instance)_.
+
+Les applications prises en charge et leurs configurations sont les suivantes :
+
+* Base de données Oracle :
++
+** Sauvegardes complètes (données + journal) créées avec au moins une planification quotidienne, hebdomadaire ou mensuelle
+** SAN, NFS, VMDK-SAN, VMDK-NFS ET RDM
+
+
+* Base de données Microsoft SQL Server :
++
+** Autonome, basculement d'instances de cluster et groupes de disponibilité
+** Sauvegardes complètes créées avec au moins un planning quotidien, hebdomadaire ou mensuel
+** SAN, VMDK-SAN, VMDK-NFS ET RDM
+
+
+* Base de données SAP HANA :
++
+** Conteneur unique 1.x
+** Conteneur de bases de données multiples 2.x
+** Réplication système HANA (HSR)
++
+Vous devez sauvegarder au moins une sauvegarde sur le site principal et sur les sites secondaires. Vous pouvez décider d'effectuer une défaillance pro-active ou un basculement différé vers le secondaire.
+
+** Les ressources non-data volumes (NDV), telles que les binaires HANA, le volume des journaux d'archives HANA, le volume partagé HANA, etc
+
+
+
+
+Les bases de données suivantes ne s'affichent pas :
+
+* Bases de données qui n'ont pas de sauvegarde
+* Les bases de données avec des règles à la demande ou à l'heure
+* Bases de données Oracle résidant sur NVMe
+
