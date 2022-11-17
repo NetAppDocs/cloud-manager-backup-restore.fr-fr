@@ -28,7 +28,7 @@ Une licence Cloud Backup valide est requise pour restaurer les données à parti
 
 == Le tableau de bord de restauration
 
-Le tableau de bord de restauration permet d'effectuer des opérations de restauration de volumes, de dossiers et de fichiers. Pour accéder au Tableau de bord de restauration, cliquez sur *Backup and Recovery* dans le menu BlueXP, puis cliquez sur l'onglet *Restore*. Vous pouvez également cliquer sur image:screenshot_gallery_options.gif["Bouton plus"] > *Afficher le tableau de bord de restauration* à partir du service sauvegarde et restauration du panneau Services.
+Le tableau de bord de restauration permet d'effectuer des opérations de restauration de volumes, de dossiers et de fichiers. Pour accéder au Tableau de bord de restauration, cliquez sur *Backup and Recovery* dans le menu BlueXP, puis cliquez sur l'onglet *Restore*. Vous pouvez également cliquer sur image:screenshot_gallery_options.gif["Bouton plus"] > *Afficher le tableau de bord de restauration* à partir du service de sauvegarde et de récupération du panneau Services.
 
 
 NOTE: Cloud Backup doit déjà être activé pour au moins un environnement de travail et les fichiers de sauvegarde initiaux doivent exister.
@@ -560,9 +560,9 @@ En fonction de votre configuration, la recherche et la restauration peuvent êtr
 
 +
 ** S'il n'y a pas d'identifiants de fournisseur de cloud dans votre compte, les informations de catalogue indexées sont stockées sur le connecteur.
-** Si vous l'avez https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-aws.html["Identifiants AWS"^] ou https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-azure.html["Identifiants Azure"^] Dans le compte, le catalogue indexé est stocké sur le fournisseur cloud, comme avec un connecteur déployé dans le cloud.
+** Si vous l'avez https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-aws.html["Identifiants AWS"^] ou https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-azure.html["Identifiants Azure"^] Dans le compte, le catalogue indexé est stocké sur le fournisseur cloud, comme avec un connecteur déployé dans le cloud. (Si vous disposez des deux identifiants, AWS est sélectionné par défaut.)
 +
-Consultez les exigences AWS et Azure ci-dessus lors de l'utilisation de cette implémentation. Même si vous utilisez un connecteur sur site, les exigences du fournisseur cloud doivent être respectées tant pour les autorisations de connecteur que pour les ressources du fournisseur cloud.
+Même si vous utilisez un connecteur sur site, les exigences du fournisseur cloud doivent être respectées tant pour les autorisations de connecteur que pour les ressources du fournisseur cloud. Consultez les exigences AWS et Azure ci-dessus lors de l'utilisation de cette implémentation.
 
 
 
@@ -678,7 +678,10 @@ Si vous sélectionnez un système ONTAP sur site et que vous n'avez pas encore c
 +
 ifdef::aws[]
 
-** Lors de la restauration depuis Amazon S3, sélectionnez l'IPspace dans le cluster ONTAP où se trouve le volume de destination, entrez la clé d'accès et la clé secrète pour l'utilisateur créé pour donner l'accès au cluster ONTAP au compartiment S3, Il est également possible de choisir un terminal VPC privé pour sécuriser le transfert de données.
++
+*** Lors de la restauration depuis Amazon S3, sélectionnez l'IPspace dans le cluster ONTAP où se trouve le volume de destination, entrez la clé d'accès et la clé secrète pour l'utilisateur créé pour donner l'accès au cluster ONTAP au compartiment S3, Il est également possible de choisir un terminal VPC privé pour sécuriser le transfert de données.
+
+
 
 
 

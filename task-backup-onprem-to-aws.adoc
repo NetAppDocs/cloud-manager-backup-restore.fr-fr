@@ -49,7 +49,7 @@ Configurez les autorisations pour le connecteur afin de créer et de gérer le c
 Vous pouvez également configurer vos propres clés gérées sur mesure pour le chiffrement des données au lieu d'utiliser les clés de chiffrement Amazon S3 par défaut.  your AWS environment,Découvrez comment préparer votre environnement AWS S3 pour recevoir des sauvegardes ONTAP.
 
 [role="quick-margin-para"]
-Sélectionnez l'environnement de travail et cliquez sur *Activer > Backup volumes* en regard du service Backup & Restore dans le panneau droit. Suivez ensuite l'assistant d'installation pour définir la stratégie de sauvegarde par défaut et le nombre de sauvegardes à conserver, puis sélectionnez les volumes à sauvegarder.
+Sélectionnez l'environnement de travail et cliquez sur *Activer > volumes de sauvegarde* en regard du service de sauvegarde et de restauration dans le volet droit. Suivez ensuite l'assistant d'installation pour définir la stratégie de sauvegarde par défaut et le nombre de sauvegardes à conserver, puis sélectionnez les volumes à sauvegarder.
 
 [role="quick-margin-para"]
  Cloud Backup,Découvrez comment activer Cloud Backup sur vos volumes.
@@ -355,12 +355,12 @@ Please enter Certificate: Press <Enter> when done
 Activation de Cloud Backup à tout moment directement depuis l'environnement de travail sur site
 
 .Étapes
-. Dans Canvas, sélectionnez l'environnement de travail et cliquez sur *Activer > volumes de sauvegarde* en regard du service sauvegarde et restauration dans le panneau de droite.
+. Dans Canvas, sélectionnez l'environnement de travail et cliquez sur *Activer > volumes de sauvegarde* en regard du service de sauvegarde et de restauration dans le panneau de droite.
 +
 Si la destination Amazon S3 pour vos sauvegardes existe en tant qu'environnement de travail sur la fenêtre Canvas, vous pouvez faire glisser le cluster vers l'environnement de travail Amazon S3 pour lancer l'assistant d'installation.
 
 +
-image:screenshot_backup_onprem_enable.png["Capture d'écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."]
+image:screenshot_backup_onprem_enable.png["Capture d'écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d'un environnement de travail."]
 
 . Sélectionnez Amazon Web Services comme fournisseur et cliquez sur *Suivant*.
 . Entrez les détails du fournisseur et cliquez sur *Suivant*.

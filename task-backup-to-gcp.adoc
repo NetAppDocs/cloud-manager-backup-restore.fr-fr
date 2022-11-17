@@ -31,7 +31,7 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 
 .<span class=« image »><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png"[] alt=« deux »></span> Activer Cloud Backup sur votre nouveau système ou votre système existant
 * Nouveaux systèmes : Cloud Backup peut être activé lorsque vous suivez l'assistant du nouvel environnement de travail.
-* Systèmes existants : sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite, puis suivez l'assistant d'installation.
+* Systèmes existants : sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de restauration dans le panneau de droite, puis suivez l'assistant d'installation.
 +
 image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Enable, disponible après la sélection d'un environnement de travail."]
 
@@ -145,7 +145,7 @@ Cloud Backup est activé sur le système. Il sauvegarde le volume que vous crée
 Vous pouvez activer Cloud Backup à tout moment directement depuis l'environnement de travail.
 
 .Étapes
-. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite.
+. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de restauration dans le panneau de droite.
 +
 Si la destination Google Cloud Storage pour vos sauvegardes existe en tant qu'environnement de travail sur la Canvas, vous pouvez faire glisser le cluster vers l'environnement de travail Google Cloud Storage pour lancer l'assistant d'installation.
 

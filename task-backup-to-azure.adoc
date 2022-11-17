@@ -30,7 +30,7 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 
 .<span class=« image »><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png"[] alt=« deux »></span> Activer Cloud Backup sur votre nouveau système ou votre système existant
 * Nouveaux systèmes : Cloud Backup est activé par défaut dans l'assistant de l'environnement de travail. Assurez-vous de conserver l'option activée.
-* Systèmes existants : sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite, puis suivez l'assistant d'installation.
+* Systèmes existants : sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de restauration dans le panneau de droite, puis suivez l'assistant d'installation.
 +
 image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Enable, disponible après la sélection d'un environnement de travail."]
 
@@ -160,7 +160,7 @@ Cloud Backup est activé sur le système. Il sauvegarde les volumes tous les jou
 Activation de Cloud Backup à tout moment directement depuis l'environnement de travail
 
 .Étapes
-. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite.
+. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de restauration dans le panneau de droite.
 +
 Si la destination Azure Blob de vos sauvegardes existe en tant qu'environnement de travail dans la zone de travail, vous pouvez faire glisser le cluster dans l'environnement de travail Azure Blob pour lancer l'assistant d'installation.
 

@@ -37,7 +37,7 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 
 
 [role="quick-margin-para"]
-Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite, puis suivez l'assistant d'installation.
+Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de récupération dans le panneau de droite, puis suivez l'assistant d'installation.
 
 [role="quick-margin-para"]
 image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Enable, disponible après la sélection d'un environnement de travail."]
@@ -145,7 +145,7 @@ Compte de services GCP:: Vous devez disposer d'un compte de service dans votre p
 Activation de Cloud Backup à tout moment directement depuis l'environnement de travail Kubernetes.
 
 .Étapes
-. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite.
+. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de restauration dans le panneau de droite.
 +
 image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Settings, disponible après la sélection d'un environnement de travail."]
 

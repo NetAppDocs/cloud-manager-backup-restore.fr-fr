@@ -31,9 +31,9 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 
 .<span class=« image »><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png"[] alt=« deux »></span> Activer Cloud Backup sur votre nouveau système ou votre système existant
 * Nouveaux systèmes : Cloud Backup est activé par défaut dans l'assistant de l'environnement de travail. Assurez-vous de conserver l'option activée.
-* Systèmes existants : sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite, puis suivez l'assistant d'installation.
+* Systèmes existants : sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de restauration dans le panneau de droite, puis suivez l'assistant d'installation.
 +
-image:screenshot_backup_cvo_enable.png["Capture d'écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."]
+image:screenshot_backup_cvo_enable.png["Capture d'écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d'un environnement de travail."]
 
 
 
@@ -188,12 +188,12 @@ Cloud Backup est activé sur le système. Il sauvegarde les volumes tous les jou
 Activation de Cloud Backup à tout moment directement depuis l'environnement de travail
 
 .Étapes
-. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service sauvegarde et restauration dans le panneau de droite.
+. Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de restauration dans le panneau de droite.
 +
 Si la destination Amazon S3 pour vos sauvegardes existe en tant qu'environnement de travail sur la fenêtre Canvas, vous pouvez faire glisser le cluster vers l'environnement de travail Amazon S3 pour lancer l'assistant d'installation.
 
 +
-image:screenshot_backup_cvo_enable.png["Capture d'écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."]
+image:screenshot_backup_cvo_enable.png["Capture d'écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d'un environnement de travail."]
 
 . Sélectionnez les détails du fournisseur et cliquez sur *Suivant*.
 +

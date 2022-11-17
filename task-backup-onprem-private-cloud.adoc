@@ -43,10 +43,10 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 
 
 [role="quick-margin-para"]
-Sélectionnez l'environnement de travail et cliquez sur *Activer > Backup volumes* en regard du service Backup & Restore dans le panneau de droite, puis suivez l'assistant d'installation.
+Sélectionnez l'environnement de travail et cliquez sur *Activer > volumes de sauvegarde* en regard du service de sauvegarde et de restauration dans le panneau droit, puis suivez l'assistant d'installation.
 
 [role="quick-margin-para"]
-image:screenshot_backup_onprem_enable.png["Capture d'écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."]
+image:screenshot_backup_onprem_enable.png["Capture d'écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d'un environnement de travail."]
 
 [role="quick-margin-para"]
 Sélectionnez StorageGRID comme fournisseur, puis entrez les informations du serveur StorageGRID et du compte de locataire S3. Vous devez également spécifier l'IPspace dans le cluster ONTAP où les volumes résident.
@@ -209,12 +209,12 @@ TIP: Les licences PAYGO ne sont pas prises en charge lors de la sauvegarde des f
 Activation de Cloud Backup à tout moment directement depuis l'environnement de travail sur site
 
 .Étapes
-. Dans Canvas, sélectionnez l'environnement de travail sur site et cliquez sur *Activer > volumes de sauvegarde* en regard du service sauvegarde et restauration dans le panneau de droite.
+. Dans Canvas, sélectionnez l'environnement de travail sur site et cliquez sur *Activer > volumes de sauvegarde* en regard du service de sauvegarde et de restauration dans le panneau de droite.
 +
 Si la destination StorageGRID de vos sauvegardes existe en tant qu'environnement de travail dans la fenêtre Canvas, vous pouvez faire glisser le cluster dans l'environnement de travail StorageGRID pour lancer l'assistant d'installation.
 
 +
-image:screenshot_backup_onprem_enable.png["Capture d'écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."]
+image:screenshot_backup_onprem_enable.png["Capture d'écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d'un environnement de travail."]
 
 . Sélectionnez *StorageGRID* comme fournisseur, cliquez sur *Suivant*, puis entrez les détails du fournisseur :
 +
