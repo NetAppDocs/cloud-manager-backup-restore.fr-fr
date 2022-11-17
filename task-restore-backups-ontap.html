@@ -1342,7 +1342,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 19:15:28 +0000">11/16/2022</time>
+    <time datetime="2022-11-17 18:31:41 +0000">11/17/2022</time>
     
   
 
@@ -1375,7 +1375,7 @@
 <h2 id="le-tableau-de-bord-de-restauration">Le tableau de bord de restauration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Le tableau de bord de restauration permet d&#8217;effectuer des opérations de restauration de volumes, de dossiers et de fichiers. Pour accéder au Tableau de bord de restauration, cliquez sur <strong>Backup and Recovery</strong> dans le menu BlueXP, puis cliquez sur l&#8217;onglet <strong>Restore</strong>. Vous pouvez également cliquer sur <span class="image"><img src="./media/screenshot_gallery_options.gif" alt="Bouton plus"></span> &gt; <strong>Afficher le tableau de bord de restauration</strong> à partir du service sauvegarde et restauration du panneau Services.</p>
+<p>Le tableau de bord de restauration permet d&#8217;effectuer des opérations de restauration de volumes, de dossiers et de fichiers. Pour accéder au Tableau de bord de restauration, cliquez sur <strong>Backup and Recovery</strong> dans le menu BlueXP, puis cliquez sur l&#8217;onglet <strong>Restore</strong>. Vous pouvez également cliquer sur <span class="image"><img src="./media/screenshot_gallery_options.gif" alt="Bouton plus"></span> &gt; <strong>Afficher le tableau de bord de restauration</strong> à partir du service de sauvegarde et de récupération du panneau Services.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2102,9 +2102,9 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <p>S&#8217;il n&#8217;y a pas d&#8217;identifiants de fournisseur de cloud dans votre compte, les informations de catalogue indexées sont stockées sur le connecteur.</p>
 </li>
 <li>
-<p>Si vous l&#8217;avez <a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-aws.html" target="_blank" rel="noopener">"Identifiants AWS"</a> ou <a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-azure.html" target="_blank" rel="noopener">"Identifiants Azure"</a> Dans le compte, le catalogue indexé est stocké sur le fournisseur cloud, comme avec un connecteur déployé dans le cloud.</p>
+<p>Si vous l&#8217;avez <a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-aws.html" target="_blank" rel="noopener">"Identifiants AWS"</a> ou <a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/concept-accounts-azure.html" target="_blank" rel="noopener">"Identifiants Azure"</a> Dans le compte, le catalogue indexé est stocké sur le fournisseur cloud, comme avec un connecteur déployé dans le cloud. (Si vous disposez des deux identifiants, AWS est sélectionné par défaut.)</p>
 <div class="paragraph">
-<p>Consultez les exigences AWS et Azure ci-dessus lors de l&#8217;utilisation de cette implémentation. Même si vous utilisez un connecteur sur site, les exigences du fournisseur cloud doivent être respectées tant pour les autorisations de connecteur que pour les ressources du fournisseur cloud.</p>
+<p>Même si vous utilisez un connecteur sur site, les exigences du fournisseur cloud doivent être respectées tant pour les autorisations de connecteur que pour les ressources du fournisseur cloud. Consultez les exigences AWS et Azure ci-dessus lors de l&#8217;utilisation de cette implémentation.</p>
 </div>
 </li>
 </ul>
@@ -2269,7 +2269,8 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <div class="paragraph">
 <p>Si vous sélectionnez un système ONTAP sur site et que vous n&#8217;avez pas encore configuré la connexion de cluster au stockage objet, vous êtes invité à fournir des informations supplémentaires :</p>
 </div>
-</li>
+<div class="ulist">
+<ul>
 <li>
 <p>Lors de la restauration depuis Amazon S3, sélectionnez l&#8217;IPspace dans le cluster ONTAP où se trouve le volume de destination, entrez la clé d&#8217;accès et la clé secrète pour l&#8217;utilisateur créé pour donner l&#8217;accès au cluster ONTAP au compartiment S3, Il est également possible de choisir un terminal VPC privé pour sécuriser le transfert de données.</p>
 <div class="ulist">
@@ -2282,6 +2283,9 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 </li>
 <li>
 <p>Lors d&#8217;une restauration à partir de StorageGRID, entrez le FQDN du serveur StorageGRID et le port que ONTAP doit utiliser pour la communication HTTPS avec StorageGRID, entrez la clé d&#8217;accès et la clé secrète nécessaires pour accéder au stockage objet, et l&#8217;IPspace dans le cluster ONTAP où réside le volume de destination.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>

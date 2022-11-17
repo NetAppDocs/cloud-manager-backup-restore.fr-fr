@@ -1277,7 +1277,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 19:15:28 +0000">11/16/2022</time>
+    <time datetime="2022-11-17 18:31:41 +0000">11/17/2022</time>
     
   
 
@@ -1334,10 +1334,10 @@
 </ul>
 </div>
 <div class="paragraph quick-margin-para">
-<p>Sélectionnez l&#8217;environnement de travail et cliquez sur <strong>Activer &gt; Backup volumes</strong> en regard du service Backup &amp; Restore dans le panneau de droite, puis suivez l&#8217;assistant d&#8217;installation.</p>
+<p>Sélectionnez l&#8217;environnement de travail et cliquez sur <strong>Activer &gt; volumes de sauvegarde</strong> en regard du service de sauvegarde et de restauration dans le panneau droit, puis suivez l&#8217;assistant d&#8217;installation.</p>
 </div>
 <div class="paragraph quick-margin-para">
-<p><span class="image"><img src="./media/screenshot_backup_onprem_enable.png" alt="Capture d&#8217;écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."></span></p>
+<p><span class="image"><img src="./media/screenshot_backup_onprem_enable.png" alt="Capture d&#8217;écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d&#8217;un environnement de travail."></span></p>
 </div>
 <div class="paragraph quick-margin-para">
 <p>Sélectionnez Google Cloud comme fournisseur, puis saisissez les informations relatives au fournisseur. Vous devez également spécifier l&#8217;IPspace dans le cluster ONTAP où les volumes résident.</p>
@@ -1373,13 +1373,13 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Le schéma suivant montre la méthode <strong>connexion publique</strong> et les connexions que vous devez préparer entre les composants. Vous pouvez utiliser un connecteur que vous avez installé sur votre site ou un connecteur que vous avez déployé dans le VPC Google Cloud Platform.</p>
+<p>Le schéma suivant montre la méthode <strong>connexion publique</strong> et les connexions que vous devez préparer entre les composants. Le connecteur doit être déployé dans le VPC Google Cloud Platform.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./media/diagram_cloud_backup_onprem_gcp_public.png" alt="Un diagramme montrant comment Cloud Backup communique via une connexion publique avec les volumes du cluster et le stockage Google Cloud où sont situés les fichiers de sauvegarde."></span></p>
 </div>
 <div class="paragraph">
-<p>Le schéma suivant montre la méthode <strong>connexion privée</strong> et les connexions que vous devez préparer entre les composants. Vous pouvez utiliser un connecteur que vous avez installé sur votre site ou un connecteur que vous avez déployé dans le VPC Google Cloud Platform.</p>
+<p>Le schéma suivant montre la méthode <strong>connexion privée</strong> et les connexions que vous devez préparer entre les composants. Le connecteur doit être déployé dans le VPC Google Cloud Platform.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./media/diagram_cloud_backup_onprem_gcp_private.png" alt="Un diagramme montrant comment Cloud Backup communique via une connexion privée avec les volumes du cluster et le stockage Google Cloud où sont situés les fichiers de sauvegarde."></span></p>
@@ -1467,7 +1467,7 @@
 <div class="sect2">
 <h3 id="création-ou-commutation-de-connecteurs">Création ou commutation de connecteurs</h3>
 <div class="paragraph">
-<p>Si votre connecteur est déjà déployé dans votre cloud privé virtuel Google Cloud Platform ou sur site, cela signifie que tout est là pour vous. Si ce n&#8217;est pas le cas, vous devrez créer un connecteur dans l&#8217;un de ces emplacements pour sauvegarder les données ONTAP dans un stockage Google Cloud. Vous ne pouvez pas utiliser un connecteur déployé dans un autre fournisseur de cloud.</p>
+<p>Si un connecteur est déjà déployé dans votre VPC Google Cloud Platform, vous devez le configurer. Dans le cas contraire, créez un connecteur sur cet emplacement pour sauvegarder les données ONTAP dans un stockage Google Cloud. Vous ne pouvez pas utiliser un connecteur déployé dans un autre fournisseur cloud ou sur site.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1479,9 +1479,6 @@
 </li>
 <li>
 <p><a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-gcp.html" target="_blank" rel="noopener">"Installation d&#8217;un connecteur dans GCP"</a></p>
-</li>
-<li>
-<p><a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-installing-linux.html" target="_blank" rel="noopener">"Installation d&#8217;un connecteur dans vos locaux"</a></p>
 </li>
 </ul>
 </div>
@@ -1522,7 +1519,7 @@
 <div class="sect2">
 <h3 id="vérifiez-ou-ajoutez-des-autorisations-au-connecteur">Vérifiez ou ajoutez des autorisations au connecteur</h3>
 <div class="paragraph">
-<p>Pour utiliser la fonctionnalité de recherche et restauration de Cloud Backup, vous devez disposer d&#8217;autorisations spécifiques dans le rôle du connecteur afin qu&#8217;il puisse accéder au service Google Cloud BigQuery. Reportez-vous aux autorisations ci-dessous et suivez les étapes si vous devez modifier la stratégie.</p>
+<p>Pour utiliser la fonctionnalité « recherche et restauration » de Cloud Backup, vous devez disposer d&#8217;autorisations spécifiques dans le rôle du connecteur afin qu&#8217;il puisse accéder au service Google Cloud BigQuery. Reportez-vous aux autorisations ci-dessous et suivez les étapes si vous devez modifier la stratégie.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>
@@ -1630,12 +1627,12 @@ bigquery.tables.create</code></pre>
 <div class="title">Étapes</div>
 <ol class="arabic">
 <li>
-<p>Dans Canvas, sélectionnez l&#8217;environnement de travail et cliquez sur <strong>Activer &gt; volumes de sauvegarde</strong> en regard du service sauvegarde et restauration dans le panneau de droite.</p>
+<p>Dans Canvas, sélectionnez l&#8217;environnement de travail et cliquez sur <strong>Activer &gt; volumes de sauvegarde</strong> en regard du service de sauvegarde et de restauration dans le panneau de droite.</p>
 <div class="paragraph">
 <p>Si la destination Google Cloud Storage pour vos sauvegardes existe en tant qu&#8217;environnement de travail sur la Canvas, vous pouvez faire glisser le cluster vers l&#8217;environnement de travail Google Cloud Storage pour lancer l&#8217;assistant d&#8217;installation.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="./media/screenshot_backup_onprem_enable.png" alt="Capture d&#8217;écran affichant le bouton Sauvegarder et Activer de restauration disponible après avoir sélectionné un environnement de travail."></span></p>
+<p><span class="image"><img src="./media/screenshot_backup_onprem_enable.png" alt="Capture d&#8217;écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d&#8217;un environnement de travail."></span></p>
 </div>
 </li>
 <li>
