@@ -1,0 +1,177 @@
+---
+sidebar: sidebar 
+permalink: reference-backup-cbs-db-in-dark-site.html 
+keywords: backup database, recover database 
+summary: Si vous utilisez Cloud Backup sur un site sans accès Internet, vous devez sauvegarder régulièrement les fichiers Cloud Backup critiques si vous rencontrez un problème avec le système hôte BlueXP Connector. Cela vous permet de déployer un nouveau connecteur et de restaurer les données Cloud Backup stratégiques. 
+---
+= Sauvegardez et restaurez les données Cloud Backup dans un site sombre
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Si vous utilisez Cloud Backup sur un site sans accès Internet, vous devez sauvegarder régulièrement les fichiers Cloud Backup critiques si vous rencontrez un problème avec le système hôte BlueXP Connector. Cela vous permet de déployer un nouveau connecteur et de restaurer les données Cloud Backup stratégiques.
+
+Lorsque vous utilisez Cloud Backup dans un environnement SaaS où BlueXP Connector est déployé sur votre fournisseur de cloud ou sur votre propre système hôte disposant d'un accès Internet, toutes les données importantes de configuration Cloud Backup sont sauvegardées et stockées dans le cloud. Lorsque vous utilisez Cloud Backup sur un site sans accès à Internet ou « site sombre », ces informations de Cloud Backup sont stockées uniquement sur le système de connecteur local.
+
+Cette section décrit comment sauvegarder les données Cloud Backup stratégiques sur votre système StorageGRID connecté. Il décrit également comment restaurer les données sur un nouveau connecteur si nécessaire.
+
+
+NOTE: Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin que vous ayez toujours accès aux données les plus récentes.
+
+
+
+== Sauvegardez vos données Cloud Backup stratégiques
+
+Il existe 2 types de données à sauvegarder :
+
+* Base de données Cloud Backup
+* Fichiers de catalogue indexés (utilisés pour la fonctionnalité de recherche et de restauration)
+
+
+Aucune donnée de volume n'est déjà incluse dans la base de données Cloud Backup ou dans les fichiers de catalogue indexés.
+
+
+
+=== Sauvegardez la base de données Cloud Backup
+
+La base de données Cloud Backup contient la liste de tous les volumes, fichiers de sauvegarde, règles de sauvegarde et informations de configuration.
+
+.Étapes
+. Connectez-vous au système hôte du connecteur à l'aide des informations d'identification appropriées.
+. Entrez le shell du conteneur MySQL en entrant la commande suivante :
++
+[source, cli]
+----
+docker exec -it ds_mysql_1 sh
+----
+. Dans le conteneur, déployez l'« env ».
+. Vous aurez besoin du mot de passe MySQL DB, donc copiez la valeur de la clé "MYSQL_ROOT_PASSWORD".
+. Sauvegardez la base de données Cloud Backup MySQL à l'aide de la commande suivante :
++
+[source, cli]
+----
+mysqldump --user root --password -p cloud_backup --result-file=mysql.dump.cloud_backup.sql
+----
+. Copiez la sauvegarde de base de données MySQL à partir du conteneur mysql docker en entrant la commande suivante :
++
+[source, cli]
+----
+docker cp ds_mysql_1:/mysql.dump.cloud_backup.sql .
+----
+. Copiez la sauvegarde dans un emplacement sécurisé de votre réseau. Vous pouvez utiliser un système StorageGRID local si vous créez des sauvegardes de volumes ONTAP à cet emplacement.
+
+
+
+
+=== Sauvegardez les fichiers de catalogue indexés
+
+Le catalogue indexé est utilisé pour la fonctionnalité de recherche et de restauration. Il contient des informations sur chaque volume et chaque fichier de sauvegarde, ce qui accélère et optimise les recherches lors de la restauration de données de volume.
+
+. Sur le système hôte Connector, remplacez le répertoire par "/tmp".
+. Localisez le dossier Catalogue d'index. Il commence par la chaîne *catalogue*.
+. Compressez le dossier « catalog<_xxxxxx_> » en entrant la commande suivante :
++
+[source, cli]
+----
+zip -r catalogxxxxxx.zip catalogxxxxxx
+----
+. Copiez la sauvegarde compressée dans un emplacement sécurisé de votre réseau.
+
+
+
+
+== Restaurez les données de Cloud Backup vers un nouveau connecteur
+
+Si votre connecteur sur site présente une défaillance majeure, vous devez installer un nouveau connecteur, puis restaurer les données Cloud Backup vers le nouveau connecteur.
+
+Vous devez effectuer 4 tâches pour rétablir l'état de fonctionnement de votre système Cloud Backup :
+
+* https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-install-connector-onprem-no-internet.html["Installez un nouveau connecteur sur un nouvel hôte Linux sur site"^]
+* Restaurez la base de données Cloud Backup
+* Restaurez les fichiers de catalogue indexés
+* Redécouvrez tous vos systèmes ONTAP sur site dans l'interface utilisateur BlueXP
+
+
+Une fois que vous avez vérifié que votre système est de nouveau en bon état de fonctionnement, nous vous recommandons de créer de nouveaux fichiers de sauvegarde.
+
+
+
+=== Restaurez la base de données Cloud Backup
+
+. Après avoir installé le nouveau connecteur, connectez-vous au système hôte du connecteur à l'aide des informations d'identification appropriées.
+. Copiez la sauvegarde MySQL de l'emplacement sécurisé vers le nouvel hôte de connecteur.
+. Copiez la sauvegarde dans le conteneur MySQL docker à l'aide de la commande suivante :
++
+[source, cli]
+----
+docker cp mysql.dump.cloud_backup.sql ds_mysql_1:/.
+----
+. Entrez le shell du conteneur MySQL à l'aide de la commande suivante :
++
+[source, cli]
+----
+docker exec -it ds_mysql_1 sh
+----
+. Dans le conteneur, déployez l'« env ».
+. Vous aurez besoin du mot de passe MySQL DB, donc copiez la valeur de la clé "MYSQL_ROOT_PASSWORD".
+. Restaurez la base de données Cloud Backup MySQL à l'aide de la commande suivante :
++
+[source, cli]
+----
+mysql -u root -p cloud_backup < mysql.dump.cloud_backup.sql
+----
+. Vérifiez que la base de données Cloud Backup MySQL a été restaurée correctement à l'aide des commandes SQL suivantes :
++
+[source, cli]
+----
+# mysql -u root -p cloud_backup
+----
++
+Saisissez le mot de passe.
+
++
+[source, cli]
+----
+mysql> show tables;
+mysql> select * from volume;
+----
++
+Vérifiez si les volumes affichés sont identiques à ceux qui existaient dans votre environnement d'origine.
+
+
+
+
+
+=== Restaurez les fichiers de catalogue indexés
+
+. Copiez le fichier zip de sauvegarde de catalogue indexé de l'emplacement sécurisé vers le nouvel hôte de connecteur dans le dossier "/tmp".
+. Décompressez le fichier « cataloguxxxxxx.zip » à l'aide de la commande suivante :
++
+[source, cli]
+----
+unzip catalogxxxxxx.zip
+----
+. Exécutez la commande *ls* pour vous assurer que le dossier "cataloguxxxxxx" a été créé avec les sous-dossiers "modifications" et "snapshots" en dessous.
+
+
+
+
+=== Détecter les clusters et vérifier les paramètres de Cloud Backup
+
+. https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html#discovering-clusters-from-the-canvas-page["Découvrez tous les environnements de travail ONTAP sur site"^] qui étaient disponibles dans votre environnement précédent.
+. En option, https://docs.netapp.com/us-en/cloud-manager-storagegrid/task-discover-storagegrid.html["Découvrir vos systèmes StorageGRID"^].
+. Sélectionnez chaque environnement de travail ONTAP et cliquez sur *Afficher les sauvegardes* en regard du service de sauvegarde et de restauration dans le panneau de droite.
++
+Vous devriez pouvoir voir toutes les sauvegardes qui ont été créées pour vos volumes.
+
+. Dans le Tableau de bord de restauration, sous la section Rechercher et restaurer, cliquez sur *Paramètres d'indexation*.
++
+Assurez-vous que les environnements de travail où le catalogage indexé est activé précédemment restent activés.
+
+. À partir de la page Rechercher et restaurer, exécutez quelques recherches de catalogue pour confirmer que la restauration du catalogue indexé a bien été effectuée.
+

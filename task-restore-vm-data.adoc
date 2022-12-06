@@ -19,6 +19,7 @@ Vous pouvez restaurer des machines virtuelles à partir du cloud vers vCenter su
 
 NOTE: Vous ne pouvez pas restaurer des machines virtuelles qui sont fractionnés entre les datastores.
 
+.Ce dont vous avez besoin
 Assurez-vous que vous avez rempli toutes les link:concept-protect-vm-data.html#Requirements["de formation"] avant de restaurer des machines virtuelles à partir du cloud.
 
 .Étapes

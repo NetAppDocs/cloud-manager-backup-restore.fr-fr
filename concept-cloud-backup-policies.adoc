@@ -230,9 +230,9 @@ endif::aws[]
 
 Si vous utilisez un certain stockage cloud, vous pouvez déplacer d'anciens fichiers de sauvegarde vers un Tier de stockage/accès moins onéreux après un certain nombre de jours. Notez que le stockage d'archives ne peut pas être utilisé si vous avez activé DataLock.
 
-Les données des niveaux d'archivage ne sont pas accessibles immédiatement lorsque cela s'avère nécessaire. Par conséquent, les coûts de récupération des données sont plus élevés, vous devez déterminer la fréquence à laquelle restaurer les données à partir des fichiers de sauvegarde archivés.
+Vous n'avez pas accès immédiatement aux données des niveaux d'archivage quand vous en avez besoin. Par conséquent, vos coûts de récupération sont plus élevés, vous devez déterminer la fréquence à laquelle restaurer les données à partir des fichiers de sauvegarde archivés.
 
-Lors de la création de fichiers de sauvegarde dans AWS ou Azure, chaque règle de sauvegarde fournit une section intitulée _Archival_ que vous pouvez appliquer à vos fichiers de sauvegarde.
+Chaque politique de sauvegarde fournit une section pour _Archival_ que vous pouvez appliquer à vos fichiers de sauvegarde.
 
 image:screenshot_archive_tier_settings.png["Capture d'écran des paramètres de la politique d'archivage lors de la création d'une politique de sauvegarde."]
 
@@ -263,7 +263,7 @@ ifdef::gcp[]
 
 * Dans GCP, les sauvegardes sont associées par défaut à la classe de stockage _Standard_.
 +
-Vous pouvez utiliser la classe de stockage _Nearline_ moins chère ou les classes de stockage _Coldline_ ou _Archive_. Toutefois, vous configurez ces autres classes de stockage via Google, et non via l'interface utilisateur de Cloud Backup. Consultez la rubrique Google https://cloud.google.com/storage/docs/storage-classes["Classes de stockage"^] Pour plus d'informations sur la modification de la classe de stockage par défaut d'un compartiment Google Cloud Storage.
+Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure, vous pouvez choisir de transférer d'anciennes sauvegardes vers le stockage _Archive_ dans l'interface utilisateur de sauvegarde dans le cloud au bout d'un certain nombre de jours afin d'optimiser les coûts. (Cette fonctionnalité n'est pas disponible actuellement pour les systèmes Cloud Volumes ONTAP.) link:reference-google-backup-tiers.html["En savoir plus sur le stockage des archives Google"^].
 
 
 

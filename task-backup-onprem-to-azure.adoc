@@ -24,7 +24,8 @@ Notez que les « systèmes ONTAP sur site » comprennent les systèmes FAS, AFF 
 
 Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux sections restantes pour obtenir de plus amples informations.
 
-.<span class=« image »><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"[] alt=« one »></span> Vérifiez la prise en charge de votre configuration
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Une seule"] Vérifiez la prise en charge de votre configuration
+[role="quick-margin-list"]
 * Vous avez découvert le cluster sur site et l'avez ajouté à un environnement de travail dans BlueXP. Voir https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html["Découverte des clusters ONTAP"^] pour plus d'informations.
 +
 ** Le cluster exécute ONTAP 9.7P5 ou version ultérieure.
@@ -36,24 +37,28 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 * Vous disposez d'un abonnement Azure valide pour l'espace de stockage objet dans lequel vos sauvegardes seront stockées.
 
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Deux"] Activation de Cloud Backup sur le système
 [role="quick-margin-para"]
 Sélectionnez l'environnement de travail et cliquez sur *Activer > volumes de sauvegarde* en regard du service de sauvegarde et de restauration dans le panneau droit, puis suivez l'assistant d'installation.
 
 [role="quick-margin-para"]
 image:screenshot_backup_onprem_enable.png["Capture d'écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d'un environnement de travail."]
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Trois"] Sélectionnez le fournisseur de cloud et entrez les informations relatives au fournisseur
 [role="quick-margin-para"]
 Sélectionnez Microsoft Azure comme fournisseur, puis saisissez les informations relatives au fournisseur. Vous devez sélectionner l'abonnement Azure et la région dans laquelle vous souhaitez créer les sauvegardes. Vous pouvez également choisir votre propre clé gérée par le client pour le chiffrement des données au lieu d'utiliser la clé de chiffrement par défaut gérée par Microsoft.
 
 [role="quick-margin-para"]
 image:screenshot_backup_onprem_to_azure.png["Une copie d'écran présente les informations détaillées du fournisseur cloud lors de la sauvegarde des volumes d'un cluster sur site vers le stockage Azure Blob."]
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Quatre"] Sélectionnez le cluster IPspace et utilisez en option un terminal VNet privé
 [role="quick-margin-para"]
 Sélectionnez l'IPspace dans le cluster ONTAP où les volumes résident. Vous pouvez également choisir d'utiliser un terminal privé Azure existant pour établir une connexion plus sécurisée à vnet à partir de votre data Center sur site.
 
 [role="quick-margin-para"]
 image:screenshot_backup_onprem_azure_networking.png["Copie d'écran affichant les détails de mise en réseau lors de la sauvegarde des volumes d'un système ONTAP vers un stockage Azure Blob."]
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Cinq"] Définissez la stratégie de sauvegarde par défaut
 [role="quick-margin-para"]
 La règle par défaut sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes de chaque volume. Passage à des sauvegardes toutes les heures, tous les jours, toutes les semaines, tous les mois ou tous les ans vous pouvez également sélectionner l'une des règles définies par le système qui offrent plus d'options. Vous pouvez également modifier le nombre de copies de sauvegarde à conserver.
 
@@ -63,6 +68,7 @@ Par défaut, les sauvegardes sont stockées dans le niveau d'accès Cool. Si vot
 [role="quick-margin-para"]
 image:screenshot_backup_policy_azure.png["Capture d'écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification de sauvegarde et la période de conservation."]
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-6.png["Six"] Sélectionnez les volumes à sauvegarder
 [role="quick-margin-para"]
 Identifiez les volumes que vous souhaitez sauvegarder à l'aide de la stratégie de sauvegarde par défaut dans la page Sélectionner les volumes. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes, vous pouvez créer des règles supplémentaires et les appliquer ultérieurement aux volumes.
 
@@ -173,6 +179,7 @@ Assurez-vous que le connecteur dispose des connexions réseau requises.
 
 Pour utiliser la fonctionnalité recherche et restauration de Cloud Backup, vous devez disposer d'autorisations spécifiques dans le rôle du connecteur afin qu'il puisse accéder à l'espace de travail Azure Synapse et au compte de stockage Data Lake. Reportez-vous aux autorisations ci-dessous et suivez les étapes si vous devez modifier la stratégie.
 
+.Avant de commencer
 Vous devez enregistrer le fournisseur de ressources Azure Synapse Analytics auprès de votre abonnement. https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types#register-resource-provider["Découvrez comment enregistrer ce fournisseur de ressources pour votre abonnement"^]. Vous devez être l'abonnement *propriétaire* ou *Contributeur* pour enregistrer le fournisseur de ressources.
 
 .Étapes
@@ -302,12 +309,13 @@ image:screenshot_backup_policy_azure.png["Capture d'écran indiquant les paramè
 +
 image:screenshot_backup_select_volumes.png["Capture d'écran de la sélection des volumes qui seront sauvegardés."]
 
-** Si des copies Snapshot locales des volumes de cet environnement de travail correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidiennement, hebdomadaires, etc.), une invite supplémentaire s'affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d'assurer la protection la plus complète de vos volumes.
+** Si dans cet environnement de travail contient des copies Snapshot locales pour les volumes en lecture/écriture qui correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidien, hebdomadaire, etc.), une invite supplémentaire s'affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d'assurer la protection la plus complète de vos volumes.
 
 
 . Cliquez sur *Activer la sauvegarde* et Cloud Backup commence à effectuer les sauvegardes initiales de vos volumes.
 
 
+.Résultat
 Un conteneur de stockage Blob est créé automatiquement dans le groupe de ressources que vous avez saisi et les fichiers de sauvegarde y sont stockés. Le tableau de bord de sauvegarde de volume s'affiche pour vous permettre de surveiller l'état des sauvegardes. Vous pouvez également surveiller l'état des tâches de sauvegarde et de restauration à l'aide de l' link:task-monitor-backup-jobs.html["Panneau surveillance des tâches"^].
 
 

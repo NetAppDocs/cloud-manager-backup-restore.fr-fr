@@ -1,0 +1,46 @@
+---
+sidebar: sidebar 
+permalink: reference-google-backup-tiers.html 
+keywords: google, storage classes, archive 
+summary: 'Cloud Backup prend en charge une classe de stockage d"archivage Google et la plupart des régions.' 
+---
+= Classes de stockage d'archivage Google et temps de récupération
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Cloud Backup prend en charge une classe de stockage d'archivage Google et la plupart des régions.
+
+
+
+== Classes de stockage d'archivage Google prises en charge pour Cloud Backup
+
+Lors de la création initiale des fichiers de sauvegarde, ils sont stockés dans le stockage _Standard_. Il est optimisé pour stocker les données peu utilisées, mais vous pouvez également y accéder immédiatement.
+
+Si votre cluster sur site utilise ONTAP 9.12.1 ou version supérieure, vous pouvez choisir de transférer d'anciennes sauvegardes vers _Archive_ le stockage dans l'interface utilisateur de sauvegarde dans le cloud au bout d'un certain nombre de jours (généralement plus de 30 jours) afin d'optimiser les coûts. (Cette fonctionnalité n'est pas disponible actuellement pour les systèmes Cloud Volumes ONTAP.) Les données de ce niveau nécessitent un coût de récupération plus élevé, vous devez donc déterminer la fréquence à laquelle vous devrez peut-être restaurer les données à partir de ces fichiers de sauvegarde archivés. Reportez-vous à la section à propos de <<Restauration des données à partir du stockage d'archivage,restauration des données à partir du stockage d'archivage>>.
+
+Notez que lorsque vous configurez Cloud Backup avec ce type de règle de cycle de vie, vous ne devez pas configurer de règles de cycle de vie lors de la configuration du compartiment dans votre compte Google.
+
+https://cloud.google.com/storage/docs/storage-classes["En savoir plus sur les classes de stockage Google"^].
+
+
+
+== Restauration des données à partir du stockage d'archivage
+
+Le stockage d'anciens fichiers de sauvegarde dans un stockage d'archivage est bien moins coûteux que le stockage standard. En revanche, l'accès aux données à partir d'un fichier de sauvegarde dans le stockage d'archivage à des fins de restauration prendra un peu plus de temps et coûtera plus d'argent.
+
+Combien coûte la restauration des données à partir de Google Archive ?:: Pour obtenir des informations détaillées sur la tarification de Google Cloud Storage par région, rendez-vous sur le https://cloud.google.com/storage/pricing["Page de tarification de Google Cloud Storage"^].
+Combien de temps faut-il pour restaurer mes objets archivés dans Google Archive ?:: Deux parties composent la durée totale de restauration :
++
+--
+* *Temps de récupération* : le temps de récupérer le fichier de sauvegarde à partir de l'archive et de le placer dans le stockage standard. Ce temps est parfois appelé le temps de « réhydratation ». Contrairement aux solutions de stockage les plus inactives des autres fournisseurs de cloud, vos données sont accessibles en quelques millisecondes.
+* *Temps de restauration* : temps de restauration des données à partir du fichier de sauvegarde dans le stockage standard. Ce temps n'est pas différent de l'opération de restauration standard directement depuis le stockage standard - lorsque vous n'utilisez pas de niveau d'archivage.
+
+
+--
+

@@ -22,7 +22,8 @@ Procédez en quelques étapes pour sauvegarder les données à partir de volumes
 
 Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux sections restantes pour obtenir plus de détails.
 
-.<span class=« image »><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"[] alt=« one »></span> revoir les prérequis
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Une seule"] Passer en revue les prérequis
+[role="quick-margin-list"]
 * Vous avez découvert le cluster Kubernetes en tant qu'environnement de travail BlueXP.
 +
 ** Trident doit être installé sur le cluster, et la version de Trident doit être égale ou supérieure à 21.1.
@@ -35,18 +36,21 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 * Vous avez souscrit au https://azuremarketplace.microsoft.com/en-us/marketplace/apps/netapp.cloud-manager?tab=Overview["Offre de sauvegarde BlueXP Marketplace"^], ou vous avez acheté link:task-licensing-cloud-backup.html#use-a-cloud-backup-byol-license["et activé"^] Licence Cloud Backup BYOL de NetApp.
 
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Deux"] Activation de Cloud Backup sur votre cluster Kubernetes existant
 [role="quick-margin-para"]
 Sélectionnez l'environnement de travail et cliquez sur *Activer* en regard du service de sauvegarde et de récupération dans le panneau de droite, puis suivez l'assistant d'installation.
 
 [role="quick-margin-para"]
 image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Enable, disponible après la sélection d'un environnement de travail."]
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Trois"] Définissez la stratégie de sauvegarde
 [role="quick-margin-para"]
 La règle par défaut sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes de chaque volume. Vous pouvez passer aux sauvegardes toutes les heures, tous les jours, hebdomadaires ou mensuelles ou sélectionner l'une des règles définies par le système et qui offrent plus d'options. Vous pouvez également modifier le nombre de copies de sauvegarde à conserver.
 
 [role="quick-margin-para"]
 image:screenshot_backup_policy_k8s_azure.png["Capture d'écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification de sauvegarde et la période de conservation."]
 
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Quatre"] Sélectionnez les volumes à sauvegarder
 [role="quick-margin-para"]
 Identifiez les volumes à sauvegarder dans la page Sélectionner les volumes. Les fichiers de sauvegarde sont stockés dans un conteneur Blob en utilisant la même souscription Azure et la même région que le système Cloud Volumes ONTAP.
 
@@ -167,8 +171,10 @@ image:screenshot_backup_select_volumes_k8s.png["Capture d'écran de la sélectio
 . Cliquez sur *Activer la sauvegarde* et Cloud Backup commence à effectuer les sauvegardes initiales de chaque volume sélectionné.
 
 
+.Résultat
 Les fichiers de sauvegarde sont stockés dans un conteneur Blob en utilisant la même souscription Azure et la même région que le système Cloud Volumes ONTAP.
 
 Le tableau de bord Kubernetes s'affiche pour vous permettre de contrôler l'état des sauvegardes.
 
+.Et la suite ?
 C'est possible link:task-manage-backups-kubernetes.html["démarrer et arrêter les sauvegardes de volumes ou modifier le planning de sauvegarde"^]. Vous pouvez également link:task-restore-backups-kubernetes.html#restoring-volumes-from-a-kubernetes-backup-file["restaurez des volumes entiers à partir d'un fichier de sauvegarde"^] En tant que nouveau volume sur le même cluster Kubernetes ou un autre cluster dans Azure (dans la même région).

@@ -66,4 +66,5 @@ image:screenshot_restore_k8s_volume.png["Capture d'écran concernant les informa
 . Cliquez sur *Restore* et vous revenez au tableau de bord Kubernetes pour vérifier la progression de l'opération de restauration.
 
 
+.Résultat
 BlueXP crée un nouveau volume dans le cluster Kubernetes en fonction de la sauvegarde que vous avez sélectionnée. C'est possible link:task-manage-backups-kubernetes.html["gérez les paramètres de sauvegarde de ce nouveau volume"] selon les besoins.

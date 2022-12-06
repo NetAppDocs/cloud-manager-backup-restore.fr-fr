@@ -71,24 +71,21 @@ Cloud Backup vous permet de sauvegarder des volumes ONTAP à partir de ces envir
 |===
 Vous pouvez restaurer un volume, un dossier ou des fichiers individuels depuis un fichier de sauvegarde ONTAP vers les environnements de travail suivants :
 
-[cols="25,33,37"]
+[cols="50,50"]
 |===
-| Fichier de sauvegarde 2+| Environnement de travail de destination 
+| Emplacement du fichier de sauvegarde | Destination Environnement de travail ifdef::aws[] 
 
 
-| *Emplacement* | *Restauration du volume* | *Restauration de dossiers et de fichiers* ifdef::aws[] 
+| Amazon S3 | Cloud Volumes ONTAP dans le système ONTAP sur site AWS endif::aws[] ifdef::Azure[] 
 
 
-| Amazon S3 | Cloud Volumes ONTAP sur le système ONTAP AWS sur site | Cloud Volumes ONTAP dans le système ONTAP sur site AWS endif::aws[] ifdef::Azure[] 
+| Blob d'Azure | Cloud Volumes ONTAP dans le système ONTAP sur site Azure endif::Azure[] ifdef::gcp[] 
 
 
-| Blob d'Azure | Cloud Volumes ONTAP dans le système ONTAP sur site Azure | Cloud Volumes ONTAP dans le système ONTAP sur site Azure endif::Azure[] ifdef::gcp[] 
+| Google Cloud Storage | Cloud Volumes ONTAP dans le système ONTAP sur site Google endif::gcp[] 
 
 
-| Google Cloud Storage | Cloud Volumes ONTAP dans le système ONTAP sur site Google | Cloud Volumes ONTAP dans le système ONTAP sur site Google endif::gcp[] 
-
-
-| NetApp StorageGRID | Système ONTAP sur site | Système ONTAP sur site 
+| NetApp StorageGRID | Système ONTAP sur site 
 |===
 Notez que les références aux « systèmes ONTAP sur site » incluent les systèmes FAS, AFF et ONTAP Select.
 
@@ -107,10 +104,25 @@ Cloud Backup prend en charge plusieurs types de volumes :
 * Volumes FlexVol de lecture/écriture
 * Volumes de destination SnapMirror avec protection des données (DP)
 * Volumes SnapLock Enterprise (requiert ONTAP 9.11.1 ou version ultérieure)
++
+** Les volumes de conformité SnapLock ne sont actuellement pas pris en charge.
 
 
-Les volumes FlexGroup et SnapLock Compliance ne sont actuellement pas pris en charge.
+* Volumes FlexGroup (requiert ONTAP 9.12.1 ou version ultérieure)
 
+
+[NOTE]
+====
+*Restrictions FlexGroup*:
+
+* La restauration de volume complet est prise en charge par les systèmes ONTAP sur site ; les systèmes Cloud Volumes ONTAP ne sont pas pris en charge actuellement.
+* La restauration au niveau fichier est prise en charge à la fois pour les systèmes ONTAP et Cloud Volumes ONTAP sur site.
+* La restauration des répertoires/dossiers n'est pas prise en charge actuellement.
+* Les sauvegardes ne peuvent pas être déplacées vers le stockage d'archivage.
+* Les sauvegardes ne peuvent pas utiliser le verrouillage des données et la protection contre les attaques par ransomware.
+
+
+====
 
 
 == Le coût
@@ -162,7 +174,7 @@ endif::gcp[]
 
 Les frais de service sont payés à NetApp et couvrent le coût de _créer_ sauvegardes et de _restaurer_ volumes ou fichiers à partir de ces sauvegardes. Vous ne payez que les données que vous protégez, calculées par la capacité logique utilisée source (_before_ ONTAP before_ ONTAP) des volumes qui sont sauvegardés sur le stockage objet. Cette capacité est également connue sous le nom de téraoctets frontaux (FETB).
 
-Vous pouvez payer le service de sauvegarde de trois façons. La première option consiste à vous abonner à votre fournisseur cloud pour un paiement mensuel. La deuxième option consiste à obtenir un contrat annuel. La troisième option consiste à acheter des licences directement auprès de NetApp. Lire le ,Licences pour plus de détails.
+Vous pouvez payer le service de sauvegarde de trois façons. La première option consiste à vous abonner à votre fournisseur cloud pour un paiement mensuel. La deuxième option consiste à obtenir un contrat annuel. La troisième option consiste à acheter des licences directement auprès de NetApp. Lire le <<Licences,Licences>> pour plus de détails.
 
 
 
@@ -240,7 +252,7 @@ link:task-licensing-cloud-backup.html#use-an-annual-contract["Découvrez comment
 
 == Fonctionnement de Cloud Backup
 
-Lorsque vous activez Cloud Backup sur un système ONTAP Cloud Volumes ONTAP ou sur site, le service effectue une sauvegarde complète de vos données. Les instantanés de volume ne sont pas inclus dans l'image de sauvegarde. Après la sauvegarde initiale, toutes les sauvegardes supplémentaires sont incrémentielles, ce qui signifie que seuls les blocs modifiés et les nouveaux blocs sont sauvegardés. Le trafic réseau est ainsi réduit au minimum. Cloud Backup repose sur le https://docs.netapp.com/us-en/ontap/concepts/snapmirror-cloud-backups-object-store-concept.html["Technologie NetApp SnapMirror Cloud"].
+Lorsque vous activez Cloud Backup sur un système ONTAP Cloud Volumes ONTAP ou sur site, le service effectue une sauvegarde complète de vos données. Les instantanés de volume ne sont pas inclus dans l'image de sauvegarde. Après la sauvegarde initiale, toutes les sauvegardes supplémentaires sont incrémentielles, ce qui signifie que seuls les blocs modifiés et les nouveaux blocs sont sauvegardés. Le trafic réseau est ainsi réduit au minimum. Cloud Backup repose sur le https://docs.netapp.com/us-en/ontap/concepts/snapmirror-cloud-backups-object-store-concept.html["Technologie NetApp SnapMirror Cloud"^].
 
 
 CAUTION: Toute action effectuée directement depuis votre environnement de fournisseur cloud pour gérer ou modifier des fichiers de sauvegarde peut corrompre les fichiers et entraîner une configuration non prise en charge.
@@ -359,9 +371,9 @@ endif::azure[]
 
 ifdef::gcp[]
 
-* Dans GCP, les sauvegardes sont associées par défaut à la classe de stockage _Standard_.
+* Dans GCP, les sauvegardes sont associées à la classe de stockage _Standard_.
 +
-Vous pouvez également utiliser la classe de stockage _Nearline_ moins chère ou les classes de stockage _Coldline_ ou _Archive_. Vous configurez ces autres classes de stockage via Google. Consultez la rubrique Google link:https://cloud.google.com/storage/docs/storage-classes["Classes de stockage"^] pour plus d'informations sur la modification de la classe de stockage.
+Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure, vous pouvez choisir de transférer d'anciennes sauvegardes vers le stockage _Archive_ dans l'interface utilisateur de sauvegarde dans le cloud au bout d'un certain nombre de jours afin d'optimiser les coûts. (Cette fonctionnalité n'est pas disponible actuellement pour les systèmes Cloud Volumes ONTAP.) link:reference-google-backup-tiers.html["En savoir plus sur le stockage des archives Google"^].
 
 
 
@@ -417,9 +429,9 @@ Voici un problème connu qui sera résolu dans une prochaine version :
 ** La règle Snapshot appliquée au volume doit être l'une des règles reconnues par Cloud Backup, y compris les règles quotidiennes, hebdomadaires, mensuelles, etc. La stratégie par défaut « sm_create » (utilisée pour *Mirror All snapshots*) N'est pas reconnu et le volume DP n'apparaît pas dans la liste des volumes pouvant être sauvegardés.
 
 
+* La sauvegarde MetroCluster (MCC) est prise en charge à partir d'un système secondaire ONTAP uniquement : MCC > SnapMirror > ONTAP > sauvegarde dans le cloud > stockage objet.
 * La sauvegarde de volume ad-hoc à l'aide du bouton *Backup Now* n'est pas prise en charge sur les volumes de protection des données.
 * Les configurations SM-BC ne sont pas prises en charge.
-* La sauvegarde MetroCluster (MCC) est prise en charge à partir d'un système secondaire ONTAP uniquement : MCC > SnapMirror > ONTAP > sauvegarde dans le cloud > stockage objet.
 * ONTAP ne prend pas en charge la « fan-out » des relations SnapMirror depuis un volume unique vers plusieurs magasins d'objets. Par conséquent, cette configuration n'est pas prise en charge par Cloud Backup.
 * Le mode WORM/Compliance d'un magasin d'objets est actuellement pris en charge uniquement sur Amazon S3 et StorageGRID. Il s'agit de la fonctionnalité DataLock qui doit être gérée à l'aide des paramètres Cloud Backup.
 

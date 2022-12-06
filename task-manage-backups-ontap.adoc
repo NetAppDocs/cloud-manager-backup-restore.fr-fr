@@ -41,7 +41,7 @@ Si vous recherchez des volumes spécifiques dans certains environnements de trav
 
 Vous pouvez activer les sauvegardes de tout nouveau volume s'ils ne sont pas actuellement sauvegardés. Vous pouvez également activer les sauvegardes de tous les volumes que vous avez précédemment désactivés.
 
-Vous pouvez désactiver les sauvegardes pour les volumes de manière à ce qu'aucune sauvegarde supplémentaire ne soit générée. Cela désactive également la restauration des données de volume à partir d'un fichier de sauvegarde. Cette opération vous permet en fait d'interrompre l'ensemble des activités de sauvegarde et de restauration pendant une période donnée. Toutes les sauvegardes existantes ne seront pas supprimées. Ainsi, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que vos sauvegardes utilisent, sauf si vous link:deleting-all-backup-files-for-a-volume["supprimez les sauvegardes"].
+Vous pouvez désactiver les sauvegardes pour les volumes de manière à ce qu'aucune sauvegarde supplémentaire ne soit générée. Cela désactive également la restauration des données de volume à partir d'un fichier de sauvegarde. Cette opération vous permet en fait d'interrompre l'ensemble des activités de sauvegarde et de restauration pendant une période donnée. Toutes les sauvegardes existantes ne seront pas supprimées. Ainsi, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que vos sauvegardes utilisent, sauf si vous <<Suppression de tous les fichiers de sauvegarde d'un volume,supprimez les sauvegardes>>.
 
 .Étapes
 . Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
@@ -110,9 +110,15 @@ link:reference-azure-backup-tiers.html["En savoir plus sur l'utilisation du stoc
 
 endif::azure[]
 
+ifdef::gcp[]
+
+link:reference-google-backup-tiers.html["En savoir plus sur l'utilisation du stockage d'archives Google"]. (Nécessite ONTAP 9.12.1.)
+
+endif::gcp[]
+
 +image:screenshot_backup_modify_policy_page2.png["Copie d'écran montrant les paramètres de Tiering d'archivage pour Cloud Backup."]
 
-+ Notez que tous les fichiers de sauvegarde qui ont été hiérarchisés vers le stockage d'archivage sont conservés dans ce niveau si vous arrêtez le Tiering des sauvegardes vers l'archivage - ils ne sont pas automatiquement déplacés vers le niveau standard.
++ Notez que tous les fichiers de sauvegarde qui ont été hiérarchisés vers le stockage d'archivage sont conservés dans ce niveau si vous arrêtez le Tiering des sauvegardes vers l'archivage - ils ne sont pas automatiquement déplacés vers le niveau standard. Seules les sauvegardes de volume nouveaux résident dans le niveau standard.
 
 
 
@@ -120,7 +126,7 @@ endif::azure[]
 
 Lorsque vous activez Cloud Backup pour un environnement de travail, tous les volumes que vous sélectionnez initialement sont sauvegardés à l'aide de la stratégie de sauvegarde par défaut que vous avez définie. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes ayant des objectifs de point de récupération différents, vous pouvez créer des règles supplémentaires pour ce cluster et les affecter à d'autres volumes.
 
-Si vous souhaitez appliquer une nouvelle stratégie de sauvegarde à certains volumes d'un environnement de travail, vous devez d'abord ajouter la stratégie de sauvegarde à l'environnement de travail. C'est alors possible  the policy assigned to existing volumes,appliquer la policy aux volumes de cet environnement de travail.
+Si vous souhaitez appliquer une nouvelle stratégie de sauvegarde à certains volumes d'un environnement de travail, vous devez d'abord ajouter la stratégie de sauvegarde à l'environnement de travail. C'est alors possible <<Modification de la règle attribuée aux volumes existants,appliquer la policy aux volumes de cet environnement de travail>>.
 
 [NOTE]
 ====
@@ -164,6 +170,12 @@ link:reference-azure-backup-tiers.html["En savoir plus sur l'utilisation du stoc
 
 endif::azure[]
 
+ifdef::gcp[]
+
+link:reference-google-backup-tiers.html["En savoir plus sur l'utilisation du stockage d'archives Google"]. (Nécessite ONTAP 9.12.1.)
+
+endif::gcp[]
+
 +image:screenshot_backup_modify_policy_page2.png["Copie d'écran montrant les paramètres de Tiering d'archivage pour Cloud Backup."]
 
 
@@ -172,7 +184,7 @@ endif::azure[]
 
 Vous pouvez modifier la stratégie de sauvegarde attribuée à vos volumes existants si vous souhaitez modifier la fréquence des sauvegardes ou si vous souhaitez modifier la valeur de rétention.
 
-Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister.  a new backup policy,Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail.
+Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister. <<Ajout d'une nouvelle politique de sauvegarde,Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail>>.
 
 .Étapes
 . Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
@@ -291,7 +303,7 @@ CAUTION: Si vous prévoyez de supprimer un environnement ou un cluster de travai
 
 === Suppression de tous les fichiers de sauvegarde d'un environnement de travail
 
-La suppression de toutes les sauvegardes d'un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d'un environnement de travail, vous pouvez désactiver les sauvegardes  Cloud Backup for a working environment,comme décrit ici.
+La suppression de toutes les sauvegardes d'un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d'un environnement de travail, vous pouvez désactiver les sauvegardes <<Désactivation de Cloud Backup pour un environnement de travail,comme décrit ici>>.
 
 .Étapes
 . Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
@@ -311,7 +323,7 @@ image:screenshot_delete_all_backups.png["Capture d'écran de la sélection du bo
 
 La suppression de toutes les sauvegardes d'un volume désactive également les futures sauvegardes de ce volume.
 
-C'est possible  and disabling backups of volumes,relancez les sauvegardes pour le volume À tout moment à partir de la page gérer les sauvegardes.
+C'est possible <<Activation et désactivation des sauvegardes des volumes,relancez les sauvegardes pour le volume>> À tout moment à partir de la page gérer les sauvegardes.
 
 .Étapes
 . Dans l'onglet *volumes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
@@ -400,7 +412,7 @@ image:screenshot_backup_view_no_relationship.png["Capture d'écran affichant le 
 
 La désactivation de Cloud Backup pour un environnement de travail désactive les sauvegardes de chaque volume du système et désactive également la restauration d'un volume. Les sauvegardes existantes ne seront pas supprimées. Cela ne désinscrit pas le service de sauvegarde de cet environnement de travail, car il vous permet de suspendre l'ensemble de l'activité de sauvegarde et de restauration pendant une période donnée.
 
-Notez que vous continuerez d'être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous  all backup files for a working environment,supprimez les sauvegardes.
+Notez que vous continuerez d'être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous <<Suppression de tous les fichiers de sauvegarde d'un environnement de travail,supprimez les sauvegardes>>.
 
 .Étapes
 . Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.

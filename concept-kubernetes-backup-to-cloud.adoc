@@ -85,7 +85,7 @@ Les frais en ressources sont payés au fournisseur cloud pour la capacité de st
 
 Les frais de service sont payés à NetApp et couvrent à la fois le coût de _créer_ sauvegardes et de _restaurer_ volumes à partir de ces sauvegardes. Vous ne payez que les données que vous protégez, calculées par la capacité logique utilisée source (_before_ ONTAP efficacités) des volumes sauvegardés sur le stockage objet. Cette capacité est également connue sous le nom de téraoctets frontaux (FETB).
 
-Vous pouvez payer le service de sauvegarde de deux façons. La première option consiste à vous abonner à votre fournisseur cloud pour un paiement mensuel. La deuxième option consiste à acheter des licences directement auprès de NetApp. Lire le ,Licences pour plus de détails.
+Vous pouvez payer le service de sauvegarde de deux façons. La première option consiste à vous abonner à votre fournisseur cloud pour un paiement mensuel. La deuxième option consiste à acheter des licences directement auprès de NetApp. Lire le <<Licences,Licences>> pour plus de détails.
 
 
 

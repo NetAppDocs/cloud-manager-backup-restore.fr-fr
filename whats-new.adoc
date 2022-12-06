@@ -18,6 +18,32 @@ Découvrez les nouveautés de Cloud Backup.
 
 
 
+== 6 décembre 2022
+
+
+
+=== Prise en charge de la classe de stockage d'archivage Google
+
+Les fichiers de sauvegarde sont initialement créés dans la classe de stockage Google Standard. Vous pouvez désormais choisir de transférer les anciennes sauvegardes vers le système de stockage Google Archive après un certain nombre de jours pour optimiser les coûts.
+
+Cette fonctionnalité est actuellement prise en charge par les clusters ONTAP sur site avec ONTAP 9.12.1 (ou version ultérieure). Elle n'est pas actuellement disponible pour les systèmes Cloud Volumes ONTAP.
+
+
+
+=== Prise en charge des volumes FlexGroup
+
+Cloud Backup prend désormais en charge les volumes FlexGroup. Avec ONTAP 9.12.1 ou version supérieure, vous pouvez sauvegarder des volumes FlexGroup sur un stockage de cloud public et privé. Si vous disposez d'environnements de travail intégrant des FlexVol et des volumes FlexGroup, vous pouvez sauvegarder tous les volumes FlexGroup sur ces systèmes une fois la mise à jour du logiciel ONTAP effectuée.
+
+https://docs.netapp.com/us-en/cloud-manager-backup-restore/concept-ontap-backup-to-cloud.html#supported-volumes["Consultez la liste complète des types de volumes pris en charge"].
+
+
+
+=== Possibilité de restaurer les données à partir de sauvegardes vers un agrégat spécifique sur les systèmes Cloud Volumes ONTAP
+
+Dans les versions précédentes, vous pouviez sélectionner l'agrégat uniquement lors de la restauration des données sur des systèmes ONTAP sur site. Cette fonctionnalité fonctionne désormais lors de la restauration des données sur des systèmes Cloud Volumes ONTAP.
+
+
+
 == 2 novembre 2022
 
 
@@ -38,7 +64,7 @@ Vous pouvez maintenant supprimer la relation de sauvegarde d'un volume. Vous dis
 
 === Le service de support a été ajouté pour recevoir les alertes Cloud Backup par e-mail et dans le centre de notification
 
-Cloud Backup a été intégré au service BlueXP notification. Vous pouvez afficher les notifications Cloud Backup en cliquant sur la cloche de notification dans la barre de menus BlueXP. Vous pouvez également configurer BlueXP pour qu'il envoie des notifications par e-mail en tant qu'alertes de sorte que vous puissiez être informé de l'activité système importante, même lorsque vous n'êtes pas connecté au système. Cet e-mail peut être envoyé aux destinataires qui doivent connaître les activités de sauvegarde et de restauration. https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-monitor-backup-jobs.html#use-the-job-monitor-to-view-backup-and-restore-job-status["Découvrez comment"].
+Cloud Backup a été intégré au service BlueXP notification. Vous pouvez afficher les notifications Cloud Backup en cliquant sur la cloche de notification dans la barre de menus BlueXP. Vous pouvez également configurer BlueXP pour envoyer des notifications par e-mail en tant qu'alertes afin de vous informer de l'activité système importante, même lorsque vous n'êtes pas connecté au système. Cet e-mail peut être envoyé aux destinataires qui doivent connaître les activités de sauvegarde et de restauration. https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-monitor-backup-jobs.html#use-the-job-monitor-to-view-backup-and-restore-job-status["Découvrez comment"].
 
 
 

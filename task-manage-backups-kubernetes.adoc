@@ -57,7 +57,7 @@ image:screenshot_backup_manage_volumes_page_k8s.png["La page gérer les volumes 
 . Cliquez sur *Enregistrer* pour valider vos modifications.
 
 
-*Remarque :* lors de l'arrêt de la sauvegarde d'un volume, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que les sauvegardes utilisent, sauf si vous  backups,supprimez les sauvegardes.
+*Remarque :* lors de l'arrêt de la sauvegarde d'un volume, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que les sauvegardes utilisent, sauf si vous <<Suppression de sauvegardes,supprimez les sauvegardes>>.
 
 
 
@@ -90,7 +90,7 @@ image:screenshot_backup_edit_policy_k8s.png["Capture d'écran présentant les pa
 
 Si vous n'avez pas sélectionné l'option permettant d'attribuer automatiquement une stratégie de sauvegarde aux volumes nouvellement créés lorsque vous avez activé Cloud Backup pour la première fois sur votre cluster Kubernetes, vous pouvez choisir cette option ultérieurement dans la page _Backup Settings_. L'affectation d'une règle de sauvegarde aux nouveaux volumes permet de garantir la protection de toutes vos données.
 
-Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister.  a new backup policy,Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail.
+Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister. <<Ajout d'une nouvelle politique de sauvegarde,Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail>>.
 
 Vous pouvez également désactiver ce paramètre afin que les volumes nouvellement créés ne soient pas sauvegardés automatiquement. Dans ce cas, vous devrez activer manuellement les sauvegardes pour tous les volumes que vous souhaitez effectuer ultérieurement.
 
@@ -109,6 +109,7 @@ image:screenshot_auto_backup_k8s.png["Copie d'écran montrant comment sélection
 
 
 
+.Résultat
 Désormais, cette règle de sauvegarde sera appliquée à tout nouveau volume créé dans ce cluster Kubernetes.
 
 
@@ -150,7 +151,7 @@ CAUTION: Si vous prévoyez de supprimer un environnement ou un cluster de travai
 
 === Suppression de tous les fichiers de sauvegarde d'un environnement de travail
 
-La suppression de toutes les sauvegardes d'un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d'un environnement de travail, vous pouvez désactiver les sauvegardes  Cloud Backup for a working environment,comme décrit ici.
+La suppression de toutes les sauvegardes d'un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d'un environnement de travail, vous pouvez désactiver les sauvegardes <<Désactivation de Cloud Backup pour un environnement de travail,comme décrit ici>>.
 
 .Étapes
 . Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.
@@ -170,7 +171,7 @@ image:screenshot_delete_all_backups_k8s.png["Capture d'écran de la sélection d
 
 La suppression de toutes les sauvegardes d'un volume désactive également les futures sauvegardes de ce volume.
 
-C'est possible  and disabling backups of volumes,relancez les sauvegardes pour le volume À tout moment à partir de la page gérer les sauvegardes.
+C'est possible <<Activation et désactivation des sauvegardes des volumes,relancez les sauvegardes pour le volume>> À tout moment à partir de la page gérer les sauvegardes.
 
 .Étapes
 . Dans l'onglet *Kubernetes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
@@ -220,7 +221,7 @@ image:screenshot_delete_one_backup_k8s.png["Capture d'écran indiquant comment s
 
 La désactivation de Cloud Backup pour un environnement de travail désactive les sauvegardes de chaque volume du système. Elle désactive également la restauration d'un volume. Les sauvegardes existantes ne seront pas supprimées. Cela ne désinscrit pas le service de sauvegarde de cet environnement de travail, car il vous permet de suspendre l'ensemble de l'activité de sauvegarde et de restauration pendant une période donnée.
 
-Notez que vous continuerez d'être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous  all backup files for a working environment,supprimez les sauvegardes.
+Notez que vous continuerez d'être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous <<Suppression de tous les fichiers de sauvegarde d'un environnement de travail,supprimez les sauvegardes>>.
 
 .Étapes
 . Dans l'onglet *Kubernetes*, sélectionnez *Paramètres de sauvegarde*.

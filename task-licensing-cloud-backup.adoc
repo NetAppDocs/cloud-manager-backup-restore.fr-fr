@@ -182,6 +182,7 @@ image:screenshot_services_license_add2.png["Capture d'écran affichant la page p
 
 
 
+.Résultat
 BlueXP ajoute la licence pour que Cloud Backup soit actif.
 
 
@@ -201,7 +202,7 @@ Une fois que vous avez payé la licence et qu'elle est enregistrée sur le site 
 
 . Si BlueXP ne peut pas mettre à jour automatiquement la licence (par exemple, lorsqu'elle est installée sur un site sombre), vous devrez charger manuellement le fichier de licence.
 +
-.. C'est possible  your Cloud Backup license file,Procurez-vous le fichier de licence sur le site de support NetApp.
+.. C'est possible <<Procurez-vous votre fichier de licence Cloud Backup,Procurez-vous le fichier de licence sur le site de support NetApp>>.
 .. Sur la page Portefeuille numérique _licences de services de données_, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le numéro de série de service que vous mettez à jour, cliquez sur *mettre à jour la licence*.
 +
 image:screenshot_services_license_update1.png["Capture d'écran de la sélection du bouton mettre à jour la licence pour un service particulier."]
@@ -211,6 +212,7 @@ image:screenshot_services_license_update1.png["Capture d'écran de la sélection
 
 
 
+.Résultat
 BlueXP met à jour la licence pour que Cloud Backup reste actif.
 
 

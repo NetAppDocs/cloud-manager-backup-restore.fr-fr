@@ -160,6 +160,8 @@ sidebar:
       url: "/reference-aws-backup-tiers.html"
     - title: Tiers d'accès d'archivage Azure pris en charge
       url: "/reference-azure-backup-tiers.html"
+    - title: Tiers de stockage d'archivage Google pris en charge
+      url: "/reference-google-backup-tiers.html"
     - title: Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure
       url: "/reference-backup-multi-account-azure.html"
   - title: Connaissances et support

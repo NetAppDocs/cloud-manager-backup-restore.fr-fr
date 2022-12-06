@@ -42,7 +42,7 @@ NOTE: Le compte de service (_SnapCenter-account-<accountid>_) est utilisé pour 
 
 . Dans la page Specify Host Details, entrez les détails de l'hôte de la base de données Oracle, cochez la case pour confirmer que le plug-in est installé sur l'hôte, puis cliquez sur *Discover*.
 +
-** Affiche toutes les bases de données sur l'hôte. Si l'authentification OS est désactivée pour la base de données, vous devez configurer l'authentification de la base de données en cliquant sur *configurer*. Pour plus d'informations, reportez-vous à la section  Oracle database credentials.
+** Affiche toutes les bases de données sur l'hôte. Si l'authentification OS est désactivée pour la base de données, vous devez configurer l'authentification de la base de données en cliquant sur *configurer*. Pour plus d'informations, reportez-vous à la section <<Configurer les informations d'identification de la base de données Oracle>>.
 ** Cliquez sur *gérer l'application*, sélectionnez *Ajouter* pour ajouter un nouvel hôte, *Actualiser* pour découvrir de nouvelles bases de données ou *Supprimer* pour supprimer un hôte de base de données.
 ** Cliquez sur *Paramètres* et sélectionnez *stratégies* pour afficher les stratégies prédéfinies. Passez en revue les stratégies pré-prédéfinies et, si vous le souhaitez, vous pouvez les modifier pour répondre à vos exigences ou créer une nouvelle stratégie.
 

@@ -63,6 +63,8 @@ image:screenshot_backup_advanced_settings_page.png["Capture d'écran présentant
 
 Si vous devez apporter des modifications, développez simplement l'option et apportez les modifications nécessaires. Toutes les opérations de sauvegarde après la modification utiliseront les nouvelles valeurs.
 
+Certaines options ne sont plus disponibles en fonction de la version de ONTAP sur le cluster source et en fonction du fournisseur cloud où résident les sauvegardes.
+
 
 
 == Changer les clés de stockage pour que ONTAP puisse accéder au stockage cloud
@@ -141,9 +143,9 @@ Une fois activée, cette stratégie de sauvegarde sera appliquée à tout nouvea
 
 == Indiquer si les copies Snapshot historiques sont exportées en tant que fichiers de sauvegarde
 
-S'il existe des copies Snapshot locales pour les volumes correspondant au libellé de planification des sauvegardes que vous utilisez dans cet environnement de travail (par exemple, quotidienne, hebdomadaire, etc.), vous pouvez exporter ces snapshots historiques vers le stockage objet sous forme de fichiers de sauvegarde. Vous pouvez ainsi initialiser vos sauvegardes dans le cloud en transférant vos anciennes copies Snapshot vers la copie de sauvegarde de base.
+S'il existe des copies Snapshot locales pour les volumes correspondant au libellé de planification des sauvegardes que vous utilisez dans cet environnement de travail (par exemple, quotidienne, hebdomadaire, etc.), vous pouvez exporter ces snapshots historiques vers le stockage objet sous forme de fichiers de sauvegarde. Cela vous permet d'initialiser vos sauvegardes dans le cloud en déplaçant d'anciennes copies Snapshot vers la copie de sauvegarde de base.
 
-Notez que cette option s'applique uniquement aux nouveaux fichiers de sauvegarde pour les nouveaux volumes et qu'elle n'est pas prise en charge avec les volumes de protection des données (DP).
+Notez que cette option s'applique uniquement aux nouveaux fichiers de sauvegarde pour les nouveaux volumes de lecture/écriture et qu'elle n'est pas prise en charge avec les volumes DP (protection des données).
 
 image:screenshot_backup_edit_export_snapshots.png["Capture d'écran de l'entrée Exporter des copies Snapshot existantes dans la page Paramètres avancés."]
 

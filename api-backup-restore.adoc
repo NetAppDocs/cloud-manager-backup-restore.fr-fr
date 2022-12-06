@@ -34,7 +34,7 @@ Il existe huit catégories de terminaux définis au sein du Cloud Backup Service
 
 Pour commencer à utiliser les API Cloud Backup, vous devez obtenir un jeton d'utilisateur, votre ID de compte Cloud Central et votre ID Cloud Connector.
 
-Lorsque vous passez des appels API, vous allez ajouter le jeton utilisateur dans l’en-tête autorisation et l’ID du connecteur de Cloud dans l’en-tête x-agent-ID. Vous devez utiliser l'ID de compte Cloud Central dans les API.
+Lorsque vous passez des appels API, vous ajoutez le jeton utilisateur dans l'en-tête autorisation et l'ID du connecteur de Cloud dans l'en-tête x-agent-ID. Vous devez utiliser l'ID de compte Cloud Central dans les API.
 
 .Étapes
 . Obtenez un jeton utilisateur auprès de NetApp Cloud Central.
@@ -99,9 +99,10 @@ Cette API renvoie une réponse comme suit. Vous pouvez récupérer l'ID de l'age
 
 == Exemple d'utilisation des API
 
-L'exemple suivant montre un appel d'API pour activer la sauvegarde dans l'environnement de travail avec une nouvelle politique dont les libellés sont définis tous les jours, toutes les heures ou toutes les semaines, et qui s'archive après les jours définis comme 180 jours, dans la région est-US-2 dans le cloud Azure. Notez que cela active la sauvegarde uniquement sur l'environnement de travail, mais qu'aucun volume n'est sauvegardé. Si vous choisissez ""auto-backup-enabled": True, tous les volumes déjà existants dans le système seront sauvegardés, plus les volumes futurs ajoutés.
+L'exemple suivant montre un appel d'API pour activer la sauvegarde dans l'environnement de travail avec une nouvelle politique dont les libellés sont définis tous les jours, toutes les heures ou toutes les semaines, et qui s'archive après les jours définis comme 180 jours, dans la région est-US-2 dans le cloud Azure. Notez que cela active la sauvegarde uniquement sur l'environnement de travail, mais qu'aucun volume n'est sauvegardé. Si vous choisissez « sauvegarde automatique activée » : true, tous les volumes déjà existants du système seront sauvegardés, plus les volumes futurs ajoutés.
 
-Vous verrez que nous utilisons l'ID de compte Cloud Central "Account-DpTFcxN3", l'ID de connecteur BlueXP "iZwFFeVZjWnzGlw8RgD0QNANZvpP7Iclients", et le jeton d'utilisateur "Bearer YhbGciOiJSUzI1U4UKI6KIJU4UKIVIKIJU4UKUKUKIVIKUKUKUKUKUKI6WUKUKUKUKUKIVIKUKUKUKUKUKUKUKUKIVITUGUGUGUGUGUGUKUG
+.Demande d'API
+Nous utiliserons l'ID de compte Cloud Central `account-DpTFcxN3`, ID connecteur BlueXP `iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients`, et jeton utilisateur `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5rSXlPVFUzUWpZek1E…y6nyhBjwkeMwHc4ValobjUmju2x0xUH48g` dans cette commande.
 
 [source, http]
 ----
