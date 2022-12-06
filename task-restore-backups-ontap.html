@@ -713,6 +713,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1236,6 +1238,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1342,7 +1351,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-17 18:31:41 +0000">11/17/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1457,13 +1466,13 @@ Cloud Backup doit déjà être activé pour au moins un environnement de travail
 <div class="ulist">
 <ul>
 <li>
-<p>volumes using Browse  Restore,Restaurez les volumes à l&#8217;aide de Browse  ; restaurez</p>
+<p>&lt;&lt;Restoring volumes using Browse &amp; Restore,Restaurez les volumes à l&#8217;aide de Browse  ; restaurez</p>
 </li>
 <li>
-<p>folders and files using Browse  Restore,Restaurez les dossiers et les fichiers à l&#8217;aide de Browse  Restore</p>
+<p>&lt;&lt;Restoring folders and files using Browse &amp; Restore,Restaurez les dossiers et les fichiers à l&#8217;aide de Browse  Restore</p>
 </li>
 <li>
-<p>ONTAP data using Search  Restore,Restaurez des volumes, des dossiers et des fichiers à l&#8217;aide de Search  ; Restore</p>
+<p>&lt;&lt;Restoring ONTAP data using Search &amp; Restore,Restaurez des volumes, des dossiers et des fichiers à l&#8217;aide de Search  ; Restore</p>
 </li>
 </ul>
 </div>
@@ -1476,13 +1485,16 @@ Cloud Backup doit déjà être activé pour au moins un environnement de travail
 <p>Avant de commencer la restauration d&#8217;un volume, d&#8217;un dossier ou d&#8217;un fichier, vous devez connaître le nom du volume à partir duquel vous souhaitez restaurer, le nom de l&#8217;environnement de travail où réside le volume et la date approximative du fichier de sauvegarde à partir duquel vous souhaitez restaurer.</p>
 </div>
 <div class="paragraph">
-<p><strong>Remarque :</strong> si le fichier de sauvegarde du volume que vous souhaitez restaurer réside dans le stockage d&#8217;archives (à partir de ONTAP 9.10.1), l&#8217;opération de restauration prendra plus de temps et entraînera un coût. En outre, le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration de volumes et 9.11.1 pour la restauration de fichiers.</p>
+<p><strong>Remarque :</strong> si le fichier de sauvegarde du volume que vous souhaitez restaurer réside dans le stockage d&#8217;archives (à partir de ONTAP 9.10.1), l&#8217;opération de restauration prendra plus de temps et entraînera un coût. En outre, le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration du volume, 9.11.1 pour la restauration des fichiers et 9.12.1 pour Google Archive.</p>
 </div>
 <div class="paragraph">
 <p><a href="reference-aws-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage AWS"</a>.</p>
 </div>
 <div class="paragraph">
 <p><a href="reference-azure-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Azure"</a>.</p>
+</div>
+<div class="paragraph">
+<p><a href="reference-google-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Google"</a>.</p>
 </div>
 <div class="sect2">
 <h3 id="parcourir-et-restaurer-les-environnements-de-travail-et-les-fournisseurs-de-stockage-objet-pris-en-charge">Parcourir et restaurer les environnements de travail et les fournisseurs de stockage objet pris en charge</h3>
@@ -1491,41 +1503,27 @@ Cloud Backup doit déjà être activé pour au moins un environnement de travail
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 30%;">
-<col style="width: 35%;">
-<col style="width: 35%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Emplacement du fichier de sauvegarde</th>
-<th class="tableblock halign-left valign-top" colspan="2">Environnement de travail de destination</th>
+<th class="tableblock halign-left valign-top">Emplacement du fichier de sauvegarde destination Environnement de travail ifdef::aws[]</th>
+<th class="tableblock halign-left valign-top">Amazon S3</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Restauration du volume</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Restauration de dossiers et de fichiers</strong> ifdef::aws[]</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Amazon S3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP sur le système ONTAP AWS sur site</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site AWS endif::aws[] ifdef::Azure[]</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Blob d&#8217;Azure</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Azure</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Azure endif::Azure[] ifdef::gcp[]</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Google Cloud Storage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Google</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Google endif::gcp[]</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Google endif::gcp[]</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NetApp StorageGRID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Système ONTAP sur site</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Système ONTAP sur site</p></td>
 </tr>
 </tbody>
 </table>
@@ -1635,15 +1633,12 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Entrez le nom à utiliser pour le volume restauré, puis sélectionnez la machine virtuelle de stockage sur laquelle le volume sera stocké. Par défaut, <strong>&lt;source_volume_name&gt;_restore</strong> est utilisé comme nom de volume.</p>
+<p>Entrez le nom à utiliser pour le volume restauré, puis sélectionnez le VM de stockage et l&#8217;agrégat dans lequel le volume sera stocké. Par défaut, <strong>&lt;source_volume_name&gt;_restore</strong> est utilisé comme nom de volume.</p>
 <div class="paragraph">
 <p><span class="image"><img src="./media/screenshot_restore_new_vol_name.png" alt="Capture d&#8217;écran indiquant le nom du nouveau volume à restaurer."></span></p>
 </div>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p>Vous pouvez sélectionner l&#8217;agrégat que le volume utilisera pour sa capacité uniquement lors de la restauration d&#8217;un volume sur un système ONTAP sur site.</p>
 </div>
 </li>
 </ul>
@@ -1663,6 +1658,9 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <div class="paragraph">
 <p><a href="reference-azure-backup-tiers.html#restoring-data-from-archival-storage">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Azure"</a>.</p>
 </div>
+<div class="paragraph">
+<p><a href="reference-google-backup-tiers.html#restoring-data-from-archival-storage">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Google"</a>. Les fichiers de sauvegarde du niveau de stockage Google Archive sont restaurés presque immédiatement, sans priorité de restauration.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1671,6 +1669,7 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 </ol>
 </div>
 <div class="paragraph">
+<div class="title">Résultat</div>
 <p>Cloud Backup crée un nouveau volume en fonction de la sauvegarde que vous avez sélectionnée. C&#8217;est possible <a href="task-manage-backups-ontap.html">"gérez les paramètres de sauvegarde de ce nouveau volume"</a> selon les besoins.</p>
 </div>
 <div class="paragraph">
@@ -1717,10 +1716,7 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <p>La version ONTAP doit être 9.6 ou supérieure pour effectuer des opérations <em>file</em> restore.</p>
 </li>
 <li>
-<p>La version ONTAP doit être 9.11.1 ou supérieure pour effectuer des opérations <em>folder</em> restore.</p>
-</li>
-<li>
-<p>La restauration entre comptes AWS nécessite une action manuelle dans la console AWS. Consultez la rubrique AWS <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/example-walkthroughs-managing-access-example2.html" target="_blank" rel="noopener">"octroi d&#8217;autorisations de compartiment entre comptes"</a> pour plus d&#8217;informations.</p>
+<p>La version ONTAP doit être 9.11.1 ou supérieure pour effectuer des opérations <em>folder</em> restore. ifdef::aws[]</p>
 </li>
 </ul>
 </div>
@@ -1806,6 +1802,9 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 </div>
 <div class="paragraph">
 <p><a href="reference-azure-backup-tiers.html#restoring-data-from-archival-storage">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Azure"</a>.</p>
+</div>
+<div class="paragraph">
+<p><a href="reference-google-backup-tiers.html#restoring-data-from-archival-storage">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Google"</a>. Les fichiers de sauvegarde du niveau de stockage Google Archive sont restaurés presque immédiatement, sans priorité de restauration.</p>
 </div>
 <div class="paragraph">
 <p>+ et si la protection par ransomware est active pour le fichier de sauvegarde (si vous avez activé DataLock et ransomware protection dans la stratégie de sauvegarde), vous êtes invité à exécuter une analyse par ransomware supplémentaire sur le fichier de sauvegarde avant de restaurer les données. Nous vous recommandons de scanner le fichier de sauvegarde à des fins d&#8217;attaques par ransomware.</p>
@@ -1925,13 +1924,16 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <p>Vous pouvez restaurer des dossiers ou des fichiers vers l&#8217;emplacement du volume d&#8217;origine, vers un autre volume dans le même environnement de travail ou vers un autre environnement de travail qui utilise le même compte cloud. Vous pouvez également restaurer des dossiers et des fichiers vers un volume situé sur un système ONTAP sur site.</p>
 </div>
 <div class="paragraph">
-<p>Si le fichier de sauvegarde du volume que vous souhaitez restaurer se trouve dans le stockage d&#8217;archives (disponible à partir de ONTAP 9.10.1), l&#8217;opération de restauration prend plus de temps et entraînera des coûts supplémentaires. Notez que le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration de volumes et 9.11.1 pour la restauration de fichiers.</p>
+<p>Si le fichier de sauvegarde du volume que vous souhaitez restaurer se trouve dans le stockage d&#8217;archives (disponible à partir de ONTAP 9.10.1), l&#8217;opération de restauration prend plus de temps et entraînera des coûts supplémentaires. Notez que le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration de volume, 9.11.1 pour la restauration de fichiers et 9.12.1 pour Google Archive.</p>
 </div>
 <div class="paragraph">
 <p><a href="reference-aws-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage AWS"</a>.</p>
 </div>
 <div class="paragraph">
 <p><a href="reference-azure-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Azure"</a>.</p>
+</div>
+<div class="paragraph">
+<p><a href="reference-google-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Google"</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2203,7 +2205,7 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <div class="sect2">
 <h3 id="restauration-de-volumes-de-dossiers-et-de-fichiers-à-laide-de-la-fonction-rechercher-et-restaurer">Restauration de volumes, de dossiers et de fichiers à l&#8217;aide de la fonction Rechercher et Restaurer</h3>
 <div class="paragraph">
-<p>Après vous  the Indexed Catalog for each working environment,Indexation activée pour votre environnement de travail, Vous pouvez restaurer des volumes, des dossiers et des fichiers à l&#8217;aide de la fonction Rechercher et restaurer. Cela vous permet d&#8217;utiliser une large gamme de filtres pour trouver le fichier ou volume exact que vous souhaitez restaurer à partir de tous les fichiers de sauvegarde.</p>
+<p>Après vous <a href="#activation-du-catalogue-indexé-pour-chaque-environnement-de-travail">Indexation activée pour votre environnement de travail</a>, Vous pouvez restaurer des volumes, des dossiers et des fichiers à l&#8217;aide de la fonction Rechercher et restaurer. Cela vous permet d&#8217;utiliser une large gamme de filtres pour trouver le fichier ou volume exact que vous souhaitez restaurer à partir de tous les fichiers de sauvegarde.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>
@@ -2272,17 +2274,17 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <div class="ulist">
 <ul>
 <li>
-<p>Lors de la restauration depuis Amazon S3, sélectionnez l&#8217;IPspace dans le cluster ONTAP où se trouve le volume de destination, entrez la clé d&#8217;accès et la clé secrète pour l&#8217;utilisateur créé pour donner l&#8217;accès au cluster ONTAP au compartiment S3, Il est également possible de choisir un terminal VPC privé pour sécuriser le transfert de données.</p>
+<p>Lors de la restauration depuis Amazon S3, sélectionnez l&#8217;IPspace dans le cluster ONTAP où se trouve le volume de destination, entrez la clé d&#8217;accès et la clé secrète pour l&#8217;utilisateur créé pour donner l&#8217;accès au cluster ONTAP au compartiment S3, Il est également possible de choisir un terminal VPC privé pour sécuriser le transfert de données. <a href="task-backup-onprem-to-aws.html#cluster-networking-requirements">"Reportez-vous aux détails de ces exigences"</a>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Lors de la restauration à partir d&#8217;Azure Blob, sélectionnez l&#8217;IPspace dans le cluster ONTAP où réside le volume de destination, puis choisissez un terminal privé pour le transfert de données sécurisé en sélectionnant le vnet et le sous-réseau.</p>
+<p>Lors de la restauration à partir d&#8217;Azure Blob, sélectionnez l&#8217;IPspace dans le cluster ONTAP où réside le volume de destination, puis choisissez un terminal privé pour le transfert de données sécurisé en sélectionnant le vnet et le sous-réseau. <a href="task-backup-onprem-to-azure.html#requirements">"Reportez-vous aux détails de ces exigences"</a>.</p>
 </li>
 <li>
-<p>Lors de la restauration à partir de Google Cloud Storage, sélectionnez l&#8217;IPspace dans le cluster ONTAP où réside le volume de destination, ainsi que la clé d&#8217;accès et la clé secrète pour accéder au stockage objet.</p>
+<p>Lors de la restauration à partir de Google Cloud Storage, sélectionnez l&#8217;IPspace dans le cluster ONTAP où réside le volume de destination, ainsi que la clé d&#8217;accès et la clé secrète pour accéder au stockage objet. <a href="task-backup-onprem-to-gcp.html#requirements">"Reportez-vous aux détails de ces exigences"</a>.</p>
 </li>
 <li>
-<p>Lors d&#8217;une restauration à partir de StorageGRID, entrez le FQDN du serveur StorageGRID et le port que ONTAP doit utiliser pour la communication HTTPS avec StorageGRID, entrez la clé d&#8217;accès et la clé secrète nécessaires pour accéder au stockage objet, et l&#8217;IPspace dans le cluster ONTAP où réside le volume de destination.</p>
+<p>Lors d&#8217;une restauration à partir de StorageGRID, entrez le FQDN du serveur StorageGRID et le port que ONTAP doit utiliser pour la communication HTTPS avec StorageGRID, entrez la clé d&#8217;accès et la clé secrète nécessaires pour accéder au stockage objet, et l&#8217;IPspace dans le cluster ONTAP où réside le volume de destination. <a href="task-backup-onprem-private-cloud.html#requirements">"Reportez-vous aux détails de ces exigences"</a>.</p>
 </li>
 </ul>
 </div>
@@ -2296,6 +2298,7 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 </ol>
 </div>
 <div class="paragraph">
+<div class="title">Résultats</div>
 <p>Le volume, le dossier ou le(s) fichier(s) sont restaurés et vous revenez au tableau de bord de restauration pour vérifier la progression de l&#8217;opération de restauration. Vous pouvez également cliquer sur l&#8217;onglet <strong>surveillance des travaux</strong> pour voir la progression de la restauration.</p>
 </div>
 <div class="paragraph">

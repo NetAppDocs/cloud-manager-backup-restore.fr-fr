@@ -718,6 +718,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1178,6 +1180,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/azure/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1284,7 +1293,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 19:15:28 +0000">11/16/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1363,6 +1372,9 @@
 </div>
 <div class="paragraph">
 <p>Si vous devez apporter des modifications, développez simplement l&#8217;option et apportez les modifications nécessaires. Toutes les opérations de sauvegarde après la modification utiliseront les nouvelles valeurs.</p>
+</div>
+<div class="paragraph">
+<p>Certaines options ne sont plus disponibles en fonction de la version de ONTAP sur le cluster source et en fonction du fournisseur cloud où résident les sauvegardes.</p>
 </div>
 </div>
 </div>
@@ -1457,10 +1469,10 @@
 <h2 id="indiquer-si-les-copies-snapshot-historiques-sont-exportées-en-tant-que-fichiers-de-sauvegarde">Indiquer si les copies Snapshot historiques sont exportées en tant que fichiers de sauvegarde</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>S&#8217;il existe des copies Snapshot locales pour les volumes correspondant au libellé de planification des sauvegardes que vous utilisez dans cet environnement de travail (par exemple, quotidienne, hebdomadaire, etc.), vous pouvez exporter ces snapshots historiques vers le stockage objet sous forme de fichiers de sauvegarde. Vous pouvez ainsi initialiser vos sauvegardes dans le cloud en transférant vos anciennes copies Snapshot vers la copie de sauvegarde de base.</p>
+<p>S&#8217;il existe des copies Snapshot locales pour les volumes correspondant au libellé de planification des sauvegardes que vous utilisez dans cet environnement de travail (par exemple, quotidienne, hebdomadaire, etc.), vous pouvez exporter ces snapshots historiques vers le stockage objet sous forme de fichiers de sauvegarde. Cela vous permet d&#8217;initialiser vos sauvegardes dans le cloud en déplaçant d&#8217;anciennes copies Snapshot vers la copie de sauvegarde de base.</p>
 </div>
 <div class="paragraph">
-<p>Notez que cette option s&#8217;applique uniquement aux nouveaux fichiers de sauvegarde pour les nouveaux volumes et qu&#8217;elle n&#8217;est pas prise en charge avec les volumes de protection des données (DP).</p>
+<p>Notez que cette option s&#8217;applique uniquement aux nouveaux fichiers de sauvegarde pour les nouveaux volumes de lecture/écriture et qu&#8217;elle n&#8217;est pas prise en charge avec les volumes DP (protection des données).</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./media/screenshot_backup_edit_export_snapshots.png" alt="Capture d&#8217;écran de l&#8217;entrée Exporter des copies Snapshot existantes dans la page Paramètres avancés."></span></p>

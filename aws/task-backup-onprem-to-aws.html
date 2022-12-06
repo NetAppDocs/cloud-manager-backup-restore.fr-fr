@@ -718,6 +718,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1178,6 +1180,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/aws/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1284,7 +1293,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-17 18:31:41 +0000">11/17/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1311,42 +1320,39 @@
 <p>Suivez ces étapes pour démarrer rapidement. Les sections suivantes de cette rubrique contiennent des informations détaillées sur chaque étape.</p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png" alt="Une seule"></span> Identifier la méthode de configuration que vous utiliserez</div>
 <p>Indiquez si vous connecterez votre cluster ONTAP sur site directement à AWS S3 via Internet public, ou si vous utiliserez un VPN ou AWS Direct Connect et acheminez le trafic via une interface de terminal VPC privée vers AWS S3.</p>
 </div>
-<div class="literalblock quick-margin-para">
-<div class="content">
-<pre>diagrams for connection options,Voir les méthodes de connexion disponibles.</pre>
-</div>
+<div class="paragraph quick-margin-para">
+<p><a href="#schémas-réseau-pour-les-options-de-connexion">Voir les méthodes de connexion disponibles.</a></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png" alt="Deux"></span> Préparez votre connecteur BlueXP</div>
 <p>Si votre connecteur est déjà déployé dans votre VPC AWS ou sur votre site, cela vous permettra d&#8217;être configuré. Si ce n&#8217;est pas le cas, vous devrez créer un connecteur pour sauvegarder les données ONTAP dans le stockage AWS S3. Vous devez également personnaliser les paramètres réseau du connecteur pour qu&#8217;il puisse se connecter à AWS S3.</p>
 </div>
-<div class="literalblock quick-margin-para">
-<div class="content">
-<pre>your Connector,Découvrez comment créer un connecteur et comment définir les paramètres réseau requis.</pre>
-</div>
+<div class="paragraph quick-margin-para">
+<p><a href="#préparez-votre-connecteur">Découvrez comment créer un connecteur et comment définir les paramètres réseau requis.</a></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png" alt="Trois"></span> Préparez votre cluster ONTAP sur site</div>
 <p>Découvrez votre cluster ONTAP dans BlueXP, vérifiez que le cluster répond à ses exigences minimales et personnalisez les paramètres réseau pour que le cluster puisse se connecter à AWS S3.</p>
 </div>
-<div class="literalblock quick-margin-para">
-<div class="content">
-<pre>your ONTAP cluster,Découvrez comment préparer votre cluster ONTAP sur site.</pre>
-</div>
+<div class="paragraph quick-margin-para">
+<p><a href="#préparez-votre-cluster-ontap">Découvrez comment préparer votre cluster ONTAP sur site.</a></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png" alt="Quatre"></span> Préparez Amazon S3 en tant que cible de sauvegarde</div>
 <p>Configurez les autorisations pour le connecteur afin de créer et de gérer le compartiment S3. Vous devez également configurer des autorisations pour le cluster ONTAP sur site afin qu&#8217;il puisse lire et écrire les données dans le compartiment S3.</p>
 </div>
 <div class="paragraph quick-margin-para">
-<p>Vous pouvez également configurer vos propres clés gérées sur mesure pour le chiffrement des données au lieu d&#8217;utiliser les clés de chiffrement Amazon S3 par défaut.  your AWS environment,Découvrez comment préparer votre environnement AWS S3 pour recevoir des sauvegardes ONTAP.</p>
+<p>Vous pouvez également configurer vos propres clés gérées sur mesure pour le chiffrement des données au lieu d&#8217;utiliser les clés de chiffrement Amazon S3 par défaut. <a href="#préparez-votre-environnement-aws">Découvrez comment préparer votre environnement AWS S3 pour recevoir des sauvegardes ONTAP.</a></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png" alt="Cinq"></span> Activation de Cloud Backup sur le système</div>
 <p>Sélectionnez l&#8217;environnement de travail et cliquez sur <strong>Activer &gt; volumes de sauvegarde</strong> en regard du service de sauvegarde et de restauration dans le volet droit. Suivez ensuite l&#8217;assistant d&#8217;installation pour définir la stratégie de sauvegarde par défaut et le nombre de sauvegardes à conserver, puis sélectionnez les volumes à sauvegarder.</p>
 </div>
-<div class="literalblock quick-margin-para">
-<div class="content">
-<pre>Cloud Backup,Découvrez comment activer Cloud Backup sur vos volumes.</pre>
-</div>
+<div class="paragraph quick-margin-para">
+<p><a href="#activation-de-cloud-backup">Découvrez comment activer Cloud Backup sur vos volumes.</a></p>
 </div>
 </div>
 </div>
@@ -1438,7 +1444,7 @@
 <p><a href="task-backup-onprem-to-aws.html#set-up-s3-permissions">"Assurez-vous que le connecteur dispose des autorisations nécessaires pour gérer le compartiment S3"</a>.</p>
 </li>
 <li>
-<p>Si vous disposez d&#8217;une connexion Direct Connect ou VPN entre votre cluster ONTAP et le VPC, et que vous souhaitez que la communication entre le connecteur et S3 reste dans votre réseau interne AWS (une connexion <strong>privée</strong>), vous devez activer une interface de terminal VPC vers S3.  your system for a private connection using a VPC endpoint interface,Découvrez comment configurer une interface de terminal VPC.</p>
+<p>Si vous disposez d&#8217;une connexion Direct Connect ou VPN entre votre cluster ONTAP et le VPC, et que vous souhaitez que la communication entre le connecteur et S3 reste dans votre réseau interne AWS (une connexion <strong>privée</strong>), vous devez activer une interface de terminal VPC vers S3. <a href="Configurez votre système pour une connexion privée à l&.html#8217;aide d&#8217;une interface de terminal VPC">Découvrez comment configurer une interface de terminal VPC.</a></p>
 </li>
 </ul>
 </div>
@@ -1514,7 +1520,7 @@
 <p>Mettre à jour les règles de pare-feu, si nécessaire, pour autoriser les connexions Cloud Backup entre ONTAP et le stockage objet via le port 443 et le trafic de résolution de nom entre le VM de stockage et le serveur DNS via le port 53 (TCP/UDP).</p>
 </li>
 <li>
-<p>Si vous utilisez un terminal VPC privé dans AWS pour la connexion S3, vous devez charger le certificat de terminal S3 dans le cluster ONTAP pour pouvoir utiliser HTTPS/443.  your system for a private connection using a VPC endpoint interface,Découvrez comment configurer une interface de terminal VPC et charger le certificat S3.</p>
+<p>Si vous utilisez un terminal VPC privé dans AWS pour la connexion S3, vous devez charger le certificat de terminal S3 dans le cluster ONTAP pour pouvoir utiliser HTTPS/443. <a href="Configurez votre système pour une connexion privée à l&.html#8217;aide d&#8217;une interface de terminal VPC">Découvrez comment configurer une interface de terminal VPC et charger le certificat S3.</a></p>
 </li>
 <li>
 <p><a href="task-backup-onprem-to-aws.html#set-up-s3-permissions">"Assurez-vous que votre cluster ONTAP possède des autorisations d&#8217;accès au compartiment S3"</a>.</p>
@@ -1598,7 +1604,7 @@
               "s3:GetBucketAcl",
               "s3:GetBucketPolicy",
               "s3:PutBucketPolicy",
-              "s3:PutBucketOwnershipControls"
+              "s3:PutBucketOwnershipControls",
               "s3:PutBucketPublicAccessBlock",
               "s3:PutEncryptionConfiguration",
               "s3:GetObjectVersionTagging",
@@ -1661,6 +1667,36 @@
             "Sid": "backupPolicy"
         }
     ]
+}
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": "arn:aws:s3:::netapp-backup*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject",
+                "s3:ListAllMyBuckets",
+                "s3:PutObjectTagging",
+                "s3:GetObjectTagging",
+                "s3:RestoreObject",
+                "s3:GetBucketObjectLockConfiguration",
+                "s3:GetObjectRetention",
+                "s3:PutBucketObjectLockConfiguration",
+                "s3:PutObjectRetention"
+            ],
+            "Resource": "arn:aws:s3:::netapp-backup*/*",
+            "Effect": "Allow"
+        }
+    ]
 }</code></pre>
 </div>
 </div>
@@ -1694,7 +1730,7 @@
 <p>Créez une configuration de point final de l&#8217;interface à l&#8217;aide de la console Amazon VPC ou de la ligne de commande. <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html" target="_blank" rel="noopener">"Pour plus d&#8217;informations sur l&#8217;utilisation d&#8217;AWS PrivateLink pour Amazon S3, reportez-vous à la section"</a>.</p>
 </li>
 <li>
-<p>Modifiez la configuration du groupe de sécurité associée au connecteur BlueXP. Vous devez modifier la règle en « personnalisé » (à partir de « accès complet ») et vous devez  up S3 permissions,Ajoutez les autorisations S3 à partir de la règle de sauvegarde comme indiqué précédemment.</p>
+<p>Modifiez la configuration du groupe de sécurité associée au connecteur BlueXP. Vous devez modifier la règle en « personnalisé » (à partir de « accès complet ») et vous devez <a href="#configurez-les-autorisations-s3">Ajoutez les autorisations S3 à partir de la règle de sauvegarde</a> comme indiqué précédemment.</p>
 <div class="paragraph">
 <p><span class="image"><img src="./media/screenshot_backup_aws_sec_group.png" alt="Copie d&#8217;écran du groupe de sécurité AWS associé au connecteur."></span></p>
 </div>
@@ -1853,7 +1889,7 @@ Please enter Certificate: Press &lt;Enter&gt; when done</code></pre>
 </div>
 </li>
 <li>
-<p>Si des copies Snapshot locales des volumes de cet environnement de travail correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidiennement, hebdomadaires, etc.), une invite supplémentaire s&#8217;affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d&#8217;assurer la protection la plus complète de vos volumes.</p>
+<p>Si dans cet environnement de travail contient des copies Snapshot locales pour les volumes en lecture/écriture qui correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidien, hebdomadaire, etc.), une invite supplémentaire s&#8217;affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d&#8217;assurer la protection la plus complète de vos volumes.</p>
 </li>
 </ul>
 </div>
@@ -1864,6 +1900,7 @@ Please enter Certificate: Press &lt;Enter&gt; when done</code></pre>
 </ol>
 </div>
 <div class="paragraph">
+<div class="title">Résultat</div>
 <p>Un compartiment S3 est créé automatiquement dans le compte de service indiqué par la clé d&#8217;accès S3 et la clé secrète que vous avez saisie, et les fichiers de sauvegarde y sont stockés. Le tableau de bord de sauvegarde de volume s&#8217;affiche pour vous permettre de surveiller l&#8217;état des sauvegardes. Vous pouvez également surveiller l&#8217;état des tâches de sauvegarde et de restauration à l&#8217;aide de l' <a href="task-monitor-backup-jobs.html" target="_blank" rel="noopener">"Panneau surveillance des tâches"</a>.</p>
 </div>
 </div>

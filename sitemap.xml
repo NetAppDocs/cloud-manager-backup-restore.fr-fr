@@ -15,7 +15,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/api-backup-restore.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -29,21 +29,21 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/concept-cloud-backup-policies.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/concept-kubernetes-backup-to-cloud.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/concept-ontap-backup-to-cloud.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -85,14 +85,21 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/reference-aws-backup-tiers.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/reference-azure-backup-tiers.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/reference-backup-cbs-db-in-dark-site.html</loc>
+      
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -100,6 +107,13 @@
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/reference-backup-multi-account-azure.html</loc>
       
       <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      
+    </url>
+  
+    <url>
+      <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/reference-google-backup-tiers.html</loc>
+      
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -113,7 +127,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore//search.html</loc>
       
-      <lastmod>2022-11-28T20:40:46+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:54+00:00</lastmod>
       
     </url>
   
@@ -155,70 +169,70 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-kubernetes-to-azure.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-kubernetes-to-gcp.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-kubernetes-to-s3.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-onprem-private-cloud.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-onprem-to-aws.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-onprem-to-azure.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-onprem-to-gcp.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-to-azure.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-to-gcp.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-to-s3.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -260,21 +274,21 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-discover-applications.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-get-help.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-licensing-cloud-backup.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -288,21 +302,21 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-manage-backup-settings-ontap.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-manage-backups-kubernetes.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-manage-backups-ontap.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -351,14 +365,14 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-restore-backups-kubernetes.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-restore-backups-ontap.html</loc>
       
-      <lastmod>2022-11-17T18:31:41+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
@@ -386,21 +400,21 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-restore-vm-data.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-support-registration.html</loc>
       
-      <lastmod>2022-11-28T20:40:30+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/whats-new.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
       
     </url>
   

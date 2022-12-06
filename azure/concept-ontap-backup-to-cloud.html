@@ -718,6 +718,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1178,6 +1180,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/azure/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1284,7 +1293,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 19:15:28 +0000">11/16/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1415,40 +1424,30 @@
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 26.3157%;">
-<col style="width: 34.7368%;">
-<col style="width: 38.9475%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Fichier de sauvegarde</th>
-<th class="tableblock halign-left valign-top" colspan="2">Environnement de travail de destination</th>
+<th class="tableblock halign-left valign-top">Emplacement du fichier de sauvegarde</th>
+<th class="tableblock halign-left valign-top">Destination Environnement de travail ifdef::aws[]</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Emplacement</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Restauration du volume</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Restauration de dossiers et de fichiers</strong> ifdef::aws[]</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Amazon S3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP sur le système ONTAP AWS sur site</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site AWS endif::aws[] ifdef::Azure[]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Blob d&#8217;Azure</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Azure</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Azure endif::Azure[] ifdef::gcp[]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Google Cloud Storage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Google</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Volumes ONTAP dans le système ONTAP sur site Google endif::gcp[]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">NetApp StorageGRID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Système ONTAP sur site</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Système ONTAP sur site</p></td>
 </tr>
 </tbody>
@@ -1480,11 +1479,51 @@
 </li>
 <li>
 <p>Volumes SnapLock Enterprise (requiert ONTAP 9.11.1 ou version ultérieure)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Les volumes de conformité SnapLock ne sont actuellement pas pris en charge.</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>Volumes FlexGroup (requiert ONTAP 9.12.1 ou version ultérieure)</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/cloud-manager-backup-restore/images/note.svg" alt="Note">
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Les volumes FlexGroup et SnapLock Compliance ne sont actuellement pas pris en charge.</p>
+<p><strong>Restrictions FlexGroup</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>La restauration de volume complet est prise en charge par les systèmes ONTAP sur site ; les systèmes Cloud Volumes ONTAP ne sont pas pris en charge actuellement.</p>
+</li>
+<li>
+<p>La restauration au niveau fichier est prise en charge à la fois pour les systèmes ONTAP et Cloud Volumes ONTAP sur site.</p>
+</li>
+<li>
+<p>La restauration des répertoires/dossiers n&#8217;est pas prise en charge actuellement.</p>
+</li>
+<li>
+<p>Les sauvegardes ne peuvent pas être déplacées vers le stockage d&#8217;archivage.</p>
+</li>
+<li>
+<p>Les sauvegardes ne peuvent pas utiliser le verrouillage des données et la protection contre les attaques par ransomware.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1530,7 +1569,7 @@
 <p>Les frais de service sont payés à NetApp et couvrent le coût de <em>créer</em> sauvegardes et de <em>restaurer</em> volumes ou fichiers à partir de ces sauvegardes. Vous ne payez que les données que vous protégez, calculées par la capacité logique utilisée source (<em>before</em> ONTAP before_ ONTAP) des volumes qui sont sauvegardés sur le stockage objet. Cette capacité est également connue sous le nom de téraoctets frontaux (FETB).</p>
 </div>
 <div class="paragraph">
-<p>Vous pouvez payer le service de sauvegarde de trois façons. La première option consiste à vous abonner à votre fournisseur cloud pour un paiement mensuel. La deuxième option consiste à obtenir un contrat annuel. La troisième option consiste à acheter des licences directement auprès de NetApp. Lire le ,Licences pour plus de détails.</p>
+<p>Vous pouvez payer le service de sauvegarde de trois façons. La première option consiste à vous abonner à votre fournisseur cloud pour un paiement mensuel. La deuxième option consiste à obtenir un contrat annuel. La troisième option consiste à acheter des licences directement auprès de NetApp. Lire le <a href="#licences">Licences</a> pour plus de détails.</p>
 </div>
 </div>
 </div>
@@ -1623,7 +1662,7 @@
 <h2 id="fonctionnement-de-cloud-backup">Fonctionnement de Cloud Backup</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Lorsque vous activez Cloud Backup sur un système ONTAP Cloud Volumes ONTAP ou sur site, le service effectue une sauvegarde complète de vos données. Les instantanés de volume ne sont pas inclus dans l&#8217;image de sauvegarde. Après la sauvegarde initiale, toutes les sauvegardes supplémentaires sont incrémentielles, ce qui signifie que seuls les blocs modifiés et les nouveaux blocs sont sauvegardés. Le trafic réseau est ainsi réduit au minimum. Cloud Backup repose sur le <a href="https://docs.netapp.com/us-en/ontap/concepts/snapmirror-cloud-backups-object-store-concept.html">"Technologie NetApp SnapMirror Cloud"</a>.</p>
+<p>Lorsque vous activez Cloud Backup sur un système ONTAP Cloud Volumes ONTAP ou sur site, le service effectue une sauvegarde complète de vos données. Les instantanés de volume ne sont pas inclus dans l&#8217;image de sauvegarde. Après la sauvegarde initiale, toutes les sauvegardes supplémentaires sont incrémentielles, ce qui signifie que seuls les blocs modifiés et les nouveaux blocs sont sauvegardés. Le trafic réseau est ainsi réduit au minimum. Cloud Backup repose sur le <a href="https://docs.netapp.com/us-en/ontap/concepts/snapmirror-cloud-backups-object-store-concept.html" target="_blank" rel="noopener">"Technologie NetApp SnapMirror Cloud"</a>.</p>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -1873,13 +1912,13 @@ DataLock ne peut pas être activé si vous effectuez le Tiering des sauvegardes 
 </div>
 </li>
 <li>
+<p>La sauvegarde MetroCluster (MCC) est prise en charge à partir d&#8217;un système secondaire ONTAP uniquement : MCC &gt; SnapMirror &gt; ONTAP &gt; sauvegarde dans le cloud &gt; stockage objet.</p>
+</li>
+<li>
 <p>La sauvegarde de volume ad-hoc à l&#8217;aide du bouton <strong>Backup Now</strong> n&#8217;est pas prise en charge sur les volumes de protection des données.</p>
 </li>
 <li>
 <p>Les configurations SM-BC ne sont pas prises en charge.</p>
-</li>
-<li>
-<p>La sauvegarde MetroCluster (MCC) est prise en charge à partir d&#8217;un système secondaire ONTAP uniquement : MCC &gt; SnapMirror &gt; ONTAP &gt; sauvegarde dans le cloud &gt; stockage objet.</p>
 </li>
 <li>
 <p>ONTAP ne prend pas en charge la « fan-out » des relations SnapMirror depuis un volume unique vers plusieurs magasins d&#8217;objets. Par conséquent, cette configuration n&#8217;est pas prise en charge par Cloud Backup.</p>

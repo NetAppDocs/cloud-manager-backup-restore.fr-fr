@@ -713,6 +713,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1236,6 +1238,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1342,7 +1351,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 19:15:28 +0000">11/16/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1403,7 +1412,7 @@ Ne gérez ni ne modifiez pas de fichiers de sauvegarde directement depuis votre 
 <p>Vous pouvez activer les sauvegardes de tout nouveau volume s&#8217;ils ne sont pas actuellement sauvegardés. Vous pouvez également activer les sauvegardes de tous les volumes que vous avez précédemment désactivés.</p>
 </div>
 <div class="paragraph">
-<p>Vous pouvez désactiver les sauvegardes pour les volumes de manière à ce qu&#8217;aucune sauvegarde supplémentaire ne soit générée. Cela désactive également la restauration des données de volume à partir d&#8217;un fichier de sauvegarde. Cette opération vous permet en fait d&#8217;interrompre l&#8217;ensemble des activités de sauvegarde et de restauration pendant une période donnée. Toutes les sauvegardes existantes ne seront pas supprimées. Ainsi, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que vos sauvegardes utilisent, sauf si vous <a href="deleting-all-backup-files-for-a-volume">"supprimez les sauvegardes"</a>.</p>
+<p>Vous pouvez désactiver les sauvegardes pour les volumes de manière à ce qu&#8217;aucune sauvegarde supplémentaire ne soit générée. Cela désactive également la restauration des données de volume à partir d&#8217;un fichier de sauvegarde. Cette opération vous permet en fait d&#8217;interrompre l&#8217;ensemble des activités de sauvegarde et de restauration pendant une période donnée. Toutes les sauvegardes existantes ne seront pas supprimées. Ainsi, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que vos sauvegardes utilisent, sauf si vous <a href="Suppression de tous les fichiers de sauvegarde d&.html#8217;un volume">supprimez les sauvegardes</a>.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>
@@ -1502,10 +1511,13 @@ Ne gérez ni ne modifiez pas de fichiers de sauvegarde directement depuis votre 
 <p><a href="reference-azure-backup-tiers.html">"En savoir plus sur l&#8217;utilisation du stockage d&#8217;archives Azure"</a>.</p>
 </div>
 <div class="paragraph">
+<p><a href="reference-google-backup-tiers.html">"En savoir plus sur l&#8217;utilisation du stockage d&#8217;archives Google"</a>. (Nécessite ONTAP 9.12.1.)</p>
+</div>
+<div class="paragraph">
 <p>+<span class="image"><img src="./media/screenshot_backup_modify_policy_page2.png" alt="Copie d&#8217;écran montrant les paramètres de Tiering d&#8217;archivage pour Cloud Backup."></span></p>
 </div>
 <div class="paragraph">
-<p>+ Notez que tous les fichiers de sauvegarde qui ont été hiérarchisés vers le stockage d&#8217;archivage sont conservés dans ce niveau si vous arrêtez le Tiering des sauvegardes vers l&#8217;archivage - ils ne sont pas automatiquement déplacés vers le niveau standard.</p>
+<p>+ Notez que tous les fichiers de sauvegarde qui ont été hiérarchisés vers le stockage d&#8217;archivage sont conservés dans ce niveau si vous arrêtez le Tiering des sauvegardes vers l&#8217;archivage - ils ne sont pas automatiquement déplacés vers le niveau standard. Seules les sauvegardes de volume nouveaux résident dans le niveau standard.</p>
 </div>
 </div>
 </div>
@@ -1516,7 +1528,7 @@ Ne gérez ni ne modifiez pas de fichiers de sauvegarde directement depuis votre 
 <p>Lorsque vous activez Cloud Backup pour un environnement de travail, tous les volumes que vous sélectionnez initialement sont sauvegardés à l&#8217;aide de la stratégie de sauvegarde par défaut que vous avez définie. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes ayant des objectifs de point de récupération différents, vous pouvez créer des règles supplémentaires pour ce cluster et les affecter à d&#8217;autres volumes.</p>
 </div>
 <div class="paragraph">
-<p>Si vous souhaitez appliquer une nouvelle stratégie de sauvegarde à certains volumes d&#8217;un environnement de travail, vous devez d&#8217;abord ajouter la stratégie de sauvegarde à l&#8217;environnement de travail. C&#8217;est alors possible  the policy assigned to existing volumes,appliquer la policy aux volumes de cet environnement de travail.</p>
+<p>Si vous souhaitez appliquer une nouvelle stratégie de sauvegarde à certains volumes d&#8217;un environnement de travail, vous devez d&#8217;abord ajouter la stratégie de sauvegarde à l&#8217;environnement de travail. C&#8217;est alors possible <a href="#modification-de-la-règle-attribuée-aux-volumes-existants">appliquer la policy aux volumes de cet environnement de travail</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1578,6 +1590,9 @@ Ne gérez ni ne modifiez pas de fichiers de sauvegarde directement depuis votre 
 <p><a href="reference-azure-backup-tiers.html">"En savoir plus sur l&#8217;utilisation du stockage d&#8217;archives Azure"</a>.</p>
 </div>
 <div class="paragraph">
+<p><a href="reference-google-backup-tiers.html">"En savoir plus sur l&#8217;utilisation du stockage d&#8217;archives Google"</a>. (Nécessite ONTAP 9.12.1.)</p>
+</div>
+<div class="paragraph">
 <p>+<span class="image"><img src="./media/screenshot_backup_modify_policy_page2.png" alt="Copie d&#8217;écran montrant les paramètres de Tiering d&#8217;archivage pour Cloud Backup."></span></p>
 </div>
 </div>
@@ -1589,7 +1604,7 @@ Ne gérez ni ne modifiez pas de fichiers de sauvegarde directement depuis votre 
 <p>Vous pouvez modifier la stratégie de sauvegarde attribuée à vos volumes existants si vous souhaitez modifier la fréquence des sauvegardes ou si vous souhaitez modifier la valeur de rétention.</p>
 </div>
 <div class="paragraph">
-<p>Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister.  a new backup policy,Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail.</p>
+<p>Notez que la règle que vous souhaitez appliquer aux volumes doit déjà exister. <a href="Ajout d&.html#8217;une nouvelle politique de sauvegarde">Découvrez comment ajouter une nouvelle stratégie de sauvegarde pour un environnement de travail</a>.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>
@@ -1791,7 +1806,7 @@ Si vous prévoyez de supprimer un environnement ou un cluster de travail qui dis
 <div class="sect2">
 <h3 id="suppression-de-tous-les-fichiers-de-sauvegarde-dun-environnement-de-travail">Suppression de tous les fichiers de sauvegarde d&#8217;un environnement de travail</h3>
 <div class="paragraph">
-<p>La suppression de toutes les sauvegardes d&#8217;un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d&#8217;un environnement de travail, vous pouvez désactiver les sauvegardes  Cloud Backup for a working environment,comme décrit ici.</p>
+<p>La suppression de toutes les sauvegardes d&#8217;un environnement de travail ne désactive pas les futures sauvegardes des volumes de cet environnement de travail. Si vous souhaitez arrêter la création de sauvegardes de tous les volumes d&#8217;un environnement de travail, vous pouvez désactiver les sauvegardes <a href="#désactivation-de-cloud-backup-pour-un-environnement-de-travail">comme décrit ici</a>.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>
@@ -1820,7 +1835,7 @@ Si vous prévoyez de supprimer un environnement ou un cluster de travail qui dis
 <p>La suppression de toutes les sauvegardes d&#8217;un volume désactive également les futures sauvegardes de ce volume.</p>
 </div>
 <div class="paragraph">
-<p>C&#8217;est possible  and disabling backups of volumes,relancez les sauvegardes pour le volume À tout moment à partir de la page gérer les sauvegardes.</p>
+<p>C&#8217;est possible <a href="#activation-et-désactivation-des-sauvegardes-des-volumes">relancez les sauvegardes pour le volume</a> À tout moment à partir de la page gérer les sauvegardes.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>
@@ -1957,7 +1972,7 @@ Une fois la relation supprimée, vous ne pouvez pas supprimer des fichiers de sa
 <p>La désactivation de Cloud Backup pour un environnement de travail désactive les sauvegardes de chaque volume du système et désactive également la restauration d&#8217;un volume. Les sauvegardes existantes ne seront pas supprimées. Cela ne désinscrit pas le service de sauvegarde de cet environnement de travail, car il vous permet de suspendre l&#8217;ensemble de l&#8217;activité de sauvegarde et de restauration pendant une période donnée.</p>
 </div>
 <div class="paragraph">
-<p>Notez que vous continuerez d&#8217;être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous  all backup files for a working environment,supprimez les sauvegardes.</p>
+<p>Notez que vous continuerez d&#8217;être facturé par votre fournisseur cloud pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf si vous <a href="Suppression de tous les fichiers de sauvegarde d&.html#8217;un environnement de travail">supprimez les sauvegardes</a>.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>

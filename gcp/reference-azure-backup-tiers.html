@@ -718,6 +718,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1171,6 +1173,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/gcp/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1277,7 +1286,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 19:15:28 +0000">11/16/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1301,7 +1310,7 @@
 <p>Lorsque les fichiers de sauvegarde sont créés initialement, ils sont stockés dans le niveau d&#8217;accès <em>Cool</em>. Il est optimisé pour le stockage des données rarement utilisées, mais à la demande, il est possible d&#8217;y accéder immédiatement.</p>
 </div>
 <div class="paragraph">
-<p>Si vos clusters source exécutent ONTAP 9.10.1 ou version ultérieure, vous pouvez choisir de classer les sauvegardes entre <em>Cool</em> et <em>Azure Archive</em> Storage après un certain nombre de jours (généralement plus de 30 jours) afin d&#8217;optimiser les coûts. Vous n&#8217;avez pas accès immédiatement aux données de ce niveau quand vous en avez besoin. Par conséquent, vos coûts de récupération sont plus élevés. Vous devez donc déterminer la fréquence à laquelle vous devrez restaurer les données à partir de ces fichiers de sauvegarde archivés. Reportez-vous à la section suivante sur  data from archival storage,restauration des données à partir du stockage d&#8217;archivage.</p>
+<p>Si vos clusters source exécutent ONTAP 9.10.1 ou version ultérieure, vous pouvez choisir de classer les sauvegardes entre <em>Cool</em> et <em>Azure Archive</em> Storage après un certain nombre de jours (généralement plus de 30 jours) afin d&#8217;optimiser les coûts. Vous n&#8217;avez pas accès immédiatement aux données de ce niveau quand vous en avez besoin. Par conséquent, vos coûts de récupération sont plus élevés. Vous devez donc déterminer la fréquence à laquelle vous devrez restaurer les données à partir de ces fichiers de sauvegarde archivés. Reportez-vous à la section suivante sur <a href="Restauration des données à partir du stockage d&.html#8217;archivage">restauration des données à partir du stockage d&#8217;archivage</a>.</p>
 </div>
 <div class="paragraph">
 <p>Notez que lorsque vous configurez Cloud Backup avec ce type de règle de cycle de vie, vous ne devez pas configurer de règles de cycle de vie lors de la configuration du conteneur dans votre compte Azure.</p>

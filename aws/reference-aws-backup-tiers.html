@@ -718,6 +718,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1178,6 +1180,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/aws/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1284,7 +1293,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 19:15:28 +0000">11/16/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1308,7 +1317,7 @@
 <p>Lorsque des fichiers de sauvegarde sont créés initialement, ils sont stockés dans le stockage S3 <em>Standard</em>. Il est optimisé pour stocker les données peu utilisées, mais vous pouvez également y accéder immédiatement. Après 30 jours, les sauvegardes passent à la classe de stockage S3 <em>Standard-Infrequent Access</em> pour réduire les coûts.</p>
 </div>
 <div class="paragraph">
-<p>Si vos clusters source exécutent ONTAP 9.10.1 ou version ultérieure, vous pouvez choisir de classer les sauvegardes vers un stockage <em>S3 Glacier</em> ou <em>S3 Glacier Deep Archive</em> après un certain nombre de jours (généralement plus de 30 jours) pour optimiser les coûts. Les données de ces niveaux ne sont pas accessibles immédiatement lorsque cela s&#8217;avère nécessaire. Par conséquent, les coûts de récupération sont plus élevés, vous devez déterminer la fréquence à laquelle vous devrez peut-être restaurer les données à partir de ces fichiers de sauvegarde archivés. Reportez-vous à la section à propos de  data from archival storage,restauration des données à partir du stockage d&#8217;archivage.</p>
+<p>Si vos clusters source exécutent ONTAP 9.10.1 ou version ultérieure, vous pouvez choisir de classer les sauvegardes vers un stockage <em>S3 Glacier</em> ou <em>S3 Glacier Deep Archive</em> après un certain nombre de jours (généralement plus de 30 jours) pour optimiser les coûts. Les données de ces niveaux ne sont pas accessibles immédiatement lorsque cela s&#8217;avère nécessaire. Par conséquent, les coûts de récupération sont plus élevés, vous devez déterminer la fréquence à laquelle vous devrez peut-être restaurer les données à partir de ces fichiers de sauvegarde archivés. Reportez-vous à la section à propos de <a href="Restauration des données à partir du stockage d&.html#8217;archivage">restauration des données à partir du stockage d&#8217;archivage</a>.</p>
 </div>
 <div class="paragraph">
 <p>Si vous choisissez <em>S3 Glacier</em> ou <em>S3 Glacier Deep Archive</em> dans votre première stratégie de sauvegarde lors de l&#8217;activation de Cloud Backup, ce Tier sera le seul niveau d&#8217;archivage disponible pour les futures stratégies de sauvegarde de ce cluster. Si vous sélectionnez aucun niveau d&#8217;archivage dans votre première stratégie de sauvegarde, alors <em>S3 Glacier</em> sera votre seule option d&#8217;archivage pour les futures stratégies.</p>

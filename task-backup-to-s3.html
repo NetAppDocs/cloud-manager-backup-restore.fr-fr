@@ -713,6 +713,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1236,6 +1238,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1342,7 +1351,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-17 18:31:41 +0000">11/17/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1365,8 +1374,8 @@
 <div class="paragraph">
 <p>Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu&#8217;aux sections restantes pour obtenir plus de détails.</p>
 </div>
-<div class="ulist">
-<div class="title">&lt;span class=« image »&gt;&lt;img src="<a href="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"" class="bare">https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"</a> alt=« one »&gt;&lt;/span&gt; Vérifiez la prise en charge de votre configuration</div>
+<div class="ulist quick-margin-list">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png" alt="Une seule"></span> Vérifiez la prise en charge de votre configuration</div>
 <ul>
 <li>
 <p>Vous exécutez Cloud Volumes ONTAP 9.7P5 ou une version ultérieure dans AWS.</p>
@@ -1382,8 +1391,8 @@
 </li>
 </ul>
 </div>
-<div class="ulist">
-<div class="title">&lt;span class=« image »&gt;&lt;img src="<a href="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png"" class="bare">https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png"</a> alt=« deux »&gt;&lt;/span&gt; Activer Cloud Backup sur votre nouveau système ou votre système existant</div>
+<div class="ulist quick-margin-list">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png" alt="Deux"></span> Activation de Cloud Backup sur votre système nouveau ou existant</div>
 <ul>
 <li>
 <p>Nouveaux systèmes : Cloud Backup est activé par défaut dans l&#8217;assistant de l&#8217;environnement de travail. Assurez-vous de conserver l&#8217;option activée.</p>
@@ -1397,12 +1406,14 @@
 </ul>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png" alt="Trois"></span> Entrez les détails du fournisseur</div>
 <p>Sélectionnez le compte AWS et la région dans laquelle vous souhaitez créer les sauvegardes. Vous pouvez également choisir votre propre clé gérée par le client pour le chiffrement des données au lieu d&#8217;utiliser la clé de chiffrement Amazon S3 par défaut.</p>
 </div>
 <div class="paragraph quick-margin-para">
 <p><span class="image"><img src="./media/screenshot_backup_provider_settings_aws.png" alt="Une copie d&#8217;écran présente les informations détaillées du fournisseur cloud lors de la sauvegarde de volumes depuis un système Cloud Volumes ONTAP vers AWS S3."></span></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png" alt="Quatre"></span> Définissez la stratégie de sauvegarde par défaut</div>
 <p>La règle par défaut sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes de chaque volume. Passage à des sauvegardes toutes les heures, tous les jours, toutes les semaines, tous les mois ou tous les ans vous pouvez également sélectionner l&#8217;une des règles définies par le système qui offrent plus d&#8217;options. Vous pouvez également modifier le nombre de copies de sauvegarde à conserver.</p>
 </div>
 <div class="paragraph quick-margin-para">
@@ -1415,6 +1426,7 @@
 <p><span class="image"><img src="./media/screenshot_backup_policy_aws.png" alt="Capture d&#8217;écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification de sauvegarde et la période de conservation."></span></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png" alt="Cinq"></span> Sélectionnez les volumes à sauvegarder</div>
 <p>Identifiez les volumes que vous souhaitez sauvegarder à l&#8217;aide de la stratégie de sauvegarde par défaut dans la page Sélectionner les volumes. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes, vous pouvez créer des règles supplémentaires et les appliquer ultérieurement aux volumes.</p>
 </div>
 </div>
@@ -1430,6 +1442,9 @@
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./media/diagram_cloud_backup_cvo_aws.png" alt="Un diagramme montrant comment Cloud Backup communique avec les volumes des systèmes source et le stockage de destination où sont situés les fichiers de sauvegarde."></span></p>
+</div>
+<div class="paragraph">
+<p>Le terminal de passerelle VPC doit déjà exister dans votre VPC.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -1469,10 +1484,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Ajoutez les informations d&#8217;identification du compte AWS de destination dans BlueXP</p>
+<p>Ajoutez les informations d&#8217;identification du compte AWS de destination dans BlueXP. <a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-adding-aws-accounts.html#add-additional-credentials-to-a-connector">"Découvrez comment faire"</a>.</p>
 </li>
 <li>
-<p>Ajoutez les autorisations « s3:PutBuckePolicy » et « s3:PutBuckeOwnershipControls » au rôle IAM qui fournit le connecteur BlueXP avec les autorisations</p>
+<p>Ajoutez les autorisations « s3:PutBuckePolicy » et « s3:PutBuckeOwnershipControls » au rôle IAM qui fournit le connecteur BlueXP avec les autorisations.</p>
 </li>
 </ul>
 </div>
@@ -1483,7 +1498,7 @@
 <dd>
 <p>Vous pouvez choisir vos propres clés gérées par le client pour le chiffrement des données dans l&#8217;assistant d&#8217;activation au lieu d&#8217;utiliser les clés de chiffrement Amazon S3 par défaut. Dans ce cas, vous devrez déjà configurer les clés de cryptage gérées. <a href="https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-setting-up-kms.html" target="_blank" rel="noopener">"Découvrez comment utiliser vos propres touches"</a>.</p>
 </dd>
-<dt class="hdlist1">Autorisations AWS requises</dt>
+<dt class="hdlist1">Autorisations de connecteur AWS requises</dt>
 <dd>
 <p>Le rôle IAM qui fournit à BlueXP des autorisations doit inclure des autorisations S3 à partir des dernières <a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-aws.html" target="_blank" rel="noopener">"Politique BlueXP"</a>.</p>
 <div class="openblock">
@@ -1559,6 +1574,21 @@
 <div class="paragraph">
 <p>Si vous avez déployé le connecteur à l&#8217;aide de la version 3.9.21 ou ultérieure, ces autorisations doivent déjà faire partie du rôle IAM. Sinon, vous devrez ajouter les autorisations manquantes. En particulier les autorisations « athena » et « colle », car elles sont requises pour la recherche et la restauration.</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Autorisations d&#8217;accès Cloud Volumes ONTAP AWS requises</dt>
+<dd>
+<p>Lorsque votre système Cloud Volumes ONTAP exécute le logiciel ONTAP 9.12.1 ou version supérieure, le rôle IAM qui fournit cet environnement de travail avec des autorisations doit inclure un nouvel ensemble d&#8217;autorisations S3 spécifiquement pour la sauvegarde dans le cloud à partir des dernières versions <a href="https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-set-up-iam-roles.html" target="_blank" rel="noopener">"Politique de Cloud Volumes ONTAP"</a>.</p>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Si vous avez créé l&#8217;environnement de travail Cloud Volumes ONTAP à l&#8217;aide de BlueXP version 3.9.23 ou supérieure, ces autorisations doivent déjà faire partie du rôle IAM. Sinon, vous devrez ajouter les autorisations manquantes.</p>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1594,6 +1624,7 @@
 </ol>
 </div>
 <div class="paragraph">
+<div class="title">Résultat</div>
 <p>Cloud Backup est activé sur le système. Il sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes.</p>
 </div>
 </div>
@@ -1680,7 +1711,7 @@
 </div>
 </li>
 <li>
-<p>Si des copies Snapshot locales des volumes de cet environnement de travail correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidiennement, hebdomadaires, etc.), une invite supplémentaire s&#8217;affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d&#8217;assurer la protection la plus complète de vos volumes.</p>
+<p>Si dans cet environnement de travail contient des copies Snapshot locales pour les volumes en lecture/écriture qui correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidien, hebdomadaire, etc.), une invite supplémentaire s&#8217;affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d&#8217;assurer la protection la plus complète de vos volumes.</p>
 </li>
 </ul>
 </div>
@@ -1691,6 +1722,7 @@
 </ol>
 </div>
 <div class="paragraph">
+<div class="title">Résultat</div>
 <p>Un compartiment S3 est créé automatiquement dans le compte de service indiqué par la clé d&#8217;accès S3 et la clé secrète que vous avez saisie, et les fichiers de sauvegarde y sont stockés. Le tableau de bord de sauvegarde de volume s&#8217;affiche pour vous permettre de surveiller l&#8217;état des sauvegardes. Vous pouvez également surveiller l&#8217;état des tâches de sauvegarde et de restauration à l&#8217;aide de l' <a href="task-monitor-backup-jobs.html" target="_blank" rel="noopener">"Panneau surveillance des tâches"</a>.</p>
 </div>
 </div>

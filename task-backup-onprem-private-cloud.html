@@ -713,6 +713,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1236,6 +1238,13 @@
         Tiers d'accès d'archivage Azure pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Tiers de stockage d'archivage Google pris en charge"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/reference-google-backup-tiers.html">
+        Tiers de stockage d'archivage Google pris en charge
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1342,7 +1351,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-17 18:31:41 +0000">11/17/2022</time>
+    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
     
   
 
@@ -1368,8 +1377,8 @@
 <div class="paragraph">
 <p>Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu&#8217;aux sections restantes pour obtenir de plus amples informations.</p>
 </div>
-<div class="ulist">
-<div class="title">&lt;span class=« image »&gt;&lt;img src="<a href="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"" class="bare">https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png"</a> alt=« one »&gt;&lt;/span&gt; Vérifiez la prise en charge de votre configuration</div>
+<div class="ulist quick-margin-list">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png" alt="Une seule"></span> Vérifiez la prise en charge de votre configuration</div>
 <ul>
 <li>
 <p>Vous avez découvert le cluster sur site et l&#8217;avez ajouté à un environnement de travail dans BlueXP. Voir <a href="https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html" target="_blank" rel="noopener">"Découverte des clusters ONTAP"</a> pour plus d&#8217;informations.</p>
@@ -1409,18 +1418,21 @@
 </ul>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png" alt="Deux"></span> Activation de Cloud Backup sur le système</div>
 <p>Sélectionnez l&#8217;environnement de travail et cliquez sur <strong>Activer &gt; volumes de sauvegarde</strong> en regard du service de sauvegarde et de restauration dans le panneau droit, puis suivez l&#8217;assistant d&#8217;installation.</p>
 </div>
 <div class="paragraph quick-margin-para">
 <p><span class="image"><img src="./media/screenshot_backup_onprem_enable.png" alt="Capture d&#8217;écran présentant le bouton Activer la sauvegarde et la restauration disponible après la sélection d&#8217;un environnement de travail."></span></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png" alt="Trois"></span> Entrer les détails StorageGRID</div>
 <p>Sélectionnez StorageGRID comme fournisseur, puis entrez les informations du serveur StorageGRID et du compte de locataire S3. Vous devez également spécifier l&#8217;IPspace dans le cluster ONTAP où les volumes résident.</p>
 </div>
 <div class="paragraph quick-margin-para">
 <p><span class="image"><img src="./media/screenshot_backup_provider_settings_storagegrid.png" alt="Capture d&#8217;écran présentant les détails du fournisseur cloud lors de la sauvegarde de volumes d&#8217;un cluster ONTAP vers StorageGRID."></span></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png" alt="Quatre"></span> Définissez la stratégie de sauvegarde par défaut</div>
 <p>La règle par défaut sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes de chaque volume. Passage à des sauvegardes toutes les heures, tous les jours, toutes les semaines, tous les mois ou tous les ans vous pouvez également sélectionner l&#8217;une des règles définies par le système qui offrent plus d&#8217;options. Vous pouvez également modifier le nombre de copies de sauvegarde à conserver.</p>
 </div>
 <div class="paragraph quick-margin-para">
@@ -1430,6 +1442,7 @@
 <p><span class="image"><img src="./media/screenshot_backup_onprem_policy.png" alt="Capture d&#8217;écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification de sauvegarde et la période de conservation."></span></p>
 </div>
 <div class="paragraph quick-margin-para">
+<div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png" alt="Cinq"></span> Sélectionnez les volumes à sauvegarder</div>
 <p>Identifiez les volumes que vous souhaitez sauvegarder à l&#8217;aide de la stratégie de sauvegarde par défaut dans la page Sélectionner les volumes. Si vous souhaitez attribuer différentes stratégies de sauvegarde à certains volumes, vous pouvez créer des règles supplémentaires et les appliquer ultérieurement aux volumes.</p>
 </div>
 <div class="paragraph quick-margin-para">
@@ -1747,7 +1760,7 @@ Les licences PAYGO ne sont pas prises en charge lors de la sauvegarde des fichie
 </div>
 </li>
 <li>
-<p>Si des copies Snapshot locales des volumes de cet environnement de travail correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidiennement, hebdomadaires, etc.), une invite supplémentaire s&#8217;affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d&#8217;assurer la protection la plus complète de vos volumes.</p>
+<p>Si dans cet environnement de travail contient des copies Snapshot locales pour les volumes en lecture/écriture qui correspondent au libellé de la planification de sauvegarde que vous venez de sélectionner pour cet environnement de travail (par exemple, quotidien, hebdomadaire, etc.), une invite supplémentaire s&#8217;affiche « Exporter les copies Snapshot existantes vers le stockage objet en tant que copies de sauvegarde ». Cochez cette case si vous souhaitez que tous les snapshots historiques soient copiés dans le stockage objet en tant que fichiers de sauvegarde afin d&#8217;assurer la protection la plus complète de vos volumes.</p>
 </li>
 </ul>
 </div>
@@ -1758,6 +1771,7 @@ Les licences PAYGO ne sont pas prises en charge lors de la sauvegarde des fichie
 </ol>
 </div>
 <div class="paragraph">
+<div class="title">Résultat</div>
 <p>Un compartiment S3 est créé automatiquement dans le compte de service indiqué par la clé d&#8217;accès S3 et la clé secrète que vous avez saisie, et les fichiers de sauvegarde y sont stockés. Le tableau de bord de sauvegarde de volume s&#8217;affiche pour vous permettre de surveiller l&#8217;état des sauvegardes. Vous pouvez également surveiller l&#8217;état des tâches de sauvegarde et de restauration à l&#8217;aide de l' <a href="task-monitor-backup-jobs.html" target="_blank" rel="noopener">"Panneau surveillance des tâches"</a>.</p>
 </div>
 </div>
