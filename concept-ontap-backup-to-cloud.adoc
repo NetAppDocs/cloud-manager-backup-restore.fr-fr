@@ -404,15 +404,6 @@ La lecture des données de votre fournisseur de cloud peut s'accélérer et gén
 
 
 
-== Limites
-
-Voici un problème connu qui sera résolu dans une prochaine version :
-
-* Au cours d'une opération de restauration, si la sauvegarde a été créée sur un système exécutant ONTAP version 9.10.1 ou ultérieure et si le système sur lequel le volume est restauré exécute ONTAP version 9.10.0 ou antérieure, la restauration échoue en cas d'interruption du système ou, dans certains cas, de réussite de la restauration. mais le volume est corrompu.
-
-
-
-
 === Limites des sauvegardes
 
 * Pour effectuer le Tiering des anciens fichiers de sauvegarde dans un stockage d'archivage, le cluster exécute ONTAP 9.10.1 ou une version ultérieure. La restauration de volumes à partir de fichiers de sauvegarde qui résident dans un stockage d'archivage nécessite également que le cluster de destination exécute ONTAP 9.10.1+.
@@ -433,7 +424,7 @@ Voici un problème connu qui sera résolu dans une prochaine version :
 * La sauvegarde de volume ad-hoc à l'aide du bouton *Backup Now* n'est pas prise en charge sur les volumes de protection des données.
 * Les configurations SM-BC ne sont pas prises en charge.
 * ONTAP ne prend pas en charge la « fan-out » des relations SnapMirror depuis un volume unique vers plusieurs magasins d'objets. Par conséquent, cette configuration n'est pas prise en charge par Cloud Backup.
-* Le mode WORM/Compliance d'un magasin d'objets est actuellement pris en charge uniquement sur Amazon S3 et StorageGRID. Il s'agit de la fonctionnalité DataLock qui doit être gérée à l'aide des paramètres Cloud Backup.
+* Le mode WORM/Compliance d'un magasin d'objets est actuellement pris en charge uniquement sur Amazon S3 et StorageGRID. Il s'agit de la fonctionnalité DataLock, qui doit être gérée à l'aide des paramètres Cloud Backup.
 
 
 
@@ -445,8 +436,9 @@ Ces limitations s'appliquent à la fois aux méthodes de recherche et de restaur
 * Parcourir et restaurer peut restaurer jusqu'à 100 fichiers individuels à la fois.
 * La fonction de recherche et de restauration permet de restaurer 1 fichier à la fois.
 * Parcourir et restaurer et Rechercher et restaurer peut restaurer 1 dossier à la fois.
-* Le fichier en cours de restauration doit être dans la même langue que celle du volume de destination. Vous recevrez un message d'erreur si les langues ne sont pas les mêmes.
+* La restauration des volumes FlexGroup vers des volumes FlexVol, ou des volumes FlexVol vers des volumes FlexGroup n'est pas prise en charge.
 * La restauration au niveau des fichiers n'est pas prise en charge lors de l'utilisation du même compte avec différents systèmes BlueXP dans des sous-réseaux différents.
-* Vous ne pouvez pas restaurer des dossiers individuels si le fichier de sauvegarde réside dans le stockage d'archivage.
 * La restauration du niveau fichier à l'aide de la fonction Rechercher et restaurer n'est pas prise en charge lorsque le connecteur est installé sur un site sans accès à Internet (site sombre).
+* Vous ne pouvez pas restaurer des dossiers individuels si le fichier de sauvegarde réside dans le stockage d'archivage.
+* Le fichier en cours de restauration doit être dans la même langue que celle du volume de destination. Vous recevrez un message d'erreur si les langues ne sont pas les mêmes.
 

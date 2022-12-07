@@ -32,12 +32,12 @@ Il existe huit catégories de terminaux définis au sein du Cloud Backup Service
 
 == Pour commencer
 
-Pour commencer à utiliser les API Cloud Backup, vous devez obtenir un jeton d'utilisateur, votre ID de compte Cloud Central et votre ID Cloud Connector.
+Pour commencer à utiliser les API Cloud Backup, vous devez obtenir un jeton utilisateur, votre identifiant de compte BlueXP et l'ID connecteur BlueXP.
 
-Lorsque vous passez des appels API, vous ajoutez le jeton utilisateur dans l'en-tête autorisation et l'ID du connecteur de Cloud dans l'en-tête x-agent-ID. Vous devez utiliser l'ID de compte Cloud Central dans les API.
+Lorsque vous passez des appels API, vous ajoutez le jeton utilisateur dans l'en-tête autorisation et l'ID connecteur BlueXP dans l'en-tête x-agent-ID. Vous devez utiliser l'ID de compte BlueXP dans les API.
 
 .Étapes
-. Obtenez un jeton utilisateur auprès de NetApp Cloud Central.
+. Procurez-vous un jeton utilisateur sur le site Web NetApp BlueXP.
 +
 Veillez à générer le jeton de rafraîchissement à partir du lien suivant : https://services.cloud.netapp.com/refresh-token/. Le jeton d'actualisation est une chaîne alphanumérique que vous utiliserez pour générer un jeton utilisateur.
 
@@ -54,9 +54,9 @@ curl --location --request POST 'https://netapp-cloud-account.auth0.com/oauth/tok
 ----
 +
 
-NOTE: Le jeton utilisateur de NetApp Cloud Central a une date d'expiration. La réponse de l'API inclut un champ " expire_in " qui indique la date d'expiration du jeton. Pour actualiser le token, vous devez à nouveau appeler cette API.
+NOTE: Le token utilisateur du site Web BlueXP a une date d'expiration. La réponse de l'API inclut un champ " expire_in " qui indique la date d'expiration du jeton. Pour actualiser le token, vous devez à nouveau appeler cette API.
 
-. Obtenez votre ID de compte NetApp Cloud Central.
+. Obtenez votre identifiant de compte BlueXP.
 +
 [source, http]
 ----
@@ -99,10 +99,12 @@ Cette API renvoie une réponse comme suit. Vous pouvez récupérer l'ID de l'age
 
 == Exemple d'utilisation des API
 
-L'exemple suivant montre un appel d'API pour activer la sauvegarde dans l'environnement de travail avec une nouvelle politique dont les libellés sont définis tous les jours, toutes les heures ou toutes les semaines, et qui s'archive après les jours définis comme 180 jours, dans la région est-US-2 dans le cloud Azure. Notez que cela active la sauvegarde uniquement sur l'environnement de travail, mais qu'aucun volume n'est sauvegardé. Si vous choisissez « sauvegarde automatique activée » : true, tous les volumes déjà existants du système seront sauvegardés, plus les volumes futurs ajoutés.
+L'exemple suivant montre un appel d'API pour activer Cloud Backup dans un environnement de travail avec une nouvelle règle dont les libellés sont quotidiens, horaires et hebdomadaires, archivés après les jours définis sur 180 jours, dans la région est-US-2 dans le cloud Azure. Notez que cela n'active que la sauvegarde de l'environnement de travail, mais qu'aucun volume n'est sauvegardé.
+
+Si vous choisissez « auto-backup-enabled » : « true », tous les volumes déjà existants du système seront sauvegardés, de plus tous les volumes futurs seront également sauvegardés.
 
 .Demande d'API
-Nous utiliserons l'ID de compte Cloud Central `account-DpTFcxN3`, ID connecteur BlueXP `iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients`, et jeton utilisateur `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5rSXlPVFUzUWpZek1E…y6nyhBjwkeMwHc4ValobjUmju2x0xUH48g` dans cette commande.
+Vous verrez que nous utilisons l'ID de compte BlueXP `account-DpTFcxN3`, ID connecteur BlueXP `iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients`, et jeton utilisateur `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5rSXlPVFUzUWpZek1E…y6nyhBjwkeMwHc4ValobjUmju2x0xUH48g` dans cette commande.
 
 [source, http]
 ----
