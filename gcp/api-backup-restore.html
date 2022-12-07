@@ -1286,7 +1286,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
+    <time datetime="2022-12-07 15:53:42 +0000">12/07/2022</time>
     
   
 
@@ -1338,16 +1338,16 @@
 <h2 id="pour-commencer">Pour commencer</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Pour commencer à utiliser les API Cloud Backup, vous devez obtenir un jeton d&#8217;utilisateur, votre ID de compte Cloud Central et votre ID Cloud Connector.</p>
+<p>Pour commencer à utiliser les API Cloud Backup, vous devez obtenir un jeton utilisateur, votre identifiant de compte BlueXP et l&#8217;ID connecteur BlueXP.</p>
 </div>
 <div class="paragraph">
-<p>Lorsque vous passez des appels API, vous ajoutez le jeton utilisateur dans l&#8217;en-tête autorisation et l&#8217;ID du connecteur de Cloud dans l&#8217;en-tête x-agent-ID. Vous devez utiliser l&#8217;ID de compte Cloud Central dans les API.</p>
+<p>Lorsque vous passez des appels API, vous ajoutez le jeton utilisateur dans l&#8217;en-tête autorisation et l&#8217;ID connecteur BlueXP dans l&#8217;en-tête x-agent-ID. Vous devez utiliser l&#8217;ID de compte BlueXP dans les API.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Étapes</div>
 <ol class="arabic">
 <li>
-<p>Obtenez un jeton utilisateur auprès de NetApp Cloud Central.</p>
+<p>Procurez-vous un jeton utilisateur sur le site Web NetApp BlueXP.</p>
 <div class="paragraph">
 <p>Veillez à générer le jeton de rafraîchissement à partir du lien suivant : <a href="https://services.cloud.netapp.com/refresh-token/" class="bare">https://services.cloud.netapp.com/refresh-token/</a>. Le jeton d&#8217;actualisation est une chaîne alphanumérique que vous utiliserez pour générer un jeton utilisateur.</p>
 </div>
@@ -1369,14 +1369,14 @@
 <img src="/us-en/cloud-manager-backup-restore/images/note.svg" alt="Note">
 </td>
 <td class="content">
-Le jeton utilisateur de NetApp Cloud Central a une date d&#8217;expiration. La réponse de l&#8217;API inclut un champ " expire_in " qui indique la date d&#8217;expiration du jeton. Pour actualiser le token, vous devez à nouveau appeler cette API.
+Le token utilisateur du site Web BlueXP a une date d&#8217;expiration. La réponse de l&#8217;API inclut un champ " expire_in " qui indique la date d&#8217;expiration du jeton. Pour actualiser le token, vous devez à nouveau appeler cette API.
 </td>
 </tr>
 </table>
 </div>
 </li>
 <li>
-<p>Obtenez votre ID de compte NetApp Cloud Central.</p>
+<p>Obtenez votre identifiant de compte BlueXP.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-http" data-lang="http">GET 'https://cloudmanager.cloud.netapp.com/tenancy/account' -H 'authority: cloudmanager.cloud.netapp.com'
@@ -1424,11 +1424,14 @@ Header:
 <h2 id="exemple-dutilisation-des-api">Exemple d&#8217;utilisation des API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>L&#8217;exemple suivant montre un appel d&#8217;API pour activer la sauvegarde dans l&#8217;environnement de travail avec une nouvelle politique dont les libellés sont définis tous les jours, toutes les heures ou toutes les semaines, et qui s&#8217;archive après les jours définis comme 180 jours, dans la région est-US-2 dans le cloud Azure. Notez que cela active la sauvegarde uniquement sur l&#8217;environnement de travail, mais qu&#8217;aucun volume n&#8217;est sauvegardé. Si vous choisissez « sauvegarde automatique activée » : true, tous les volumes déjà existants du système seront sauvegardés, plus les volumes futurs ajoutés.</p>
+<p>L&#8217;exemple suivant montre un appel d&#8217;API pour activer Cloud Backup dans un environnement de travail avec une nouvelle règle dont les libellés sont quotidiens, horaires et hebdomadaires, archivés après les jours définis sur 180 jours, dans la région est-US-2 dans le cloud Azure. Notez que cela n&#8217;active que la sauvegarde de l&#8217;environnement de travail, mais qu&#8217;aucun volume n&#8217;est sauvegardé.</p>
+</div>
+<div class="paragraph">
+<p>Si vous choisissez « auto-backup-enabled » : « true », tous les volumes déjà existants du système seront sauvegardés, de plus tous les volumes futurs seront également sauvegardés.</p>
 </div>
 <div class="paragraph">
 <div class="title">Demande d&#8217;API</div>
-<p>Nous utiliserons l&#8217;ID de compte Cloud Central <code>account-DpTFcxN3</code>, ID connecteur BlueXP <code>iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients</code>, et jeton utilisateur <code>Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5rSXlPVFUzUWpZek1E…y6nyhBjwkeMwHc4ValobjUmju2x0xUH48g</code> dans cette commande.</p>
+<p>Vous verrez que nous utilisons l&#8217;ID de compte BlueXP <code>account-DpTFcxN3</code>, ID connecteur BlueXP <code>iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients</code>, et jeton utilisateur <code>Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5rSXlPVFUzUWpZek1E…y6nyhBjwkeMwHc4ValobjUmju2x0xUH48g</code> dans cette commande.</p>
 </div>
 <div class="listingblock">
 <div class="content">

@@ -1293,7 +1293,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
+    <time datetime="2022-12-07 15:53:42 +0000">12/07/2022</time>
     
   
 
@@ -1866,21 +1866,6 @@ DataLock ne peut pas être activé si vous effectuez le Tiering des sauvegardes 
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="limites">Limites</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Voici un problème connu qui sera résolu dans une prochaine version :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Au cours d&#8217;une opération de restauration, si la sauvegarde a été créée sur un système exécutant ONTAP version 9.10.1 ou ultérieure et si le système sur lequel le volume est restauré exécute ONTAP version 9.10.0 ou antérieure, la restauration échoue en cas d&#8217;interruption du système ou, dans certains cas, de réussite de la restauration. mais le volume est corrompu.</p>
-</li>
-</ul>
-</div>
 <div class="sect2">
 <h3 id="limites-des-sauvegardes">Limites des sauvegardes</h3>
 <div class="ulist">
@@ -1930,7 +1915,7 @@ DataLock ne peut pas être activé si vous effectuez le Tiering des sauvegardes 
 <p>ONTAP ne prend pas en charge la « fan-out » des relations SnapMirror depuis un volume unique vers plusieurs magasins d&#8217;objets. Par conséquent, cette configuration n&#8217;est pas prise en charge par Cloud Backup.</p>
 </li>
 <li>
-<p>Le mode WORM/Compliance d&#8217;un magasin d&#8217;objets est actuellement pris en charge uniquement sur Amazon S3 et StorageGRID. Il s&#8217;agit de la fonctionnalité DataLock qui doit être gérée à l&#8217;aide des paramètres Cloud Backup.</p>
+<p>Le mode WORM/Compliance d&#8217;un magasin d&#8217;objets est actuellement pris en charge uniquement sur Amazon S3 et StorageGRID. Il s&#8217;agit de la fonctionnalité DataLock, qui doit être gérée à l&#8217;aide des paramètres Cloud Backup.</p>
 </li>
 </ul>
 </div>
@@ -1952,16 +1937,19 @@ DataLock ne peut pas être activé si vous effectuez le Tiering des sauvegardes 
 <p>Parcourir et restaurer et Rechercher et restaurer peut restaurer 1 dossier à la fois.</p>
 </li>
 <li>
-<p>Le fichier en cours de restauration doit être dans la même langue que celle du volume de destination. Vous recevrez un message d&#8217;erreur si les langues ne sont pas les mêmes.</p>
+<p>La restauration des volumes FlexGroup vers des volumes FlexVol, ou des volumes FlexVol vers des volumes FlexGroup n&#8217;est pas prise en charge.</p>
 </li>
 <li>
 <p>La restauration au niveau des fichiers n&#8217;est pas prise en charge lors de l&#8217;utilisation du même compte avec différents systèmes BlueXP dans des sous-réseaux différents.</p>
 </li>
 <li>
+<p>La restauration du niveau fichier à l&#8217;aide de la fonction Rechercher et restaurer n&#8217;est pas prise en charge lorsque le connecteur est installé sur un site sans accès à Internet (site sombre).</p>
+</li>
+<li>
 <p>Vous ne pouvez pas restaurer des dossiers individuels si le fichier de sauvegarde réside dans le stockage d&#8217;archivage.</p>
 </li>
 <li>
-<p>La restauration du niveau fichier à l&#8217;aide de la fonction Rechercher et restaurer n&#8217;est pas prise en charge lorsque le connecteur est installé sur un site sans accès à Internet (site sombre).</p>
+<p>Le fichier en cours de restauration doit être dans la même langue que celle du volume de destination. Vous recevrez un message d&#8217;erreur si les langues ne sont pas les mêmes.</p>
 </li>
 </ul>
 </div>
