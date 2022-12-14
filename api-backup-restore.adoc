@@ -16,16 +16,17 @@ summary: 'Les fonctionnalités Cloud Backup disponibles via l"interface utilisat
 [role="lead"]
 Les fonctionnalités Cloud Backup disponibles via l'interface utilisateur web sont également disponibles via l'API RESTful.
 
-Il existe huit catégories de terminaux définis au sein du Cloud Backup Service :
+Il existe neuf catégories de terminaux définis dans Cloud Backup :
 
-* sauvegarde
-* catalogue
-* le cloud
-* travail
-* licence
-* restaurer
-* Restauration à un seul niveau fichier (SFR)
-* environnement de travail
+* backup : gère les opérations de sauvegarde des ressources cloud et sur site et récupère les détails des données de sauvegarde
+* Catalogue : gère la recherche de fichiers dans le catalogue indexé en fonction d'une requête (recherche et restauration)
+* Cloud - récupère des informations sur les différentes ressources du fournisseur de cloud à partir de BlueXP
+* Jobs : gère les entrées de détail de travail dans la base de données BlueXP
+* Licence - récupère la validité de la licence des environnements de travail à partir de BlueXP
+* analyse par ransomware : démarre une analyse par ransomware sur un fichier de sauvegarde spécifique
+* restaurer : permet d'effectuer des opérations de restauration au niveau du volume et du fichier
+* sfr - récupère les fichiers d'un fichier de sauvegarde pour des opérations de restauration uniques au niveau des fichiers (Browse & Restore)
+* environnement de travail : gère les stratégies de sauvegarde et configure le magasin d'objets de destination associé à un environnement de travail
 
 
 
@@ -60,7 +61,7 @@ NOTE: Le token utilisateur du site Web BlueXP a une date d'expiration. La répon
 +
 [source, http]
 ----
-GET 'https://cloudmanager.cloud.netapp.com/tenancy/account' -H 'authority: cloudmanager.cloud.netapp.com'
+GET 'https://api.bluexp.netapp.com/tenancy/account' -H 'authority: api.bluexp.netapp.com'
 Header:
 -H 'accept: application/json'
 -H 'accept-language: en-GB,en;q=0.9'
@@ -108,7 +109,7 @@ Vous verrez que nous utilisons l'ID de compte BlueXP `account-DpTFcxN3`, ID conn
 
 [source, http]
 ----
-curl --location --request POST 'https://cloudmanager.cloud.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v3/backup/working-environment/VsaWorkingEnvironment-99hPYEgk' \
+curl --location --request POST 'https://api.bluexp.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v3/backup/working-environment/VsaWorkingEnvironment-99hPYEgk' \
 --header 'x-agent-id: iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
@@ -150,7 +151,7 @@ curl --location --request POST 'https://cloudmanager.cloud.netapp.com/account/ac
 .Surveiller la réponse.
 [source, http]
 ----
-curl --location --request GET 'https://cloudmanager.cloud.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v1/job/1b34b6f6-8f43-40fb-9a52-485b0dfe893a' \
+curl --location --request GET 'https://api.bluexp.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v1/job/1b34b6f6-8f43-40fb-9a52-485b0dfe893a' \
 --header 'x-agent-id: iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \

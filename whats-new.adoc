@@ -22,9 +22,27 @@ Découvrez les nouveautés de Cloud Backup.
 
 
 
-=== Prise en charge de la classe de stockage d'archivage Google
+=== Modifications du point de terminaison d'accès Internet sortant du connecteur requises
 
-Les fichiers de sauvegarde sont initialement créés dans la classe de stockage Google Standard. Vous pouvez désormais choisir de transférer les anciennes sauvegardes vers le système de stockage Google Archive après un certain nombre de jours pour optimiser les coûts.
+Du fait d'un changement dans Cloud Backup, vous devez modifier les terminaux de connecteur suivants pour assurer la réussite des opérations de sauvegarde dans le cloud :
+
+[cols="50,50"]
+|===
+| Ancien terminal | Nouveau terminal 
+
+
+| https://cloudmanager.cloud.netapp.com[] | https://api.bluexp.netapp.com[] 
+
+
+| https://*.cloudmanager.cloud.netapp.com[] | https://*.api.bluexp.netapp.com[] 
+|===
+Consultez la liste complète des terminaux de votre https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-aws.html#outbound-internet-access["AWS"^], https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-gcp.html#outbound-internet-access["Google Cloud"^], ou https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-azure.html#outbound-internet-access["Azure"^] de cloud hybride.
+
+
+
+=== Prise en charge de la sélection de la classe de stockage d'archivage Google dans l'interface utilisateur
+
+Les fichiers de sauvegarde sont initialement créés dans la classe de stockage Google Standard. Vous pouvez désormais utiliser l'interface utilisateur de Cloud Backup pour transférer les anciennes sauvegardes vers le stockage Google Archive après un certain nombre de jours afin d'optimiser les coûts.
 
 Cette fonctionnalité est actuellement prise en charge par les clusters ONTAP sur site avec ONTAP 9.12.1 (ou version ultérieure). Elle n'est pas actuellement disponible pour les systèmes Cloud Volumes ONTAP.
 

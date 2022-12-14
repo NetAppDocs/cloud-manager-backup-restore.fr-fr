@@ -113,16 +113,19 @@ Vous pouvez restaurer un volume, un dossier ou des fichiers individuels depuis u
 
 [cols="50,50"]
 |===
-| Emplacement du fichier de sauvegarde destination Environnement de travail ifdef::aws[] | Amazon S3 
+| Emplacement du fichier de sauvegarde | Destination Environnement de travail ifdef::aws[] 
 
 
-| Cloud Volumes ONTAP dans le système ONTAP sur site AWS endif::aws[] ifdef::Azure[] | Blob d'Azure 
+| Amazon S3 | Cloud Volumes ONTAP dans le système ONTAP sur site AWS endif::aws[] ifdef::Azure[] 
 
 
-| Cloud Volumes ONTAP dans le système ONTAP sur site Azure endif::Azure[] ifdef::gcp[] | Google Cloud Storage 
+| Blob d'Azure | Cloud Volumes ONTAP dans le système ONTAP sur site Azure endif::Azure[] ifdef::gcp[] 
 
 
-| Cloud Volumes ONTAP dans le système ONTAP sur site Google endif::gcp[] | NetApp StorageGRID 
+| Google Cloud Storage | Cloud Volumes ONTAP dans le système ONTAP sur site Google endif::gcp[] 
+
+
+| NetApp StorageGRID | Système ONTAP sur site 
 |===
 Pour l'utilisation et la restauration, le connecteur peut être installé aux emplacements suivants :
 

@@ -113,13 +113,12 @@ Cloud Backup prend en charge plusieurs types de volumes :
 
 [NOTE]
 ====
-*Restrictions FlexGroup*:
+*Limitations de restauration de volume FlexGroup* :
 
-* La restauration de volume complet est prise en charge par les systèmes ONTAP sur site ; les systèmes Cloud Volumes ONTAP ne sont pas pris en charge actuellement.
+* La restauration de volume complet est prise en charge uniquement sur les systèmes ONTAP sur site (les systèmes Cloud Volumes ONTAP ne sont pas pris en charge actuellement).
 * La restauration au niveau fichier est prise en charge à la fois pour les systèmes ONTAP et Cloud Volumes ONTAP sur site.
 * La restauration des répertoires/dossiers n'est pas prise en charge actuellement.
-* Les sauvegardes ne peuvent pas être déplacées vers le stockage d'archivage.
-* Les sauvegardes ne peuvent pas utiliser le verrouillage des données et la protection contre les attaques par ransomware.
+* Actuellement, les volumes peuvent être restaurés sur un seul agrégat.
 
 
 ====
@@ -183,19 +182,19 @@ Vous pouvez payer le service de sauvegarde de trois façons. La première option
 Cloud Backup est disponible avec les modèles de consommation suivants :
 
 * *BYOL* : licence achetée auprès de NetApp et utilisable avec n'importe quel fournisseur cloud.
-* *PAYGO* : un abonnement horaire sur le marché de votre fournisseur de services clouds.
-* *Annuel* : contrat annuel sur le marché de votre fournisseur de services clouds.
+* *PAYGO* : un abonnement à l'heure sur le marché de votre fournisseur de services cloud.
+* *Annuel* : contrat annuel sur le marché de votre fournisseur cloud.
 
 
 [NOTE]
 ====
-Si vous achetez une licence BYOL auprès de NetApp, vous devez également vous abonner à l'offre PAYGO depuis le marché de votre fournisseur cloud. Votre licence est toujours facturée en premier, mais vous serez facturé à partir du tarif horaire sur le marché dans les cas suivants :
+Si vous achetez une licence BYOL auprès de NetApp, vous devez également vous abonner à l'offre PAYGO depuis le marché de votre fournisseur cloud. Votre licence est toujours facturée en premier, mais vous devrez payer à l'heure sur le marché dans les cas suivants :
 
 * Si vous dépassez votre capacité autorisée
 * Si la durée de votre licence expire
 
 
-Si vous disposez d'un contrat annuel sur un marché, l'ensemble de la consommation de Cloud Backup est facturée sur votre contrat. Vous ne pouvez pas combiner un contrat annuel de marché avec une licence BYOL.
+Si vous disposez d'un contrat annuel sur un marché, l'ensemble de la consommation de Cloud Backup est facturée sur votre contrat. Vous ne pouvez pas combiner un contrat annuel de vente avec un contrat BYOL.
 
 ====
 
@@ -212,7 +211,7 @@ link:task-licensing-cloud-backup.html#use-a-cloud-backup-byol-license["Découvre
 
 === Abonnement avec paiement à l'utilisation
 
-Cloud Backup propose un modèle de paiement à l'utilisation avec des licences basées sur la consommation. Après vous être abonné sur le marché de votre fournisseur cloud, vous payez par Gio pour les données sauvegardées, et aucun paiement initial d'​there. Votre fournisseur cloud vous facturé mensuellement.
+Cloud Backup propose un modèle de paiement à l'utilisation avec des licences basées sur la consommation. Après votre abonnement sur le marché de votre fournisseur cloud, vous payez par Gio pour les données sauvegardées, sans paiement initial. Votre fournisseur cloud vous facturé mensuellement.
 
 link:task-licensing-cloud-backup.html#use-a-cloud-backup-paygo-subscription["Découvrez comment configurer un abonnement avec paiement à l'utilisation"].
 
@@ -265,7 +264,7 @@ image:diagram_cloud_backup_general.png["Un diagramme montrant comment Cloud Back
 
 === L'emplacement des sauvegardes
 
-Les copies de sauvegarde sont stockées dans un magasin d'objets créé par BlueXP dans votre compte cloud. Il y a un magasin d'objets par cluster/environnement de travail, et BlueXP nomme le magasin d'objets comme suit : « netapp-backup-clusterUUID ». Veillez à ne pas supprimer ce magasin d'objets.
+Les copies de sauvegarde sont stockées dans un magasin d'objets créé par BlueXP dans votre compte cloud. Chaque cluster/environnement de travail est équipé d'un magasin d'objets, et BlueXP a indiqué le magasin d'objets comme suit : « netapp-backup-clusterUUID ». Veillez à ne pas supprimer ce magasin d'objets.
 
 ifdef::aws[]
 
@@ -411,9 +410,10 @@ La lecture des données de votre fournisseur de cloud peut s'accélérer et gén
 * Lors de la sauvegarde de volumes de protection des données (DP) :
 +
 ** Relations avec les libellés SnapMirror `app_consistent` et `all_source_snapshot` elles ne seront pas sauvegardées dans le cloud.
-** Si vous créez des copies Snapshot locales sur le volume de destination SnapMirror (indépendamment des étiquettes SnapMirror utilisées), ces snapshots ne seront pas déplacés vers le cloud en tant que sauvegardes. A ce moment-là, vous devrez créer une stratégie de snapshot avec les étiquettes souhaitées pour le volume DP source afin que Cloud Backup puisse les sauvegarder.
+** Si vous créez des copies Snapshot locales sur le volume de destination SnapMirror (indépendamment des étiquettes SnapMirror utilisées), ces snapshots ne seront pas déplacés vers le cloud en tant que sauvegardes. Pour le moment, vous devrez créer une règle Snapshot avec les étiquettes souhaitées pour le volume DP source afin que Cloud Backup puisse les sauvegarder.
 
 
+* Les sauvegardes de volumes FlexGroup ne peuvent pas être déplacées vers le stockage d'archivage. Elles ne peuvent pas non plus utiliser le verrouillage des données et la protection par ransomware.
 * La sauvegarde du volume SVM-DR est prise en charge avec les restrictions suivantes :
 +
 ** Seules les sauvegardes sont prises en charge à partir du système secondaire ONTAP.

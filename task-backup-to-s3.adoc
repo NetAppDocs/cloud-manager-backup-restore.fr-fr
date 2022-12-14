@@ -73,7 +73,7 @@ L'image suivante montre chaque composant et les connexions que vous devez prépa
 
 image:diagram_cloud_backup_cvo_aws.png["Un diagramme montrant comment Cloud Backup communique avec les volumes des systèmes source et le stockage de destination où sont situés les fichiers de sauvegarde."]
 
-Le terminal de passerelle VPC doit déjà exister dans votre VPC.
+Le terminal de passerelle VPC doit déjà exister dans votre VPC. https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html["En savoir plus sur les terminaux de passerelle"^].
 
 Versions de ONTAP prises en charge:: Minimum de ONTAP 9.7P5 ; ONTAP 9.8P13 et version ultérieure est recommandé.
 Conditions de licence:: Pour le facturation à l'utilisation des PAYGO, un abonnement BlueXP est disponible sur AWS Marketplace qui permet de déployer Cloud Volumes ONTAP et Cloud Backup. Vous devez le faire https://aws.amazon.com/marketplace/pp/prodview-oorxakq6lq7m4?sr=0-8&ref_=beagle&applicationId=AWSMPContessa["Abonnez-vous à cet abonnement BlueXP"^] Avant d'activer Cloud Backup. La facturation pour Cloud Backup s'effectue via cet abonnement.
@@ -89,14 +89,6 @@ Vous devez également disposer d'un compte AWS pour l'espace de stockage où vos
 
 --
 Régions AWS prises en charge:: Cloud Backup est pris en charge dans toutes les régions AWS https://cloud.netapp.com/cloud-volumes-global-regions["Dans ce cas, Cloud Volumes ONTAP est pris en charge"^]; Y compris les régions AWS GovCloud.
-Configuration requise pour la création des sauvegardes sur un autre compte AWS:: Par défaut, les sauvegardes sont créées à l'aide du même compte que celui utilisé pour votre système Cloud Volumes ONTAP. Si vous souhaitez utiliser un autre compte AWS pour vos sauvegardes, vous devez :
-+
---
-* Ajoutez les informations d'identification du compte AWS de destination dans BlueXP. https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-adding-aws-accounts.html#add-additional-credentials-to-a-connector["Découvrez comment faire"].
-* Ajoutez les autorisations « s3:PutBuckePolicy » et « s3:PutBuckeOwnershipControls » au rôle IAM qui fournit le connecteur BlueXP avec les autorisations.
-
-
---
 Informations requises pour l'utilisation des clés gérées par le client pour le chiffrement des données:: Vous pouvez choisir vos propres clés gérées par le client pour le chiffrement des données dans l'assistant d'activation au lieu d'utiliser les clés de chiffrement Amazon S3 par défaut. Dans ce cas, vous devrez déjà configurer les clés de cryptage gérées. https://docs.netapp.com/us-en/cloud-manager-cloud-volumes-ontap/task-setting-up-kms.html["Découvrez comment utiliser vos propres touches"^].
 Autorisations de connecteur AWS requises:: Le rôle IAM qui fournit à BlueXP des autorisations doit inclure des autorisations S3 à partir des dernières https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-aws.html["Politique BlueXP"^].
 +
@@ -171,6 +163,28 @@ Autorisations d'accès Cloud Volumes ONTAP AWS requises:: Lorsque votre système
 +
 --
 Si vous avez créé l'environnement de travail Cloud Volumes ONTAP à l'aide de BlueXP version 3.9.23 ou supérieure, ces autorisations doivent déjà faire partie du rôle IAM. Sinon, vous devrez ajouter les autorisations manquantes.
+
+--
+Configuration requise pour la création des sauvegardes sur un autre compte AWS:: Par défaut, les sauvegardes sont créées à l'aide du même compte que celui utilisé pour votre système Cloud Volumes ONTAP. Si vous souhaitez utiliser un autre compte AWS pour vos sauvegardes, vous devez :
++
+--
+* Vérifiez que les autorisations « s3:PutBuckePolicy » et « s3:PutBuckeOwnershipControls » font partie du rôle IAM qui fournit le connecteur BlueXP avec les autorisations.
+* Ajoutez les informations d'identification du compte AWS de destination dans BlueXP. https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-adding-aws-accounts.html#add-additional-credentials-to-a-connector["Découvrez comment faire"^].
+* Ajoutez les autorisations suivantes dans les informations d'identification de l'utilisateur dans le second compte :
++
+....
+"athena:StartQueryExecution",
+"athena:GetQueryResults",
+"athena:GetQueryExecution",
+"glue:GetDatabase",
+"glue:GetTable",
+"glue:CreateTable",
+"glue:CreateDatabase",
+"glue:GetPartitions",
+"glue:BatchCreatePartition",
+"glue:BatchDeletePartition"
+....
+
 
 --
 
