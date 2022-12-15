@@ -1293,7 +1293,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-07 15:53:42 +0000">12/07/2022</time>
+    <time datetime="2022-12-14 19:02:53 +0000">12/14/2022</time>
     
   
 
@@ -1500,12 +1500,12 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p><strong>Restrictions FlexGroup</strong>:</p>
+<p><strong>Limitations de restauration de volume FlexGroup</strong> :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>La restauration de volume complet est prise en charge par les systèmes ONTAP sur site ; les systèmes Cloud Volumes ONTAP ne sont pas pris en charge actuellement.</p>
+<p>La restauration de volume complet est prise en charge uniquement sur les systèmes ONTAP sur site (les systèmes Cloud Volumes ONTAP ne sont pas pris en charge actuellement).</p>
 </li>
 <li>
 <p>La restauration au niveau fichier est prise en charge à la fois pour les systèmes ONTAP et Cloud Volumes ONTAP sur site.</p>
@@ -1514,10 +1514,7 @@
 <p>La restauration des répertoires/dossiers n&#8217;est pas prise en charge actuellement.</p>
 </li>
 <li>
-<p>Les sauvegardes ne peuvent pas être déplacées vers le stockage d&#8217;archivage.</p>
-</li>
-<li>
-<p>Les sauvegardes ne peuvent pas utiliser le verrouillage des données et la protection contre les attaques par ransomware.</p>
+<p>Actuellement, les volumes peuvent être restaurés sur un seul agrégat.</p>
 </li>
 </ul>
 </div>
@@ -1585,10 +1582,10 @@
 <p><strong>BYOL</strong> : licence achetée auprès de NetApp et utilisable avec n&#8217;importe quel fournisseur cloud.</p>
 </li>
 <li>
-<p><strong>PAYGO</strong> : un abonnement horaire sur le marché de votre fournisseur de services clouds.</p>
+<p><strong>PAYGO</strong> : un abonnement à l&#8217;heure sur le marché de votre fournisseur de services cloud.</p>
 </li>
 <li>
-<p><strong>Annuel</strong> : contrat annuel sur le marché de votre fournisseur de services clouds.</p>
+<p><strong>Annuel</strong> : contrat annuel sur le marché de votre fournisseur cloud.</p>
 </li>
 </ul>
 </div>
@@ -1600,7 +1597,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Si vous achetez une licence BYOL auprès de NetApp, vous devez également vous abonner à l&#8217;offre PAYGO depuis le marché de votre fournisseur cloud. Votre licence est toujours facturée en premier, mais vous serez facturé à partir du tarif horaire sur le marché dans les cas suivants :</p>
+<p>Si vous achetez une licence BYOL auprès de NetApp, vous devez également vous abonner à l&#8217;offre PAYGO depuis le marché de votre fournisseur cloud. Votre licence est toujours facturée en premier, mais vous devrez payer à l&#8217;heure sur le marché dans les cas suivants :</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1613,7 +1610,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Si vous disposez d&#8217;un contrat annuel sur un marché, l&#8217;ensemble de la consommation de Cloud Backup est facturée sur votre contrat. Vous ne pouvez pas combiner un contrat annuel de marché avec une licence BYOL.</p>
+<p>Si vous disposez d&#8217;un contrat annuel sur un marché, l&#8217;ensemble de la consommation de Cloud Backup est facturée sur votre contrat. Vous ne pouvez pas combiner un contrat annuel de vente avec un contrat BYOL.</p>
 </div>
 </td>
 </tr>
@@ -1634,7 +1631,7 @@
 <div class="sect2">
 <h3 id="abonnement-avec-paiement-à-lutilisation">Abonnement avec paiement à l&#8217;utilisation</h3>
 <div class="paragraph">
-<p>Cloud Backup propose un modèle de paiement à l&#8217;utilisation avec des licences basées sur la consommation. Après vous être abonné sur le marché de votre fournisseur cloud, vous payez par Gio pour les données sauvegardées, et aucun paiement initial d'​there. Votre fournisseur cloud vous facturé mensuellement.</p>
+<p>Cloud Backup propose un modèle de paiement à l&#8217;utilisation avec des licences basées sur la consommation. Après votre abonnement sur le marché de votre fournisseur cloud, vous payez par Gio pour les données sauvegardées, sans paiement initial. Votre fournisseur cloud vous facturé mensuellement.</p>
 </div>
 <div class="paragraph">
 <p><a href="task-licensing-cloud-backup.html#use-a-cloud-backup-paygo-subscription">"Découvrez comment configurer un abonnement avec paiement à l&#8217;utilisation"</a>.</p>
@@ -1691,7 +1688,7 @@ Toute action effectuée directement depuis votre environnement de fournisseur cl
 <div class="sect2">
 <h3 id="lemplacement-des-sauvegardes">L&#8217;emplacement des sauvegardes</h3>
 <div class="paragraph">
-<p>Les copies de sauvegarde sont stockées dans un magasin d&#8217;objets créé par BlueXP dans votre compte cloud. Il y a un magasin d&#8217;objets par cluster/environnement de travail, et BlueXP nomme le magasin d&#8217;objets comme suit : « netapp-backup-clusterUUID ». Veillez à ne pas supprimer ce magasin d&#8217;objets.</p>
+<p>Les copies de sauvegarde sont stockées dans un magasin d&#8217;objets créé par BlueXP dans votre compte cloud. Chaque cluster/environnement de travail est équipé d&#8217;un magasin d&#8217;objets, et BlueXP a indiqué le magasin d&#8217;objets comme suit : « netapp-backup-clusterUUID ». Veillez à ne pas supprimer ce magasin d&#8217;objets.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1884,10 +1881,13 @@ DataLock ne peut pas être activé si vous effectuez le Tiering des sauvegardes 
 <p>Relations avec les libellés SnapMirror <code>app_consistent</code> et <code>all_source_snapshot</code> elles ne seront pas sauvegardées dans le cloud.</p>
 </li>
 <li>
-<p>Si vous créez des copies Snapshot locales sur le volume de destination SnapMirror (indépendamment des étiquettes SnapMirror utilisées), ces snapshots ne seront pas déplacés vers le cloud en tant que sauvegardes. A ce moment-là, vous devrez créer une stratégie de snapshot avec les étiquettes souhaitées pour le volume DP source afin que Cloud Backup puisse les sauvegarder.</p>
+<p>Si vous créez des copies Snapshot locales sur le volume de destination SnapMirror (indépendamment des étiquettes SnapMirror utilisées), ces snapshots ne seront pas déplacés vers le cloud en tant que sauvegardes. Pour le moment, vous devrez créer une règle Snapshot avec les étiquettes souhaitées pour le volume DP source afin que Cloud Backup puisse les sauvegarder.</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>Les sauvegardes de volumes FlexGroup ne peuvent pas être déplacées vers le stockage d&#8217;archivage. Elles ne peuvent pas non plus utiliser le verrouillage des données et la protection par ransomware.</p>
 </li>
 <li>
 <p>La sauvegarde du volume SVM-DR est prise en charge avec les restrictions suivantes :</p>

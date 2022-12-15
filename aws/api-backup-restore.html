@@ -1293,7 +1293,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-07 15:53:42 +0000">12/07/2022</time>
+    <time datetime="2022-12-14 19:02:53 +0000">12/14/2022</time>
     
   
 
@@ -1309,33 +1309,36 @@
 <p>Les fonctionnalités Cloud Backup disponibles via l&#8217;interface utilisateur web sont également disponibles via l&#8217;API RESTful.</p>
 </div>
 <div class="paragraph">
-<p>Il existe huit catégories de terminaux définis au sein du Cloud Backup Service :</p>
+<p>Il existe neuf catégories de terminaux définis dans Cloud Backup :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>sauvegarde</p>
+<p>backup : gère les opérations de sauvegarde des ressources cloud et sur site et récupère les détails des données de sauvegarde</p>
 </li>
 <li>
-<p>catalogue</p>
+<p>Catalogue : gère la recherche de fichiers dans le catalogue indexé en fonction d&#8217;une requête (recherche et restauration)</p>
 </li>
 <li>
-<p>le cloud</p>
+<p>Cloud - récupère des informations sur les différentes ressources du fournisseur de cloud à partir de BlueXP</p>
 </li>
 <li>
-<p>travail</p>
+<p>Jobs : gère les entrées de détail de travail dans la base de données BlueXP</p>
 </li>
 <li>
-<p>licence</p>
+<p>Licence - récupère la validité de la licence des environnements de travail à partir de BlueXP</p>
 </li>
 <li>
-<p>restaurer</p>
+<p>analyse par ransomware : démarre une analyse par ransomware sur un fichier de sauvegarde spécifique</p>
 </li>
 <li>
-<p>Restauration à un seul niveau fichier (SFR)</p>
+<p>restaurer : permet d&#8217;effectuer des opérations de restauration au niveau du volume et du fichier</p>
 </li>
 <li>
-<p>environnement de travail</p>
+<p>sfr - récupère les fichiers d&#8217;un fichier de sauvegarde pour des opérations de restauration uniques au niveau des fichiers (Browse &amp; Restore)</p>
+</li>
+<li>
+<p>environnement de travail : gère les stratégies de sauvegarde et configure le magasin d&#8217;objets de destination associé à un environnement de travail</p>
 </li>
 </ul>
 </div>
@@ -1386,7 +1389,7 @@ Le token utilisateur du site Web BlueXP a une date d&#8217;expiration. La répon
 <p>Obtenez votre identifiant de compte BlueXP.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-http" data-lang="http">GET 'https://cloudmanager.cloud.netapp.com/tenancy/account' -H 'authority: cloudmanager.cloud.netapp.com'
+<pre class="highlight"><code class="language-http" data-lang="http">GET 'https://api.bluexp.netapp.com/tenancy/account' -H 'authority: api.bluexp.netapp.com'
 Header:
 -H 'accept: application/json'
 -H 'accept-language: en-GB,en;q=0.9'
@@ -1442,7 +1445,7 @@ Header:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-http" data-lang="http">curl --location --request POST 'https://cloudmanager.cloud.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v3/backup/working-environment/VsaWorkingEnvironment-99hPYEgk' \
+<pre class="highlight"><code class="language-http" data-lang="http">curl --location --request POST 'https://api.bluexp.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v3/backup/working-environment/VsaWorkingEnvironment-99hPYEgk' \
 --header 'x-agent-id: iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
@@ -1486,7 +1489,7 @@ Header:
 <div class="listingblock">
 <div class="title">Surveiller la réponse.</div>
 <div class="content">
-<pre class="highlight"><code class="language-http" data-lang="http">curl --location --request GET 'https://cloudmanager.cloud.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v1/job/1b34b6f6-8f43-40fb-9a52-485b0dfe893a' \
+<pre class="highlight"><code class="language-http" data-lang="http">curl --location --request GET 'https://api.bluexp.netapp.com/account/account-DpTFcxN3/providers/cloudmanager_cbs/api/v1/job/1b34b6f6-8f43-40fb-9a52-485b0dfe893a' \
 --header 'x-agent-id: iZwFFeVCZjWnzGlw8RgD0QQNANZvpP7Iclients' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
