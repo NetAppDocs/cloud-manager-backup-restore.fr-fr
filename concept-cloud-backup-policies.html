@@ -1351,7 +1351,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
+    <time datetime="2022-12-15 16:32:05 +0000">12/15/2022</time>
     
   
 
@@ -1518,18 +1518,6 @@
 </li>
 </ul>
 </div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<img src="/us-en/cloud-manager-backup-restore/images/caution.svg" alt="Avertissement">
-</td>
-<td class="content">
-Une analyse par ransomware requiert que le fichier de sauvegarde soit téléchargé dans votre environnement BlueXP (où le connecteur est installé). En cas de déploiement de votre connecteur sur site, vous pouvez donc prévoir des coûts de sortie supplémentaires de votre fournisseur de cloud. Nous vous recommandons donc de déployer le connecteur dans le cloud et d&#8217;utiliser la même région que le compartiment dans lequel vos sauvegardes sont stockées.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="paramètres-de-verrouillage-des-données-et-de-protection-contre-les-ransomwares">Paramètres de verrouillage des données et de protection contre les ransomwares</h3>
@@ -1620,7 +1608,7 @@ La fonction de verrouillage d&#8217;objet StorageGRID S3 fournit un mode de verr
 <div class="ulist">
 <ul>
 <li>
-<p>Ce connecteur doit être déployé dans le cloud</p>
+<p>Ce connecteur peut être déployé dans le cloud ou sur site</p>
 </li>
 <li>
 <p>Les autorisations S3 suivantes doivent faire partie du rôle IAM qui fournit au connecteur les autorisations. Ils résident dans la section « backupS3Policy » pour la ressource « arn:aws:s3::NetApp-backup-* » :</p>
@@ -1707,16 +1695,13 @@ La fonction de verrouillage d&#8217;objet StorageGRID S3 fournit un mode de verr
 <li>
 <p>s3:GetObjectVersion</p>
 <div class="paragraph">
-<p>« s3:BipassGovernanceRetention » doit être ajouté uniquement si vous souhaitez que les utilisateurs Admin puissent écraser/supprimer les fichiers de sauvegarde verrouillés en mode gouvernance.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
 <p><a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-aws.html" target="_blank" rel="noopener">"Affichez le format JSON complet de la règle dans laquelle vous pouvez copier et coller les autorisations requises"</a>.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </li>
 <li>
