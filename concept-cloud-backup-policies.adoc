@@ -105,9 +105,6 @@ Vous pouvez à tout moment exécuter une analyse de protection par ransomware à
 
 
 
-CAUTION: Une analyse par ransomware requiert que le fichier de sauvegarde soit téléchargé dans votre environnement BlueXP (où le connecteur est installé). En cas de déploiement de votre connecteur sur site, vous pouvez donc prévoir des coûts de sortie supplémentaires de votre fournisseur de cloud. Nous vous recommandons donc de déployer le connecteur dans le cloud et d'utiliser la même région que le compartiment dans lequel vos sauvegardes sont stockées.
-
-
 
 === Paramètres de verrouillage des données et de protection contre les ransomwares
 
@@ -162,7 +159,7 @@ ifdef::aws[]
 
 * Pour AWS :
 +
-** Ce connecteur doit être déployé dans le cloud
+** Ce connecteur peut être déployé dans le cloud ou sur site
 ** Les autorisations S3 suivantes doivent faire partie du rôle IAM qui fournit au connecteur les autorisations. Ils résident dans la section « backupS3Policy » pour la ressource « arn:aws:s3::NetApp-backup-* » :
 +
 *** s3:GetObjectVersionTagging
@@ -192,9 +189,6 @@ ifdef::aws[]
 *** s3:PutObjectRetention
 *** s3:GetBucketLocation
 *** s3:GetObjectVersion
-+
-« s3:BipassGovernanceRetention » doit être ajouté uniquement si vous souhaitez que les utilisateurs Admin puissent écraser/supprimer les fichiers de sauvegarde verrouillés en mode gouvernance.
-
 +
 https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-aws.html["Affichez le format JSON complet de la règle dans laquelle vous pouvez copier et coller les autorisations requises"^].
 

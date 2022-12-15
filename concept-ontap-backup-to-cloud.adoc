@@ -437,7 +437,6 @@ Ces limitations s'appliquent à la fois aux méthodes de recherche et de restaur
 * La fonction de recherche et de restauration permet de restaurer 1 fichier à la fois.
 * Parcourir et restaurer et Rechercher et restaurer peut restaurer 1 dossier à la fois.
 * La restauration des volumes FlexGroup vers des volumes FlexVol, ou des volumes FlexVol vers des volumes FlexGroup n'est pas prise en charge.
-* La restauration au niveau des fichiers n'est pas prise en charge lors de l'utilisation du même compte avec différents systèmes BlueXP dans des sous-réseaux différents.
 * La restauration du niveau fichier à l'aide de la fonction Rechercher et restaurer n'est pas prise en charge lorsque le connecteur est installé sur un site sans accès à Internet (site sombre).
 * Vous ne pouvez pas restaurer des dossiers individuels si le fichier de sauvegarde réside dans le stockage d'archivage.
 * Le fichier en cours de restauration doit être dans la même langue que celle du volume de destination. Vous recevrez un message d'erreur si les langues ne sont pas les mêmes.

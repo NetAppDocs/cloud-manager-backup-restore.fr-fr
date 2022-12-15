@@ -41,7 +41,7 @@ Si vous recherchez des volumes spécifiques dans certains environnements de trav
 
 Vous pouvez activer les sauvegardes de tout nouveau volume s'ils ne sont pas actuellement sauvegardés. Vous pouvez également activer les sauvegardes de tous les volumes que vous avez précédemment désactivés.
 
-Vous pouvez désactiver les sauvegardes pour les volumes de manière à ce qu'aucune sauvegarde supplémentaire ne soit générée. Cela désactive également la restauration des données de volume à partir d'un fichier de sauvegarde. Cette opération vous permet en fait d'interrompre l'ensemble des activités de sauvegarde et de restauration pendant une période donnée. Toutes les sauvegardes existantes ne seront pas supprimées. Ainsi, vous continuerez à être facturé par votre fournisseur de cloud pour les coûts de stockage objet pour la capacité que vos sauvegardes utilisent, sauf si vous <<Suppression de tous les fichiers de sauvegarde d'un volume,supprimez les sauvegardes>>.
+Vous pouvez désactiver les sauvegardes pour les volumes de manière à ce qu'aucune sauvegarde supplémentaire ne soit générée. Cela désactive également la restauration des données de volume à partir d'un fichier de sauvegarde. Cette opération vous permet en fait d'interrompre l'ensemble des activités de sauvegarde et de restauration pendant une période donnée. Les sauvegardes existantes ne seront pas supprimées. Votre fournisseur cloud reste donc facturé pour les coûts de stockage objet correspondant à la capacité que vos sauvegardes utilisent, sauf vous <<Suppression de tous les fichiers de sauvegarde d'un volume,supprimez les sauvegardes>>.
 
 .Étapes
 . Dans l'onglet *volumes*, sélectionnez *Paramètres de sauvegarde*.
@@ -267,9 +267,6 @@ image:screenshot_backup_view_backups.png["Capture d'écran affichant la liste de
 Le logiciel de protection par ransomware de NetApp analyse vos fichiers de sauvegarde pour détecter la preuve d'une attaque par ransomware lors de la création d'un fichier de sauvegarde, et lorsque les données d'un fichier de sauvegarde sont en cours de restauration. Vous pouvez également exécuter une analyse de protection par ransomware à la demande à tout moment pour vérifier la facilité d'utilisation d'un fichier de sauvegarde spécifique. Ceci peut être utile si vous avez eu un problème de ransomware sur un volume en particulier et que vous souhaitez vérifier que les sauvegardes de ce volume ne sont pas affectées.
 
 Cette fonctionnalité est disponible uniquement si la sauvegarde du volume a été créée à partir d'un système avec ONTAP 9.11.1 ou version ultérieure et si vous avez activé _DataLock et protection contre les attaques par ransomware_ dans la stratégie de sauvegarde.
-
-
-NOTE: Une analyse par ransomware requiert que le fichier de sauvegarde soit téléchargé dans votre environnement BlueXP (où le connecteur est installé). En cas de déploiement de votre connecteur sur site, vous pouvez donc prévoir des coûts de sortie supplémentaires de votre fournisseur de cloud. Nous vous recommandons donc de déployer le connecteur dans le cloud et d'utiliser la même région que le compartiment dans lequel vos sauvegardes sont stockées.
 
 .Étapes
 . Dans l'onglet *volumes*, cliquez sur image:screenshot_horizontal_more_button.gif["Plus d'icône"] Pour le volume source et sélectionnez *Détails et liste de sauvegarde*.
