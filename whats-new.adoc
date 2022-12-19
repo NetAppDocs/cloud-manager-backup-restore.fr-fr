@@ -18,6 +18,47 @@ Découvrez les nouveautés de Cloud Backup.
 
 
 
+== 19 décembre 2022
+
+
+
+=== Améliorations de Cloud Backup pour les applications
+
+* Les bases de données SAP HANA
++
+** Prise en charge de la sauvegarde et de la restauration basées sur des règles des bases de données SAP HANA résidant sur Azure NetApp Files (ANF)
+** Prend en charge les règles personnalisées
+
+
+* Les bases de données Oracle
++
+** Ajoutez des hôtes et déployez automatiquement le plug-in
+** Prend en charge les règles personnalisées
+** Prise en charge de la sauvegarde, de la restauration et du clonage des bases de données Oracle résidant sur Cloud Volumes ONTAP basés sur des règles
+** Prend en charge la sauvegarde et la restauration basées sur des règles des bases de données Oracle résidant sur Amazon FSX pour NetApp ONTAP
+** Prend en charge la restauration des bases de données Oracle à l'aide de la méthode de connexion et de copie
+** Prend en charge Oracle 21c
+** Prend en charge le clonage de bases de données Oracle cloud natives
+
+
+
+
+
+
+=== Améliorations apportées à Cloud Backup
+
+* Ordinateurs virtuels
++
+** Sauvegarder des machines virtuelles à partir d'un stockage secondaire sur site
+** Prend en charge les règles personnalisées
+** Prise en charge de Google Cloud Platform (GCP) pour sauvegarder un ou plusieurs datastores
+** Prise en charge d'un stockage cloud à faible coût comme Glacier, Deep Glacier et Azure Archive
+
+
+
+
+
+
 == 6 décembre 2022
 
 

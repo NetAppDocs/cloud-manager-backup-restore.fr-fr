@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar 
-permalink: task-restore-cloud-native-app-data.html 
-keywords: cloud native, application data, restore, data files, control files, recovery 
+permalink: task-restore-cloud-native-oracle-data.html 
+keywords: cloud native, application data, restore, data files, control files, recovery, Cloud Manager, BlueXP, Oracle database, Oracle 
 summary: Restaurez les fichiers de données, les fichiers de contrôle ou les deux, puis récupérez la base de données. 
 ---
-= Restaurez les données applicatives cloud natives
+= Restaurez les bases de données Oracle cloud natives
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -15,6 +15,11 @@ summary: Restaurez les fichiers de données, les fichiers de contrôle ou les de
 
 [role="lead"]
 En cas de perte de données, vous pouvez restaurer les fichiers de données, les fichiers de contrôle ou les deux, puis restaurer la base de données.
+
+*Ce dont vous aurez besoin*
+
+Si la base de données Oracle 21c est à l'état DÉMARRÉ, l'opération de restauration échoue. Vous devez exécuter les étapes suivantes pour restaurer la base de données avec succès.
+`cp -f <ORACLE_HOME>/jdbc/lib/ojdbc8.jar /opt/NetApp/snapcenter/spl/plugins/sco/lib ojdbc8-8.jar`
 
 *Étapes*
 
@@ -54,7 +59,18 @@ NOTE: La restauration des fichiers de données avec des fichiers de contrôle ou
 Vous pouvez également sélectionner la case à cocher *forcer la restauration sur place*.
 
 +
-L'option *forcer la restauration sur place* remplace les fichiers spfile, les fichiers de mot de passe et les fichiers journaux d'archive du groupe de disques des fichiers de données. Vous devez utiliser la dernière sauvegarde lorsque l'option * forcer la restauration sur place* est sélectionnée.
+Dans la disposition SAN, si le plug-in SnapCenter pour Oracle trouve des fichiers étrangers autres que les fichiers de données Oracle sur le groupe de disques ASM, la méthode de restauration de connexion et de copie est exécutée. Les fichiers étrangers peuvent être de type un ou plusieurs des types suivants :
+
++
+** Paramètre
+** Mot de passe
+** journal d'archivage
+** journal en ligne
+** Fichier de paramètres ASM.
++
+L'option *forcer la restauration sur place* remplace le paramètre de type, le mot de passe et le journal d'archivage des fichiers étrangers. Vous devez utiliser la dernière sauvegarde lorsque l'option * forcer la restauration sur place* est sélectionnée.
+
+
 
 . Dans la section étendue de la récupération, effectuez les opérations suivantes :
 +
@@ -97,4 +113,15 @@ Cochez la case si vous souhaitez ouvrir la base de données en mode LECTURE-ÉCR
 
 . Cliquez sur *Suivant* et vérifiez les détails.
 . Cliquez sur *Restaurer*.
+
+
+
+
+== Limites
+
+* Ne prend pas en charge les restaurations granulaires, par exemple la restauration des espaces de stockage et des bases de données de niveau fichier
+* Les méthodes de restauration sur place et connexion/copie sont utilisées si certains groupes de disques contiennent des fichiers étrangers. Cependant, l'utilisation des deux méthodes en même temps pour effectuer la restauration n'est pas prise en charge et l'opération de restauration échoue. La base de données reste à l'état monté et vous devez la mettre manuellement à l'état ouvert.
++
+Le message d'échec en raison de la présence de fichiers étrangers ne s'affiche pas sur la page de travail dans l'interface utilisateur en raison d'un problème connu. Vérifiez les journaux de connecteurs en cas de défaillance lors de l'étape de pré-restauration SAN pour connaître la cause du problème.
+
 

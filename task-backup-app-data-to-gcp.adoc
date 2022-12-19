@@ -14,7 +14,7 @@ summary: 'Réalisez quelques étapes de sauvegarde des données d"applications d
 
 
 [role="lead"]
-Vous pouvez sauvegarder les données applicatives de ONTAP vers Google Cloud Platform en intégrant Cloud Backup pour les applications avec BlueXP et SnapCenter sur site.
+Vous pouvez sauvegarder les données applicatives de ONTAP dans Google Cloud Platform en intégrant Cloud Backup pour les applications avec Cloud Manager et SnapCenter sur site.
 
 Vous pouvez protéger une ou plusieurs applications simultanément dans le cloud à l'aide d'une seule règle.
 

@@ -1,0 +1,247 @@
+---
+sidebar: sidebar 
+permalink: task-backup-cloud-native-sap-hana-data.html 
+keywords: cloud native, application data, back up, policy, pre-canned policies, scheduled backups, on-demand backups, cloud manager, BlueXP, add hosts, create policy, SAP HANA Database 
+summary: 'Création de sauvegardes planifiées ou à la demande d"une base de données SAP HANA.' 
+---
+= Sauvegardez les bases de données SAP HANA cloud natives
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Avant de créer une sauvegarde de la base de données SAP HANA, vous devez ajouter les hôtes de la base de données SAP HANA et affecter une règle prédéfinie ou la règle que vous avez créée.
+
+
+
+== Ajouter des hôtes de base de données SAP HANA
+
+Vous devez ajouter manuellement des hôtes de base de données SAP HANA pour attribuer des règles et créer des sauvegardes. La découverte automatique de l'hôte de base de données SAP HANA n'est pas prise en charge.
+
+*Ce dont vous aurez besoin*
+
+* Vous devez avoir ajouté l'environnement de travail et créé le connecteur.
+* Assurez-vous que le connecteur est connecté à l'environnement de travail
+* Assurez-vous que l'utilisateur BlueXP a le rôle "Admin compte".
+* Vous devez avoir déployé le plug-in SnapCenter pour SAP HANA. link:task-deploy-snapcenter-plugin-for-sap-hana.html["En savoir plus >>"]
+* Lors de l'ajout des hôtes de base de données SAP HANA, vous devez ajouter les clés de stockage HDB. La clé de stockage sécurisée HDB est utilisée pour stocker les informations de connexion des hôtes de base de données SAP HANA en toute sécurité sur le client et le client HDBSQL utilise la clé de stockage utilisateur sécurisée pour se connecter à l'hôte de base de données SAP HANA.
+* Pour la réplication système HANA (HSR), pour protéger les systèmes HANA, vous devez enregistrer manuellement les systèmes HANA primaires et secondaires.
+
+
+*Étapes*
+
+. Dans l'interface utilisateur *BlueXP*, cliquez sur *protection* > *sauvegarde et restauration* > *applications*.
+. Cliquez sur *découvrir les applications*.
+. Sélectionnez *Cloud Native* > *SAP HANA* et cliquez sur *Next*.
+. Dans la page *applications*, cliquez sur *Ajouter système*.
+. Dans la page *Détails du système*, effectuez les opérations suivantes :
++
+.. Sélectionnez le Type de système comme conteneur de base de données mutualisé ou conteneur unique.
+.. Entrez le nom du système SAP HANA.
+.. Spécifier le SID du système SAP HANA.
+.. (Facultatif) spécifiez l'utilisateur HDBSQL OS.
+.. Sélectionnez Plug-in host. (Facultatif) si l'hôte n'est pas ajouté ou si vous souhaitez ajouter plusieurs hôtes, cliquez sur *Ajouter hôte de plug-in*.
+.. Si le système HANA est configuré avec la réplication système HANA, activez *HANA System Replication (HSR) System*.
+.. Cliquez sur *HDB Secure User Store Keys* (clés de stockage d'utilisateur sécurisées) pour ajouter les détails des clés de la boutique d'utilisateurs.
++
+Spécifiez le nom de la clé, les détails du système, le nom d'utilisateur et le mot de passe, puis cliquez sur *Ajouter une clé*.
+
++
+Vous pouvez supprimer ou modifier les clés de la boutique utilisateur.
+
+
+
+. Cliquez sur *Suivant*.
+. Dans la page *empreinte de stockage*, cliquez sur *Ajouter un stockage* et effectuez les opérations suivantes :
++
+.. Sélectionnez l'environnement de travail et spécifiez le compte NetApp.
++
+Accédez à la page *Canvas* pour ajouter un nouvel environnement de travail
+
+.. Sélectionnez les volumes requis.
+.. Cliquez sur *Ajouter un stockage*.
+
+
+. Vérifiez tous les détails et cliquez sur *Ajouter système*.
+
+
+
+NOTE: Le filtre permettant d'afficher un hôte spécifique ne fonctionne pas. Lorsque vous spécifiez un nom d'hôte dans le filtre, tous les hôtes sont affichés
+
+Vous pouvez modifier et supprimer les systèmes SAP HANA à l'aide de l'API REST. Avant de supprimer le système HANA, vous devez supprimer toutes les sauvegardes associées et supprimer la protection.
+
+
+
+== Ajouter des volumes non-données
+
+Après avoir ajouté le conteneur de base de données mutualisé ou un système SAP HANA de type conteneur unique, vous pouvez ajouter les volumes non-Data du système HANA.
+
+*Étapes*
+
+. Dans l'interface utilisateur *BlueXP*, cliquez sur *protection* > *sauvegarde et restauration* > *applications*.
+. Cliquez sur *découvrir les applications*.
+. Sélectionnez *Cloud Native* > *SAP HANA* et cliquez sur *Next*.
+. Dans la page *applications*, cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant au système pour lequel vous souhaitez ajouter les volumes non-données et sélectionner *gérer le système* > *non-Data Volume*.
+
+
+
+
+== Ajouter des volumes globaux non-données
+
+Après avoir ajouté le conteneur de base de données mutualisée ou un seul type de conteneur SAP HANA, vous pouvez ajouter le système non-Data volumes global du système HANA.
+
+*Étapes*
+
+. Dans l'interface utilisateur *BlueXP*, cliquez sur *protection* > *sauvegarde et restauration* > *applications*.
+. Cliquez sur *découvrir les applications*.
+. Sélectionnez *Cloud Native* > *SAP HANA* et cliquez sur *Next*.
+. Dans la page *applications*, cliquez sur *Ajouter système*.
+. Dans la page *Détails du système*, effectuez les opérations suivantes :
++
+.. Dans la liste déroulante Type de système, sélectionnez *Volume global hors données*.
+.. Entrez le nom du système SAP HANA.
+.. Spécifiez les SID associés du système SAP HANA.
+.. Sélectionnez l'hôte du plug-in
++
+(Facultatif) pour ajouter plusieurs hôtes, cliquez sur *Ajouter hôte du plug-in* et spécifiez le nom d'hôte et le port, puis cliquez sur *Ajouter hôte*.
+
+.. Cliquez sur *Suivant*.
+.. Vérifiez tous les détails et cliquez sur *Ajouter système*.
+
+
+
+
+
+
+== Préscripts et postscripts
+
+Vous pouvez fournir des scripts prescripteurs, des scripts postaux et des scripts d'exit pendant la création d'une stratégie. Ces scripts sont exécutés sur l'hôte HANA lors de la création des sauvegardes.
+
+Le format pris en charge pour les scripts est .sh, le script python, le script perl, etc.
+
+Le prescripteur et le PostScript devraient être enregistrés par l'administrateur hôte dans `/opt/NetApp/snapcenter/scc/etc/allowed_commands.config file`
+
+`[root@scspa2622265001 etc]# cat allowed_commands.config
+command: mount
+command: umount
+command: /mnt/scripts/pre_script.sh
+command: /mnt/scripts/post_script.sh`
+
+
+
+== Variables environnementales
+
+Pour le workflow de restauration, les variables d'environnement suivantes sont disponibles dans le cadre du programme prescripteur et PostScript.
+
+|===
+| Variable d'environnement | Description 
+
+
+ a| 
+SID
+ a| 
+Identifiant système de la base de données HANA sélectionnée pour la restauration
+
+
+
+ a| 
+BackupName
+ a| 
+Nom de sauvegarde choisi pour l'opération de restauration
+
+
+
+ a| 
+UserStoreKeyNames
+ a| 
+Clé userstore configurée pour la base de données HANA
+
+
+
+ a| 
+OSDBUser
+ a| 
+OSDBUser configuré pour la base de données HANA
+
+
+
+ a| 
+NomPolicy
+ a| 
+Uniquement pour sauvegarde planifiée
+
+
+
+ a| 
+type_programme
+ a| 
+Uniquement pour sauvegarde planifiée
+
+|===
+
+
+== Créez une règle pour protéger la base de données SAP HANA
+
+Vous pouvez créer des stratégies si vous ne voulez pas utiliser ou modifier les stratégies prédéfinies.
+
+. Dans la page *applications*, dans la liste déroulante Paramètres, sélectionnez *stratégies*.
+. Cliquez sur *Créer une stratégie*.
+. Spécifiez un nom de stratégie.
+. (Facultatif) modifiez le format du nom de la copie Snapshot.
+. Sélectionnez le type de stratégie.
+. Spécifiez la planification et les informations de conservation.
+. (Facultatif) spécifiez les scripts.
+. Cliquez sur *Créer*.
+
+
+
+
+== Créez une sauvegarde de la base de données SAP HANA
+
+Vous pouvez soit affecter une stratégie pré-prédéfinie, soit créer une stratégie, puis l'affecter à la base de données. Une fois la stratégie attribuée, les sauvegardes sont créées conformément au planning défini dans la stratégie.
+
+*À propos de cette tâche*
+
+Pour la réplication système HANA (HSR), la tâche de sauvegarde planifiée se déclenchera uniquement pour le système HANA principal et si le système bascule vers le système HANA secondaire, les planifications existantes déclenchent une sauvegarde sur le système HANA principal actuel. Si la règle n'est pas attribuée au système HANA, après le basculement, les planifications échouent.
+
+Si différentes politiques sont attribuées aux systèmes HSR, la sauvegarde planifiée sera déclenchée pour les systèmes et la sauvegarde échouera pour le système HANA secondaire.
+
+*Étapes*
+
+. Dans la page applications, si la base de données n'est pas protégée à l'aide d'aucune stratégie, cliquez sur *affecter stratégie*.
++
+Si la base de données est protégée à l'aide d'une ou de plusieurs stratégies, vous pouvez attribuer davantage de stratégies en cliquant sur image:icon-action.png["pour sélectionner l'action"] > *affecter stratégie*.
+
+. Sélectionnez la stratégie et cliquez sur *affecter*.
++
+Les sauvegardes seront créées conformément à la planification définie dans la stratégie.
+
++
+
+NOTE: Le compte de service (_SnapCenter-account-<Account_ID>_) est utilisé pour l'exécution des opérations de sauvegarde planifiées.
+
+
+
+
+
+== Création d'une sauvegarde à la demande de la base de données SAP HANA
+
+Après avoir affecté la stratégie, vous pouvez créer une sauvegarde à la demande de l'application.
+
+*Étapes*
+
+. Dans la page *applications*, cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à l'application et cliquer sur *On-Demand Backup*.
+. Sélectionnez un type de sauvegarde à la demande.
+. Pour la sauvegarde basée sur la stratégie, sélectionnez la stratégie, le niveau de rétention, puis cliquez sur *Créer une sauvegarde*.
+. Pour une seule fois, sélectionnez Snapshot basé sur une copie ou fichier, effectuez les opérations suivantes :
++
+.. Sélectionnez la valeur de rétention et spécifiez le nom de la sauvegarde.
+.. (Facultatif) spécifiez les scripts et le chemin des scripts.
+.. Cliquez sur *Créer une sauvegarde*.
+
+
+

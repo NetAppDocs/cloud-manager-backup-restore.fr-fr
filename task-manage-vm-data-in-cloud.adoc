@@ -50,7 +50,7 @@ Les datastores et les machines virtuelles protégés à l'aide du plug-in SnapCe
 
 == Modifiez le plug-in SnapCenter pour l'instance VMware vSphere
 
-Vous pouvez modifier les détails du plug-in SnapCenter pour VMware vSphere dans BlueXP
+Vous pouvez modifier les détails du plug-in SnapCenter pour VMware vSphere dans BlueXP.
 
 .Étapes
 . Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *machines virtuelles* > *Paramètres* > *SnapCenter Plug-in pour VMware vSphere*.

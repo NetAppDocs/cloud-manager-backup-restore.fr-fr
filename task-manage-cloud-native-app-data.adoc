@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: task-manage-cloud-native-app-data.html 
-keywords: manage, view backup, monitor jobs, monitor 
+keywords: manage, view backup, monitor jobs, monitor, Cloud Manager, BlueXP 
 summary: 'Afficher les détails de la sauvegarde et surveiller l"état de toutes les tâches.' 
 ---
 = Gérez la protection des données applicatives cloud natives
@@ -45,6 +45,14 @@ Vous pouvez cliquer sur le nom d'un travail pour afficher les détails correspon
 
 
 
+== Données d'audit
+
+Lorsque vous exécutez une API directement ou que vous utilisez l'interface utilisateur pour passer l'appel d'API à l'une des API exposées en externe de Cloud Backup pour applications, les détails de la demande tels que les en-têtes, le rôle, le corps de la demande, Et les informations API seront consignées dans le calendrier BlueXP et les entrées d'audit seront conservées dans le calendrier pour toujours. L'état et la réponse à l'erreur de l'appel API sont également audités après l'exécution de l'opération. Dans le cas de réponses d'API asynchrones telles que des travaux, l'ID de travail est également consigné dans le cadre de la réponse.
+
+Cloud Backup pour applications journaliser les entrées telles que l'adresse IP de l'hôte, le corps de la demande, le nom de l'opération, les personnes ayant déclenché, certains en-têtes, Et l'état de fonctionnement de l'API.
+
+
+
 == Afficher les détails de la sauvegarde
 
 Vous pouvez afficher le nombre total de sauvegardes créées, les stratégies utilisées pour créer des sauvegardes, la version de la base de données et l'ID de l'agent.
@@ -54,37 +62,40 @@ Vous pouvez afficher le nombre total de sauvegardes créées, les stratégies ut
 
 
 
-IMPORTANT: L'ID de l'agent est associé au connecteur. Si un connecteur utilisé lors de l'enregistrement de l'hôte de base de données Oracle n'existe plus, les sauvegardes suivantes de cette application échoueront car l'ID agent du nouveau connecteur est différent. Vous devez exécuter l'API *Connector-update* pour modifier l'ID de l'agent.
+IMPORTANT: L'ID de l'agent est associé au connecteur. Si un connecteur utilisé lors de l'enregistrement de l'hôte SAP HANA n'existe plus, les sauvegardes suivantes de cette application échouent car l'ID agent du nouveau connecteur est différent. Vous devez modifier l'ID du connecteur dans l'hôte.
 
 
 
-== Mettre à jour les détails du connecteur
+== Supprimer le clone
 
-Si un connecteur utilisé lors de l'enregistrement de l'hôte de base de données Oracle n'existe plus ou est corrompu dans AWS, vous devez déployer un nouveau connecteur. Après le déploiement du nouveau connecteur, exécutez l'API *Connector-update* pour mettre à jour les détails du connecteur.
+Vous pouvez supprimer un clone si vous n'en avez plus besoin.
+
+. Cliquez sur image:button_plus_sign_square.png["pour sélectionner l'action"] À côté de *Filter by* et sélectionnez *Clone options* > *Clone parents*.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à l'application et cliquer sur *Afficher les détails*.
+. Dans la page Détails de la base de données, cliquez sur image:button_plus_sign_square.png["pour sélectionner l'action"] À côté de *Filter by* et sélectionnez *Clone*.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant au clone que vous souhaitez supprimer, puis cliquez sur *Supprimer*.
+. (Facultatif) cochez la case *forcer la suppression*.
+
+
+
+
+== Mettre à jour les détails de connecteur pour l'hôte de base de données SAP HANA
+
+Si le connecteur utilisé lors de l'enregistrement de l'hôte d'application n'existe plus ou est corrompu, vous devez déployer un nouveau connecteur. Après le déploiement du nouveau connecteur, exécutez l'API *Connector-update* pour mettre à jour les détails du connecteur pour tous les hôtes enregistrés à l'aide de l'ancien connecteur.
 
 [listing]
 ----
-curl --location --request PATCH 'https://snapcenter.cloudmanager.cloud.netapp.com/api/oracle/databases/connector-update' \
+curl --location --request PATCH
+'https://snapcenter.cloudmanager.cloud.netapp.com/api/saphana/hosts/connector/update' \
 --header 'x-account-id: <CM account-id>' \
---header 'x-agent-id: <connector Agent ID >' \
 --header 'Authorization: Bearer token' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-"old_connector_id": "Old connector id that no longer exist",
+"old_connector_id": "Old connector id that no longer exists",
 "new_connector_id": "New connector Id"
 }
 ----
-Après la mise à jour des détails du connecteur, vous devez vous connecter à l'hôte de la base de données Oracle et effectuer les opérations suivantes :
-
-. Obtenez les informations du plug-in en cours d'exécution sur l'hôte de la base de données Oracle.
-`rpm -qi netapp-snapcenter-plugin-oracle`
-. Désinstallez le plug-in.
-`sudo /opt/NetApp/snapcenter/spl/installation/plugins/uninstall`
-. Vérifiez que le plug-in est correctement désinstallé.
-`rpm -qi netapp-snapcenter-plugin-oracle`
-
-
-Après avoir désinstallé le plug-in, vous pouvez le déployer. link:reference-prereq-protect-cloud-native-app-data.html#deploy-snapcenter-plug-in-for-oracle["En savoir plus >>"].
+Les détails du connecteur seront mis à jour avec succès si le plug-in SnapCenter pour le service SAP HANA est installé et exécuté, mais aussi si tous sont accessibles depuis le nouveau connecteur.
 
 
 
@@ -129,7 +140,7 @@ NOTE: Le certfile.crt fait référence aux certificats de l'autorité de certifi
 
 === Configurez le certificat signé par l'autorité de certification pour le certificat de serveur du plug-in
 
-Le certificat d'autorité de certification doit avoir le nom exact de l'hôte du plug-in Oracle avec lequel la machine virtuelle du connecteur communique.
+Le certificat CA doit avoir le nom exact de l'hôte du plug-in avec lequel la machine virtuelle du connecteur communique.
 
 *Ce dont vous aurez besoin*
 

@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: task-create-policies-vms.html 
 keywords: create policy, protection policies, predefined policies, custom policies 
-summary: Sauvegardez vos datastores ONTAP sur site dans AWS. 
+summary: Créez une règle pour sauvegarder des machines virtuelles 
 ---
 = Créez une règle pour sauvegarder des machines virtuelles
 :hardbreaks:
@@ -60,10 +60,19 @@ Vous devez créer des stratégies si vous ne souhaitez pas modifier les stratég
 .Étapes
 . Sur la page machines virtuelles, dans la liste déroulante Paramètres, sélectionnez *stratégies*.
 . Cliquez sur *Créer une stratégie*.
-. Spécifiez un nom de stratégie.
-. Spécifiez la planification et les informations de conservation.
+. Dans la section Détails de la stratégie, spécifiez le nom de la stratégie.
+. Dans la section Retention, sélectionnez l'un des types de rétention et indiquez le nombre de sauvegardes à conserver.
+. Sélectionnez primaire ou secondaire comme source de stockage de sauvegarde.
+. (Facultatif) si vous souhaitez transférer des sauvegardes du magasin d'objets vers le stockage d'archives après un certain nombre de jours pour l'optimisation des coûts, cochez la case *Tier backups to Archival* et entrez le nombre de jours après lequel la sauvegarde doit être archivée.
 +
-Par défaut, la source de sauvegarde est sélectionnée comme source principale.
+Vous pouvez déplacer les sauvegardes d'un magasin d'objets vers le stockage d'archivage uniquement si vous utilisez ONTAP 9.10.1 ou version ultérieure et Amazon Web Services ou Azure comme fournisseur cloud. Vous devez configurer le niveau d'accès d'archivage pour chaque fournisseur de cloud.
 
 . Cliquez sur *Créer*.
++
+Vous pouvez modifier, copier et supprimer les stratégies personnalisées.
+
++
+
+NOTE: Vous ne pouvez pas modifier ou supprimer une stratégie associée à une machine virtuelle.
+
 

@@ -1,0 +1,92 @@
+---
+sidebar: sidebar 
+permalink: task-clone-cloud-native-oracle-data.html 
+keywords: cloud native, application data, restore, data files, control files, recovery, Cloud Manager, BlueXP, Oracle database, Oracle 
+summary: 'Cloner la base de données sur l"hôte source ou un autre hôte.' 
+---
+= Clonez des bases de données Oracle natives du cloud
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez cloner une base de données Oracle à l'aide de la sauvegarde de la base de données sur l'hôte de la base de données source ou sur un autre hôte.
+
+Il est possible de cloner des bases de données pour les raisons suivantes :
+
+* Afin de tester les fonctionnalités qui doivent être implémentées à l'aide de la structure et du contenu de la base de données en cours au cours des cycles de développement d'applications.
+* Pour renseigner les data warehouses à l'aide d'outils d'extraction et de manipulation de données.
+* Pour récupérer les données qui ont été supprimées ou modifiées par erreur.
+
+
+*Ce dont vous aurez besoin*
+
+Avant de cloner la base de données, vous devez comprendre les concepts de clonage et vous assurer que toutes les exigences sont respectées. link:concept-clone-cloud-native-oracle-concepts.html["En savoir plus >>"].
+
+*Étapes*
+
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à la base de données à cloner et cliquer sur *Afficher les détails*.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à la sauvegarde de données et cliquez sur *Clone*.
+. Sur la page Cloner les détails, sélectionnez l'une des options de clonage.
+. Selon l'option sélectionnée, effectuez les opérations suivantes :
++
+|===
+| Si vous avez sélectionné... | Procédez comme ça... 
+
+
+ a| 
+*De base*
+ a| 
+.. Sélectionnez l'hôte clone.
++
+Si vous souhaitez créer le clone sur un autre hôte, sélectionnez l'hôte ayant la même version d'Oracle et de système d'exploitation que celle de l'hôte de base de données source.
+
+.. Spécifiez la SID du clone.
+.. Sélectionnez la structure de nommage des clones.
++
+Si la base de données est clonée sur l'hôte source, le schéma de nommage des clones est généré automatiquement. Si la base de données est clonée sur un autre hôte, la structure de nommage des clones est identique.
+
+.. Spécifiez le chemin d'accès à Oracle Home.
+.. (Facultatif) spécifiez les informations d'identification de la base de données.
++
+*** Informations d'identification de la base de données : si l'authentification de l'utilisateur OS est désactivée, vous devez fournir un mot de passe à l'utilisateur sys pour le définir sur l'hôte cible.
+*** Informations d'identification ASM : si l'authentification de l'utilisateur OS est désactivée sur l'hôte cible, vous devez fournir les informations d'identification de l'utilisateur privilégié sysasm pour vous connecter à l'instance ASM sur l'hôte cible.
+
+
+.. Cliquez sur *Suivant*.
+.. Cliquez sur *Clone*.
+
+
+
+
+ a| 
+*Fichier de spécifications*
+ a| 
+.. Cliquez sur *Télécharger le fichier* pour télécharger le fichier de spécifications.
+.. Sélectionnez la structure de nommage des clones.
++
+Si vous sélectionnez *généré automatiquement*, vous devez spécifier le suffixe.
+
+.. Modifiez le fichier de spécifications selon les besoins et téléchargez-le en cliquant sur le bouton *Parcourir*.
+.. Sélectionnez l'hôte clone.
++
+Si vous souhaitez créer le clone sur un autre hôte, sélectionnez l'hôte ayant la même version d'Oracle et de système d'exploitation que celle de l'hôte de base de données source.
+
+.. Spécifiez la SID du clone.
+.. (Facultatif) spécifiez les informations d'identification de la base de données.
++
+*** Informations d'identification de la base de données : si l'authentification de l'utilisateur OS est désactivée, vous devez fournir un mot de passe à l'utilisateur sys pour le définir sur l'hôte cible.
+*** Informations d'identification ASM : si l'authentification de l'utilisateur OS est désactivée sur l'hôte cible, vous devez fournir les informations d'identification de l'utilisateur privilégié sysasm pour vous connecter à l'instance ASM sur l'hôte cible.
+
+
+.. Cliquez sur *Suivant*.
+.. Cliquez sur *Clone*.
+
+
+|===
+. Cliquez sur image:button_plus_sign_square.png["pour sélectionner l'action"] À côté de *Filter by* et sélectionnez *Clone options* > *clones* pour afficher les clones.
+

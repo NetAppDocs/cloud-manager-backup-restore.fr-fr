@@ -1,0 +1,89 @@
+---
+sidebar: sidebar 
+permalink: task-backup-cloud-native-oracle-data.html 
+keywords: admin role, service account, pre-canned policies, cloud manager, BlueXP, scheduled backups, on-demand backups, create policy, Oracle database, backup limitations 
+summary: 'Créer des sauvegardes planifiées ou à la demande d"une base de données Oracle.' 
+---
+= Sauvegardez les bases de données Oracle cloud natives
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous devez affecter une stratégie pré-prédéfinie ou la stratégie que vous avez créée, puis effectuer une sauvegarde.
+
+
+
+== Créez une règle pour protéger les bases de données Oracle
+
+Vous pouvez créer des stratégies si vous ne souhaitez pas modifier les stratégies prédéfinies.
+
+*Étapes*
+
+. Dans la page applications, dans la liste déroulante Paramètres, sélectionnez *stratégies*.
+. Cliquez sur *Créer une stratégie*.
+. Spécifiez un nom de stratégie.
+. (Facultatif) modifiez le format du nom de la sauvegarde.
+. Spécifiez la planification et les informations de conservation.
+. Cliquez sur *Créer*.
+
+
+
+
+== Créez une sauvegarde de la base de données Oracle
+
+Vous pouvez soit affecter une stratégie pré-prédéfinie, soit créer une stratégie, puis l'affecter à la base de données. Une fois la stratégie attribuée, les sauvegardes sont créées conformément au planning défini dans la stratégie.
+
+
+NOTE: Pour Oracle, lors de la création de groupes de disques ASM, assurez-vous qu'il n'y a pas de volumes communs entre les groupes de disques. Chaque groupe de disques doit disposer de volumes dédiés.
+
+*Étapes*
+
+. Dans la page applications, si la base de données n'est pas protégée à l'aide d'aucune stratégie, cliquez sur *affecter stratégie*.
++
+Si la base de données est protégée à l'aide d'une ou de plusieurs stratégies, vous pouvez attribuer davantage de stratégies en cliquant sur image:icon-action.png["pour sélectionner l'action"] > *affecter stratégie*.
+
+. Sélectionnez la stratégie et cliquez sur *affecter*.
++
+Les sauvegardes seront créées conformément à la planification définie dans la stratégie.
+
++
+
+NOTE: Le compte de service (_SnapCenter-account-<Account_ID>_) est utilisé pour l'exécution des opérations de sauvegarde planifiées.
+
+
+
+
+
+== Création d'une sauvegarde à la demande de la base de données Oracle
+
+Après avoir affecté la stratégie, vous pouvez créer une sauvegarde à la demande de l'application.
+
+*Étapes*
+
+. Dans la page applications, cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à l'application et cliquer sur *On-Demand Backup*.
+. Si plusieurs stratégies sont affectées à l'application, sélectionnez la stratégie, la valeur de conservation, puis cliquez sur *Créer une sauvegarde*.
+
+
+*Plus d'informations*
+
+Après la restauration d'une base de données volumineuse (250 Go ou plus), si vous effectuez une sauvegarde en ligne complète sur la même base de données, l'opération risque d'échouer avec l'erreur suivante :
+
+`failed with status code 500, error {\"error\":{\"code\":\"app_internal_error\",\"message\":\"Failed to create snapshot. Reason: Snapshot operation not allowed due to clones backed by snapshots. Try again after sometime.`
+
+Pour plus d'informations sur la façon de résoudre ce problème, reportez-vous à : https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/Snapshot_operation_not_allowed_due_to_clones_backed_by_snapshots["Opération de snapshot non autorisée en raison de clones sauvegardés par des snapshots"].
+
+
+
+== Limites
+
+* Ne prend pas en charge les sauvegardes de données en ligne ou de journaux uniquement
+* Ne prend pas en charge les sauvegardes hors ligne
+* Ne prend pas en charge la sauvegarde de la base de données Oracle résidant sur des points de montage récursifs
+* Ne prend pas en charge les snapshots de groupes de cohérence pour les bases de données Oracle résidant sur plusieurs groupes de disques ASM avec chevauchement des volumes FSX
+* Si vos bases de données Oracle sont configurées sur ASM, assurez-vous que les noms de vos SVM sont uniques sur les systèmes FSX. Si vous disposez du même nom de SVM sur les systèmes FSX, la sauvegarde des bases de données Oracle résidant sur ces SVM ne est pas prise en charge.
+

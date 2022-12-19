@@ -14,7 +14,7 @@ summary: Vous pouvez restaurer des machines virtuelles depuis le cloud vers Snap
 
 
 [role="lead"]
-Vous pouvez restaurer des machines virtuelles à partir du cloud vers vCenter sur site. La sauvegarde sera restaurée au même emplacement que celui où elle a été effectuée. Vous ne pouvez pas restaurer la sauvegarde à un autre emplacement. Vous pouvez restaurer des machines virtuelles depuis le datastore ou depuis la vue VM.
+Vous pouvez restaurer des machines virtuelles à partir du cloud vers vCenter sur site. La sauvegarde sera restaurée au même emplacement que celui où elle a été effectuée. Si la machine virtuelle a été sauvegardée à l'aide de la stratégie d'archivage, vous pouvez définir la priorité de restauration d'archivage.
 
 
 NOTE: Vous ne pouvez pas restaurer des machines virtuelles qui sont fractionnés entre les datastores.
@@ -33,14 +33,22 @@ NOTE: Si la machine virtuelle source est déplacée vers un autre emplacement (v
 +
 .. Cliquez sur image:icon-action.png["action"] Correspondant au datastore que vous souhaitez restaurer et cliquer sur *Afficher les détails*.
 .. Cliquez sur *Restaurer* correspondant à la sauvegarde que vous souhaitez restaurer.
-.. Sélectionnez la machine virtuelle à restaurer à partir de la sauvegarde et cliquez sur *Suivant*.
+.. Sélectionnez la machine virtuelle à restaurer à partir de la sauvegarde.
+.. Sélectionnez *Archive Restore Priority* et cliquez sur *Next*.
++
+Cette option n'est disponible que si la machine virtuelle était protégée à l'aide d'une stratégie dont les paramètres d'archivage ont été configurés. Pour Amazon Web Services, la priorité de restauration d'archivage est élevée, standard ou faible. Pour Microsoft Azure, la priorité de restauration d'archivage est élevée et standard.
+
 .. Vérifiez les détails et cliquez sur *Restaurer*.
 
 
 . Pour restaurer à partir de machines virtuelles :
 +
 .. Cliquez sur image:icon-action.png["action"] Correspondant à la machine virtuelle que vous souhaitez restaurer et cliquer sur *Restaurer*.
-.. Sélectionnez la sauvegarde par laquelle vous souhaitez restaurer la machine virtuelle et cliquez sur *Suivant*.
+.. Sélectionnez la sauvegarde par laquelle vous souhaitez restaurer la machine virtuelle.
+.. Sélectionnez *Archive Restore Priority* et cliquez sur *Next*.
++
+Cette option n'est disponible que si la machine virtuelle était protégée à l'aide d'une stratégie dont les paramètres d'archivage ont été configurés. Pour Amazon Web Services, la priorité de restauration d'archivage est élevée, standard ou faible. Pour Microsoft Azure, la priorité de restauration d'archivage est élevée et standard.
+
 .. Vérifiez les détails et cliquez sur *Restaurer*.
 
 

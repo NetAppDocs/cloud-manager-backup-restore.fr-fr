@@ -16,6 +16,8 @@ summary: Sauvegardez vos datastores ONTAP sur site dans AWS.
 [role="lead"]
 Vous pouvez sauvegarder un ou plusieurs datastores Amazon Web Services en intégrant le plug-in SnapCenter pour VMware vSphere à BlueXP. Ils peuvent ainsi sauvegarder et archiver des données facilement et rapidement à des fins d'efficacité du stockage et d'accélération de la transition vers le cloud.
 
+Si le datastore est associé à une stratégie d'archivage, vous aurez la possibilité de sélectionner le niveau d'archivage. Les tiers d'archivage pris en charge sont Glacier et Glacier Deep.
+
 
 NOTE: Assurez-vous que vous avez rempli toutes les link:concept-protect-vm-data.html#Requirements["de formation"] avant de sauvegarder des datastores dans le cloud.
 
@@ -45,6 +47,10 @@ Configurez les clusters ONTAP que vous souhaitez que BlueXP découvre pour sauve
 .. Dans le champ clé secrète AWS, spécifiez le mot de passe pour le chiffrement des données.
 .. Sélectionnez la région dans laquelle vous souhaitez créer les sauvegardes.
 .. Spécifiez les adresses IP des clusters ONTAP qui ont été ajoutés en tant qu'environnements de travail.
+.. Sélectionnez le niveau d'archivage.
++
+Il est recommandé de définir le niveau d'archivage car il s'agit d'une activité unique et vous ne serez pas autorisé à le configurer ultérieurement.
+
 
 
 . Vérifiez les détails et cliquez sur *Activer la sauvegarde*.

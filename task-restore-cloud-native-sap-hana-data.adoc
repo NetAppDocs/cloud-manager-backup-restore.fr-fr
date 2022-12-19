@@ -1,0 +1,111 @@
+---
+sidebar: sidebar 
+permalink: task-restore-cloud-native-sap-hana-data.html 
+keywords: cloud native, application data, restore, data files, SAP HANA, database, recovery, Cloud Manager, BlueXP 
+summary: Restaurez les fichiers de données, puis récupérez la base de données. 
+---
+= Restaurez la base de données SAP HANA cloud native
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+En cas de perte de données, vous pouvez restaurer les fichiers de données et non de données, puis récupérer la base de données.
+
+
+
+== Préscripts et postscripts
+
+Vous pouvez fournir des scripts prescripteurs, des scripts postaux et des scripts d'exit pendant la création d'une stratégie. Ces scripts sont exécutés sur l'hôte HANA pendant l'opération de restauration.
+
+Le format pris en charge pour les scripts est .sh, le script python, le script perl, etc.
+
+Le prescripteur et le PostScript devraient être enregistrés par l'administrateur hôte dans `/opt/NetApp/snapcenter/scc/etc/allowed_commands.config file``
+
+`[root@scspa2622265001 etc]# cat allowed_commands.config
+command: mount
+command: umount
+command: /mnt/scripts/pre_script.sh
+command: /mnt/scripts/post_script.sh`
+
+
+
+== Variables environnementales
+
+Pour le workflow de restauration, les variables d'environnement suivantes sont disponibles dans le cadre du programme prescripteur et PostScript.
+
+|===
+| Variable d'environnement | Description 
+
+
+ a| 
+SID
+ a| 
+Identifiant système de la base de données HANA sélectionnée pour la restauration
+
+
+
+ a| 
+BackupName
+ a| 
+Nom de sauvegarde choisi pour l'opération de restauration
+
+
+
+ a| 
+UserStoreKeyNames
+ a| 
+Clé userstore configurée pour la base de données HANA
+
+
+
+ a| 
+OSDBUser
+ a| 
+OSDBUser configuré pour la base de données HANA
+
+|===
+
+
+== Restaurez la base de données SAP HANA cloud native
+
+*Ce dont vous avez besoin*
+
+. Le système SAP HANA doit être dans un état arrêté.
+. Vous pouvez fournir un prescripteur pour arrêter le système SAP HANA.
+
+
+*Étapes*
+
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à la base de données à restaurer et cliquer sur *Afficher les détails*.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à la sauvegarde de données à utiliser pour la restauration et cliquer sur *Restaurer*.
+. Dans la page *Restore System*, entrez les scripts.
+. Cliquez sur *Restaurer*.
+
+
+*Après la fin*
+
+* Après une restauration, restaurez manuellement le système SAP HANA ou fournissez un script final qui exécute la restauration du système SAP HANA.
+
+
+
+
+== Restaurez un volume sans données
+
+. Dans la page *applications*, sélectionnez Volume sans données dans la liste déroulante.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant à la sauvegarde que vous souhaitez restaurer, puis cliquez sur *Restaurer*.
+
+
+
+
+== Restaurez le volume global sans données
+
+*Étapes*
+
+. Dans la page *applications*, cliquez sur le volume global sans données que vous souhaitez restaurer.
+. Cliquez sur image:icon-action.png["pour sélectionner l'action"] Correspondant au volume global hors données que vous souhaitez restaurer, puis cliquez sur *Restaurer*.
+

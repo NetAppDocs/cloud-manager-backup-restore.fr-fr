@@ -1,10 +1,10 @@
 ---
 sidebar: sidebar 
-permalink: task-backup-vm-data-to-azure.html 
-keywords: back up, backup, backup virtual machine data, Microsoft Azure, cloud backup, backup datastores 
-summary: Sauvegardez vos datastores ONTAP sur site dans Azure. 
+permalink: task-backup-vm-data-to-gcp.html 
+keywords: back up, backup, backup virtual machine data, gcp, google cloud platform, cloud backup, backup datastores 
+summary: Sauvegardez vos datastores ONTAP sur site dans Google Cloud Platform. 
 ---
-= Sauvegarde des datastores dans Microsoft Azure
+= Sauvegarde des datastores dans Google Cloud Platform
 :hardbreaks:
 :allow-uri-read: 
 :nofooter: 
@@ -14,9 +14,7 @@ summary: Sauvegardez vos datastores ONTAP sur site dans Azure.
 
 
 [role="lead"]
-Vous pouvez sauvegarder un ou plusieurs datastores dans Microsoft Azure en intégrant le plug-in SnapCenter pour VMware vSphere avec BlueXP. Ils peuvent ainsi sauvegarder et archiver des données facilement et rapidement à des fins d'efficacité du stockage et d'accélération de la transition vers le cloud.
-
-Si le datastore est associé à une stratégie d'archivage, vous aurez la possibilité de sélectionner le niveau d'archivage. Le Tier d'archivage pris en charge est le stockage Azure Archive Blob Storage.
+Vous pouvez sauvegarder un ou plusieurs datastores dans Google Cloud Platform en intégrant le plug-in SnapCenter pour VMware vSphere avec BlueXP. Ils peuvent ainsi sauvegarder et archiver des données facilement et rapidement à des fins d'efficacité du stockage et d'accélération de la transition vers le cloud.
 
 
 NOTE: Assurez-vous que vous avez rempli toutes les link:concept-protect-vm-data.html#Requirements["de formation"] avant de sauvegarder des datastores dans le cloud.
@@ -40,16 +38,13 @@ Configurez les clusters ONTAP que vous souhaitez que BlueXP découvre pour sauve
 .. Cliquez sur *Ajouter un environnement de travail*.
 
 
-. Sélectionnez *Microsoft Azure* pour le configurer en tant que fournisseur de cloud.
+. Sélectionnez *Google Cloud Platform* pour le configurer en tant que fournisseur de cloud.
 +
-.. Spécifiez l'ID d'abonnement Azure.
+.. Sélectionnez le compartiment Google Cloud Project où vous souhaitez créer le compartiment Google Cloud Storage pour les sauvegardes.
+.. Dans le champ clé d'accès Google Cloud, spécifiez la clé.
+.. Dans le champ clé secrète Google Cloud, spécifiez le mot de passe.
 .. Sélectionnez la région dans laquelle vous souhaitez créer les sauvegardes.
-.. Créez un nouveau groupe de ressources ou utilisez un groupe de ressources existant.
-.. Spécifiez les adresses IP des clusters ONTAP qui ont été ajoutés en tant qu'environnements de travail.
-.. Sélectionnez le niveau d'archivage.
-+
-Il est recommandé de définir le niveau d'archivage car il s'agit d'une activité unique et vous ne serez pas autorisé à le configurer ultérieurement.
-
+.. Spécifiez l'espace IP.
 
 
 . Vérifiez les détails et cliquez sur *Activer la sauvegarde*.

@@ -1,0 +1,216 @@
+---
+sidebar: sidebar 
+permalink: task-add-host-discover-oracle-databases.html 
+keywords: Cloud Manager, BlueXP, SnapCenter Plug-in for Oracle, Oracle, database, host, deploy, add host, discover 
+summary: Déployez le plug-in SnapCenter pour Oracle sur chacun des hôtes de base de données Oracle. 
+---
+= Ajouter l'hôte et découvrir les bases de données Oracle
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous devez ajouter l'hôte et découvrir les bases de données sur l'hôte pour affecter des stratégies et créer des sauvegardes. Vous pouvez ajouter l'hôte manuellement lorsque vous avez déjà déployé le plug-in ou l'ajouter à l'aide de SSH.
+
+
+
+== Prérequis
+
+Avant d'ajouter l'hôte, vous devez vous assurer que les prérequis sont respectés.
+
+* Vous devriez avoir créé l'environnement de travail et le connecteur.
+* Assurez-vous que le connecteur est connecté à l'environnement de travail et aux hôtes de la base de données Oracle.
+* Assurez-vous que l'utilisateur BlueXP a le rôle "Admin compte".
+* Assurez-vous que Java 11 (64 bits) Oracle Java ou OpenJDK est installé sur chacun des hôtes de base de données Oracle et QUE LA variable JAVA_HOME est correctement définie.
+* Vous devez avoir créé l'utilisateur non-root. Pour plus d'informations, reportez-vous à la section <<Configurer un utilisateur non-racine>>.
+* Si vous souhaitez ajouter l'hôte manuellement, vous devez d'abord déployer le plug-in. Vous pouvez déployer le plug-in <<Déployez le plug-in manuellement,manuellement>> ou <<Déployez le plug-in à l'aide d'un script,à l'aide du script>>.
++
+Vous devez déployer le plug-in sur chacun des hôtes de la base de données Oracle.
+
+
+
+
+
+=== Configurer un utilisateur non-racine
+
+Vous devez configurer un utilisateur non-root pour déployer le plug-in.
+
+*Étapes*
+
+. Connectez-vous à la machine virtuelle du connecteur.
+. Téléchargez le binaire du plug-in hôte SnapCenter Linux.
+`sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'`
+. Obtenez le chemin de montage de base.
+`sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`
+. Copiez les lignes 1 à 16 à partir du fichier *oracle_checksum_scs.txt* situé à *_base_mount_path_/_version_/sc-linux-host-plugin/*.
+. Connectez-vous à l'hôte de la base de données Oracle et effectuez les opérations suivantes :
++
+.. Créez le compte utilisateur non-racine, la paire de clés privées et attribuez les autorisations. Pour plus d'informations, reportez-vous à la section https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-users.html#create-user-account["Créez un compte utilisateur"^].
+.. Collez les lignes que vous avez copiées à l'étape 4 dans le fichier _/etc/sudoers_ à l'aide de l'utilitaire visudo Linux.
++
+Dans les lignes ci-dessus, remplacez le <LINUXUSER> par l'utilisateur non-root que vous avez créé et enregistrez le fichier dans l'utilitaire visudo.
+
+
+
+
+
+
+
+=== Déployez le plug-in manuellement
+
+Si l'authentification basée sur la clé SSH n'est pas activée sur l'hôte Oracle, effectuez les étapes manuelles suivantes pour déployer le plug-in.
+
+*Étapes*
+
+. Connectez-vous à la machine virtuelle du connecteur.
+. Téléchargez le binaire du plug-in hôte SnapCenter Linux.
+`sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'`
+. Obtenez le chemin de montage de base.
+`sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`
+. Obtenez le chemin binaire du plug-in téléchargé.
+`sudo ls <base_mount_path> $(sudo docker ps|grep -Po "cloudmanager_scs_cloud:.*? "|sed -e 's/ *$//'|cut -f2 -d":")/sc-linux-host-plugin/snapcenter_linux_host_plugin_scs.bin`
+. Copiez _snapcenter_linux_host_plugin_scs.bin_ vers chacun des hôtes de base de données Oracle à l'aide de scp ou d'autres méthodes alternatives.
++
+Le _snapcenter_linux_host_plugin_scs.bin_ doit être copié dans un emplacement accessible par l'utilisateur non-root.
+
+. Connectez-vous à l'hôte de la base de données Oracle à l'aide du compte utilisateur non-root et exécutez la commande suivante pour activer les autorisations d'exécution pour le binaire.
+`chmod +x snapcenter_linux_host_plugin_scs.bin`
+. Déployez le plug-in Oracle en tant qu'utilisateur non root sudo.
+`./snapcenter_linux_host_plugin_scs.bin -i silent -DSPL_USER=<non-root-user>`
+. Copiez _certificate.p12_ de _<base_mount_path>/client/certificat/_ chemin de la machine virtuelle du connecteur vers _/var/opt/snapcenter/spl/etc/_ sur l'hôte du plug-in.
+. Accédez à _/var/opt/snapcenter/spl/etc_ et exécutez la commande keytool pour importer le certificat.
+`keytool -v -importkeystore -srckeystore certificate.p12 -srcstoretype PKCS12 -destkeystore keystore.jks -deststoretype JKS -srcstorepass snapcenter -deststorepass snapcenter -srcalias agentcert -destalias agentcert -noprompt`
+. Redémarrer SPL : `systemctl restart spl`
+
+
+
+
+=== Déployez le plug-in à l'aide d'un script
+
+Si l'authentification basée sur la clé SSH est activée sur l'hôte Oracle pour l'utilisateur non-root, vous pouvez effectuer les étapes suivantes pour déployer le plug-in. Avant d'effectuer les étapes, assurez-vous que la connexion SSH au connecteur est activée.
+
+*Étapes*
+
+. Connectez-vous à la machine virtuelle du connecteur.
+. Obtenez le chemin de montage de base.
+`sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`
+. Déployez le plug-in à l'aide du script d'assistance fourni dans le connecteur.
+`sudo <base_mount_path>/scripts/oracle_plugin_copy_and_install.sh --host <host_name> --sshkey <ssh_key_file> --username <user_name> --port <ssh_port> --pluginport <plugin_port> --installdir <install_dir>`
++
+** Host_name est le nom de l'hôte Oracle et il s'agit d'un paramètre obligatoire.
+** ssh_key_file est la clé SSH de l'utilisateur non-root et utilisée pour se connecter à l'hôte Oracle. Ce paramètre est obligatoire.
+** User_name : utilisateur non-root disposant de privilèges SSH sur l'hôte Oracle et il s'agit d'un paramètre facultatif. La valeur par défaut est EC2-user.
+** ssh_port : port SSH sur l'hôte Oracle et il s'agit d'un paramètre facultatif. La valeur par défaut est 22
+** Plugin_port : port utilisé par le plug-in et il s'agit d'un paramètre facultatif. La valeur par défaut est 8145
+** Dossier_installation : répertoire dans lequel le plug-in sera déployé et il s'agit d'un paramètre facultatif. La valeur par défaut est /opt.
+
+
+
+
+Par exemple :
+`sudo /var/lib/docker/volumes/service-manager-2_cloudmanager_scs_cloud_volume/_data/scripts/oracle_plugin_copy_and_install.sh --host xxx.xx.x.x --sshkey /keys/netapp-ssh.ppk`
+
+
+
+== Ajouter hôte
+
+Vous devez ajouter l'hôte et découvrir les bases de données Oracle.
+
+*Étapes*
+
+. Dans l'interface utilisateur BlueXP, cliquez sur *protection* > *sauvegarde et récupération* > *applications*.
+. Cliquez sur découvrir les applications.
+. Sélectionnez *Cloud Native* et cliquez sur *Next*.
++
+Un compte de service avec le rôle _SnapCenter System_ est créé pour exécuter des opérations de protection des données planifiées pour tous les utilisateurs de ce compte.
+
++
+** Cliquez sur *compte* > *gérer compte* > *membres* pour afficher le compte de service.
++
+
+NOTE: Le compte de service (_SnapCenter-account-<accountid>_) est utilisé pour l'exécution des opérations de sauvegarde planifiées. Vous ne devez jamais supprimer le compte de service.
+
+
+
+. Dans la page Ajouter un hôte, effectuez l'une des opérations suivantes :
++
+|===
+| Si... | Procédez comme ça... 
+
+
+ a| 
+Ont déployé le plug-in non plus <<Déployez le plug-in manuellement,manuellement>> ou <<Déployez le plug-in à l'aide d'un script,à l'aide du script>>
+ a| 
+.. Sélectionnez *Manuel*.
+.. Spécifiez le FQDN ou l'adresse IP de l'hôte où le plug-in est déployé.
++
+Assurez-vous que le connecteur peut communiquer avec l'hôte de base de données à l'aide du FQDN ou de l'adresse IP.
+
+.. Spécifiez le port du plug-in.
++
+Le port par défaut est 8145.
+
+.. Sélectionnez le connecteur.
+.. Cochez la case pour confirmer que le plug-in est installé sur l'hôte
+.. Cliquez sur *découvrir les applications*.
+
+
+
+
+ a| 
+Déploiement automatique du plug-in
+ a| 
+.. Sélectionnez *utilisant SSH*.
+.. Spécifiez le FQDN ou l'adresse IP de l'hôte où vous souhaitez installer le plug-in.
+.. Spécifiez le nom d'utilisateur (<<Configurer un utilisateur non-racine,utilisateur non-root>>) à l'aide de laquelle le module du plug-in sera copié sur l'hôte.
+.. Spécifiez le port SSH et le port du plug-in.
++
+Le port SSH par défaut est 22 et le port du plug-in est 8145.
+
++
+Vous pouvez fermer le port SSH sur l'hôte de l'application après avoir installé le plug-in. Le port SSH n'est requis pour aucune autre opération de plug-in.
+
+.. Sélectionnez le connecteur.
+.. (Facultatif) si l'authentification sans clé n'est pas activée entre le connecteur et l'hôte, vous devez spécifier la clé privée SSH qui sera utilisée pour communiquer avec l'hôte.
++
+
+NOTE: La clé privée SSH n'est pas stockée n'importe où dans l'application et ne sera pas utilisée pour d'autres opérations.
+
+.. Cliquez sur *Suivant*.
+
+
+|===
++
+** Affiche toutes les bases de données sur l'hôte. Si l'authentification OS est désactivée pour la base de données, vous devez configurer l'authentification de la base de données en cliquant sur *configurer*. Pour plus d'informations, reportez-vous à la section <<Configurer les informations d'identification de la base de données Oracle>>.
+** Cliquez sur *Paramètres* et sélectionnez *hôtes* pour afficher tous les hôtes. Cliquez sur *Supprimer* pour supprimer un hôte de base de données.
++
+
+NOTE: Le filtre permettant d'afficher un hôte spécifique ne fonctionne pas. Lorsque vous spécifiez un nom d'hôte dans le filtre, tous les hôtes sont affichés.
+
+** Cliquez sur *Paramètres* et sélectionnez *stratégies* pour afficher les stratégies prédéfinies. Passez en revue les stratégies pré-prédéfinies et, si vous le souhaitez, vous pouvez les modifier pour répondre à vos exigences ou créer une nouvelle stratégie.
+
+
+
+
+
+
+== Configurer les informations d'identification de la base de données Oracle
+
+Vous devez configurer les informations d'identification utilisées pour effectuer des opérations de protection des données sur les bases de données Oracle.
+
+*Étapes*
+
+. Si l'authentification OS est désactivée pour la base de données, vous devez configurer l'authentification de la base de données en cliquant sur *configurer*.
+. Spécifiez le nom d'utilisateur, le mot de passe et les détails du port.
++
+Si la base de données réside dans ASM, vous devez également configurer les paramètres ASM.
+
++
+L'utilisateur Oracle doit disposer des privilèges sysdba et l'utilisateur ASM doit disposer des privilèges sysasm.
+
+. Cliquez sur *configurer*.
+

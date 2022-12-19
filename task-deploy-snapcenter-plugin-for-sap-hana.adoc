@@ -1,0 +1,97 @@
+---
+sidebar: sidebar 
+permalink: task-deploy-snapcenter-plugin-for-sap-hana.html 
+keywords: Cloud Manager, BlueXP, SnapCenter Plug-in for SAP HANA, SAP HANA, database, host, deploy 
+summary: Déployez le plug-in SnapCenter pour SAP HNAN sur chacun des hôtes de base de données SAP HANA. 
+---
+= Déployez le plug-in SnapCenter pour SAP HANA
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous devez déployer le plug-in SnapCenter pour SAP HANA sur chacun des hôtes de base de données SAP HANA. Selon que l'authentification basée sur une clé SSH est activée ou non sur l'hôte SAP HANA, vous pouvez suivre l'une des méthodes de déploiement du plug-in.
+
+
+NOTE: Assurez-vous que Java 11 (64 bits) Oracle Java ou OpenJDK est installé sur chacun des hôtes de base de données SAP HANA.
+
+
+
+== Configurer un utilisateur non-racine
+
+Vous devez créer un utilisateur non racine pour déployer le plug-in.
+
+*Étapes*
+
+. Connectez-vous à la machine virtuelle du connecteur.
+. Téléchargez le binaire du plug-in hôte Linux.
+`sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'``
+. Obtenez le chemin de montage de base.
+`sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`
+. Copier les lignes 1 à 16 à partir du `oracle_checksum_scs.txt`` dossier situé à `base_mount_path/version/sc-linux-host-plugin/`
+. Connectez-vous à l'hôte de la base de données SAP HANA et effectuez les opérations suivantes :
++
+.. Créez le compte utilisateur non-racine, la paire de clés privées et attribuez les autorisations.
+.. Collez les lignes que vous avez copiées à l'étape 4 dans le `/etc/sudoers` Fichier à l'aide de l'utilitaire Linux de visualisation.
++
+Dans les lignes ci-dessus, remplacez le <LINUXUSER> par l'utilisateur non racine que vous avez créé et enregistrez dans l'utilitaire de visualisation.
+
+
+
+
+
+
+
+== Déployez le plug-in manuellement
+
+Si l'authentification basée sur la clé SSH n'est pas activée sur l'hôte HANA, vous devez effectuer les étapes manuelles suivantes pour déployer le plug-in.
+
+*Étapes*
+
+. Connectez-vous à la machine virtuelle du connecteur.
+. Téléchargez le binaire du plug-in hôte Linux.
+`# sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'``
+. Obtenez le chemin de montage de base.
+`sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint``
+. Obtenez le chemin binaire du plug-in téléchargé.
+`sudo ls <base_mount_path> $(sudo docker ps|grep -Po "cloudmanager_scs_cloud:.*? "|sed -e 's/ *$//'|cut -f2 -d":")/sc-linux-host-plugin/snapcenter_linux_host_plugin_scs.bin``
+. Copier `snapcenter_linux_host_plugin_scs.bin`` Vers chacun des hôtes de la base de données SAP HANA à l'aide de scp ou d'autres méthodes alternatives.
+. Sur l'hôte de la base de données SAP HANA, exécutez la commande suivante pour activer les autorisations d'exécution pour le binaire.
+`chmod +x snapcenter_linux_host_plugin_scs.bin`
+. Déployez le plug-in SAP HANA en tant qu'utilisateur non root.``./snapcenter_linux_host_plugin_scs.bin -i silent -DSPL_USER=<non-root-user>``
+. Copier sur l'hôte du plug-in.
++
+.. Accédez à `/var/opt/snapcenter/spl/etc`` and execute the keytool command to import the certificate.
+`keytool -v -importkeystore -srckeystore certificate.p12 -srcstoretype PKCS12 -destkeystore keystore.jks -deststoretype JKS -srcstorepass snapcenter -deststorepass snapcenter -srcalias agentcert -destalias agentcert -noprompt``
+.. Redémarrer SPL : `systemctl restart spl``
+
+
+
+
+
+
+== Déployez le plug-in avec l'authentification basée sur des clés SSH
+
+Si l'authentification basée sur la clé SSH est activée sur l'hôte HANA, vous pouvez effectuer les étapes suivantes pour déployer le plug-in. Avant d'effectuer les étapes, assurez-vous que la connexion SSH au connecteur est activée.
+
+*Étapes*
+
+. Connectez-vous à la machine virtuelle du connecteur.
+. Obtenez le chemin de montage de base.
+`# sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`
+. Déployez le plug-in.
+`# sudo <base_mount_path>/scripts/hana_plugin_copy_and_install.sh --host <host_name> --sshkey <ssh_key_file> --username <user_name> --port <ssh_port> --pluginport <plugin_port> --installdir <install_dir>`
++
+** Host_name est le nom de l'hôte HANA, et il s'agit d'un paramètre obligatoire.
+** ssh_key_file est la clé SSH utilisée pour la connexion à l'hôte HANA, et il s'agit d'un paramètre obligatoire.
+** Nom_utilisateur : utilisateur avec privilèges SSH sur l'hôte HANA, et il s'agit d'un paramètre facultatif. La valeur par défaut est azureuser.
+** ssh_port : port SSH sur l'hôte HANA, et ce paramètre est facultatif. La valeur par défaut est 22.
+** Plugin_port : port utilisé par le plug-in, et il s'agit d'un paramètre facultatif. La valeur par défaut est 8145.
+** Dossier_installation : répertoire dans lequel le plug-in sera déployé, et il s'agit d'un paramètre facultatif. La valeur par défaut est /opt.
+
+
+

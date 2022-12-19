@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: reference-configure-azure-netapp-files.html 
+keywords: Cloud Manager, Azure NetApp Files, working environment, Connector, BlueXP 
+summary: 'Créer l"environnement de travail Azure NetApp Files et le connecteur' 
+---
+= Configurez Azure NetApp Files
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous devez créer l'environnement de travail Azure NetApp Files et le connecteur.
+
+
+
+== Créer un environnement de travail Azure NetApp Files
+
+Nous vous recommandons de créer des environnements de travail Azure NetApp Files (ANF) dans lesquels sont hébergées vos bases de données. Pour plus d'informations, reportez-vous à la section link:https://docs.netapp.com/us-en/cloud-manager-azure-netapp-files/concept-azure-netapp-files.html["Découvrez Azure NetApp Files"] et link:https://docs.netapp.com/us-en/cloud-manager-azure-netapp-files/task-create-working-env.html["Créer un environnement de travail Azure NetApp Files"].
+
+
+
+== Créer un connecteur
+
+Un administrateur de comptes doit déployer un connecteur dans ANF qui permet à BlueXP de gérer les ressources et les processus au sein de votre environnement de cloud public.
+
+
+NOTE: Vous ne pouvez pas mettre à jour le nouvel ID_connecteur à partir de l'interface utilisateur.
+
+Pour plus d'informations, reportez-vous à la section link:https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-creating-connectors-azure.html["Créez un connecteur dans Azure à partir de BlueXP"].

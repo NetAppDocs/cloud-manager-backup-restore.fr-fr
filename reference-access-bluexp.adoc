@@ -1,0 +1,17 @@
+---
+sidebar: sidebar 
+permalink: reference-access-bluexp.html 
+keywords: Cloud Manager, BlueXP 
+summary: Accéder à BlueXP. 
+---
+= Accéder à BlueXP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous devriez link:https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-signing-up.html["Inscrivez-vous au site Web NetApp BlueXP"], link:https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-logging-in.html["Connectez-vous à BlueXP"], puis configurez un link:https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-setting-up-netapp-accounts.html["Compte NetApp"].

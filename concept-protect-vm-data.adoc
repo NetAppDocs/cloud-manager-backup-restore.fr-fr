@@ -14,9 +14,9 @@ summary: Apprenez-en plus sur la protection des données sur vos machines virtue
 
 
 [role="lead"]
-Vous pouvez protéger les données stockées sur vos machines virtuelles en intégrant le plug-in SnapCenter pour VMware vSphere à BlueXP (anciennement Cloud Manager). Vous pouvez sauvegarder des datastores dans le cloud et restaurer facilement les serveurs virtuels depuis le plug-in SnapCenter sur site pour VMware vSphere.
+Vous pouvez protéger les données stockées sur vos machines virtuelles en intégrant le plug-in SnapCenter pour VMware vSphere à BlueXP (anciennement Cloud Manager). Vous pouvez sauvegarder des datastores depuis des systèmes de stockage primaire et secondaire sur site vers le cloud et restaurer facilement les machines virtuelles vers le plug-in SnapCenter sur site pour VMware vSphere.
 
-Vous pouvez sauvegarder des datastores Amazon Web Services S3, Microsoft Azure Blob et StorageGRID.
+Vous pouvez sauvegarder des datastores Amazon Web Services S3 (les tiers d'archivage pris en charge sont Glacier et Deep Glacier), Microsoft Azure Blob (le Tier d'archivage pris en charge est Azure Archive), Google Cloud Platform et StorageGRID.
 
 
 
@@ -25,10 +25,14 @@ Vous pouvez sauvegarder des datastores Amazon Web Services S3, Microsoft Azure B
 Avant de commencer à sauvegarder des datastores et des machines virtuelles sur des services cloud, lisez les éléments suivants pour vous assurer que la configuration est prise en charge.
 
 * Plug-in SnapCenter pour VMware vSphere 4.6P1 ou version ultérieure
++
+** Nous vous recommandons d'utiliser le plug-in SnapCenter pour VMware vSphere 4.7P1 ou une version ultérieure pour sauvegarder les machines virtuelles sur le stockage secondaire sur site.
+
+
 * ONTAP 9.8 ou version ultérieure
 * BlueXP 3.9 ou version ultérieure
 * Au moins une sauvegarde doit avoir été incluse dans le plug-in SnapCenter pour VMware vSphere 4.6P1.
-* Au moins une règle quotidienne, hebdomadaire ou mensuelle du plug-in SnapCenter pour VMware vSphere sans étiquette ni même étiquette que la politique de Cloud Backup pour machines virtuelles dans BlueXP.
+* Au moins une règle quotidienne, hebdomadaire ou mensuelle du plug-in SnapCenter pour VMware vSphere sans étiquette ni même étiquette que celle de la politique relative aux machines virtuelles dans BlueXP.
 * Dans le cas d'une règle prédéfinie, le niveau de planification doit être le même pour le datastore dans le plug-in SnapCenter pour VMware vSphere et dans le cloud.
 * Assurez-vous qu'il n'y a pas de volumes FlexGroup dans le datastore, car la sauvegarde et la restauration des volumes FlexGroup ne sont pas prises en charge.
 * Assurez-vous qu'aucun volume n'est chiffré car la restauration des volumes chiffrés n'est pas prise en charge.
@@ -39,4 +43,4 @@ Avant de commencer à sauvegarder des datastores et des machines virtuelles sur 
 
 L'image suivante montre chaque composant et les connexions que vous devez préparer entre eux :
 
-image:cloud_backup_vm.png["Diagramme d'architecture de la sauvegarde dans le cloud pour les machines virtuelles."]
+image:cloud_backup_vm.png["diagramme d'architecture"]
