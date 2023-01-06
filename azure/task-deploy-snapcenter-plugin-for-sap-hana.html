@@ -1536,7 +1536,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-19 11:29:42 +0000">12/19/2022</time>
+    <time datetime="2023-01-06 11:08:59 +0000">01/06/2023</time>
     
   
 
@@ -1581,14 +1581,14 @@ Assurez-vous que Java 11 (64 bits) Oracle Java ou OpenJDK est installé sur chac
 </li>
 <li>
 <p>Téléchargez le binaire du plug-in hôte Linux.<br>
-<code>sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'`</code></p>
+<code>sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'</code></p>
 </li>
 <li>
 <p>Obtenez le chemin de montage de base.<br>
 <code>sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint</code></p>
 </li>
 <li>
-<p>Copier les lignes 1 à 16 à partir du <code>oracle_checksum_scs.txt`</code> dossier situé à <code>base_mount_path/version/sc-linux-host-plugin/</code></p>
+<p>Copier les lignes 1 à 16 à partir du <code>oracle_checksum_scs.txt</code> dossier situé à <code>base_mount_path/version/sc-linux-host-plugin/</code></p>
 </li>
 <li>
 <p>Connectez-vous à l&#8217;hôte de la base de données SAP HANA et effectuez les opérations suivantes :</p>
@@ -1602,60 +1602,6 @@ Assurez-vous que Java 11 (64 bits) Oracle Java ou OpenJDK est installé sur chac
 <div class="paragraph">
 <p>Dans les lignes ci-dessus, remplacez le &lt;LINUXUSER&gt; par l&#8217;utilisateur non racine que vous avez créé et enregistrez dans l&#8217;utilitaire de visualisation.</p>
 </div>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="déployez-le-plug-in-manuellement">Déployez le plug-in manuellement</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Si l&#8217;authentification basée sur la clé SSH n&#8217;est pas activée sur l&#8217;hôte HANA, vous devez effectuer les étapes manuelles suivantes pour déployer le plug-in.</p>
-</div>
-<div class="paragraph">
-<p><strong>Étapes</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Connectez-vous à la machine virtuelle du connecteur.</p>
-</li>
-<li>
-<p>Téléchargez le binaire du plug-in hôte Linux.<br>
-<code># sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'`</code></p>
-</li>
-<li>
-<p>Obtenez le chemin de montage de base.<br>
-<code>sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint`</code></p>
-</li>
-<li>
-<p>Obtenez le chemin binaire du plug-in téléchargé.<br>
-<code>sudo ls &lt;base_mount_path&gt; $(sudo docker ps|grep -Po "cloudmanager_scs_cloud:.*? "|sed -e 's/ *$//'|cut -f2 -d":")/sc-linux-host-plugin/snapcenter_linux_host_plugin_scs.bin`</code></p>
-</li>
-<li>
-<p>Copier <code>snapcenter_linux_host_plugin_scs.bin`</code> Vers chacun des hôtes de la base de données SAP HANA à l&#8217;aide de scp ou d&#8217;autres méthodes alternatives.</p>
-</li>
-<li>
-<p>Sur l&#8217;hôte de la base de données SAP HANA, exécutez la commande suivante pour activer les autorisations d&#8217;exécution pour le binaire.<br>
-<code>chmod +x snapcenter_linux_host_plugin_scs.bin</code></p>
-</li>
-<li>
-<p>Déployez le plug-in SAP HANA en tant qu&#8217;utilisateur non root.<code>./snapcenter_linux_host_plugin_scs.bin -i silent -DSPL_USER=&lt;non-root-user&gt;</code></p>
-</li>
-<li>
-<p>Copier sur l&#8217;hôte du plug-in.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Accédez à `/var/opt/snapcenter/spl/etc<code> and execute the keytool command to import the certificate.<br>
-`keytool -v -importkeystore -srckeystore certificate.p12 -srcstoretype PKCS12 -destkeystore keystore.jks -deststoretype JKS -srcstorepass snapcenter -deststorepass snapcenter -srcalias agentcert -destalias agentcert -noprompt</code></p>
-</li>
-<li>
-<p>Redémarrer SPL : <code>systemctl restart spl`</code></p>
 </li>
 </ol>
 </div>
@@ -1706,6 +1652,61 @@ Assurez-vous que Java 11 (64 bits) Oracle Java ou OpenJDK est installé sur chac
 <p>Dossier_installation : répertoire dans lequel le plug-in sera déployé, et il s&#8217;agit d&#8217;un paramètre facultatif. La valeur par défaut est /opt.</p>
 </li>
 </ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="déployez-le-plug-in-manuellement">Déployez le plug-in manuellement</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Si l&#8217;authentification basée sur la clé SSH n&#8217;est pas activée sur l&#8217;hôte HANA, vous devez effectuer les étapes manuelles suivantes pour déployer le plug-in.</p>
+</div>
+<div class="paragraph">
+<p><strong>Étapes</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Connectez-vous à la machine virtuelle du connecteur.</p>
+</li>
+<li>
+<p>Téléchargez le binaire du plug-in hôte Linux.<br>
+<code># sudo docker exec -it cloudmanager_scs_cloud curl -X GET 'http://127.0.0.1/deploy/downloadLinuxPlugin'</code></p>
+</li>
+<li>
+<p>Obtenez le chemin de montage de base.<br>
+<code>sudo docker volume ls | grep scs_cloud_volume | awk {'print $2'} | xargs sudo docker volume inspect | grep Mountpoint</code></p>
+</li>
+<li>
+<p>Obtenez le chemin binaire du plug-in téléchargé.<br>
+<code>sudo ls &lt;base_mount_path&gt; $(sudo docker ps|grep -Po "cloudmanager_scs_cloud:.*? "|sed -e 's/ *$//'|cut -f2 -d":")/sc-linux-host-plugin/snapcenter_linux_host_plugin_scs.bin</code></p>
+</li>
+<li>
+<p>Copier <code>snapcenter_linux_host_plugin_scs.bin</code> Vers chacun des hôtes de la base de données SAP HANA à l&#8217;aide de scp ou d&#8217;autres méthodes alternatives.</p>
+</li>
+<li>
+<p>Sur l&#8217;hôte de la base de données SAP HANA, exécutez la commande suivante pour activer les autorisations d&#8217;exécution pour le binaire.<br>
+<code>chmod +x snapcenter_linux_host_plugin_scs.bin</code></p>
+</li>
+<li>
+<p>Déployez le plug-in SAP HANA en tant qu&#8217;utilisateur non root.<br>
+<code>./snapcenter_linux_host_plugin_scs.bin -i silent -DSPL_USER=&lt;non-root-user&gt;</code></p>
+</li>
+<li>
+<p>Copier <code>certificate.p12</code> de <code>&lt;base_mount_path&gt;/client/certificate/</code> Chemin d&#8217;accès de la machine virtuelle connecteur à <code>/var/opt/snapcenter/spl/etc/</code> sur l&#8217;hôte du plug-in.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Accédez à <code>/var/opt/snapcenter/spl/etc</code> et exécutez la commande keytool pour importer le certificat.<br>
+<code>keytool -v -importkeystore -srckeystore certificate.p12 -srcstoretype PKCS12 -destkeystore keystore.jks -deststoretype JKS -srcstorepass snapcenter -deststorepass snapcenter -srcalias agentcert -destalias agentcert -noprompt</code></p>
+</li>
+<li>
+<p>Redémarrer SPL : <code>systemctl restart spl</code></p>
+</li>
+</ol>
 </div>
 </li>
 </ol>
