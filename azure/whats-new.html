@@ -855,6 +855,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1430,6 +1432,13 @@
         Tiers de stockage d'archivage Google pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Sauvegardez la base de données Cloud Backup sur un site sombre"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/azure/reference-backup-cbs-db-in-dark-site.html">
+        Sauvegardez la base de données Cloud Backup sur un site sombre
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1536,7 +1545,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-19 11:29:42 +0000">12/19/2022</time>
+    <time datetime="2023-01-09 16:24:59 +0000">01/09/2023</time>
     
   
 
@@ -1552,6 +1561,38 @@
 <div class="sectionbody">
 <div class="paragraph lead">
 <p>Découvrez les nouveautés de Cloud Backup.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="9-janvier-2023">9 janvier 2023</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="la-possibilité-de-déplacer-danciens-fichiers-de-sauvegarde-vers-le-stockage-darchivage-aws-s3-à-partir-des-systèmes-storagegrid">La possibilité de déplacer d&#8217;anciens fichiers de sauvegarde vers le stockage d&#8217;archivage AWS S3 à partir des systèmes StorageGRID</h3>
+<div class="paragraph">
+<p>Vous pouvez désormais transférer d&#8217;anciens fichiers de sauvegarde des systèmes StorageGRID vers le stockage d&#8217;archivage dans AWS S3. Cela vous permet de libérer de l&#8217;espace sur vos systèmes StorageGRID et de réaliser des économies en utilisant une solution de stockage bon marché pour les anciens fichiers de sauvegarde. Vous pouvez choisir de transférer les sauvegardes vers un stockage AWS S3 Glacier ou S3 Glacier Deep Archive.</p>
+</div>
+<div class="paragraph">
+<p>Cette fonctionnalité est disponible si votre cluster utilise ONTAP 9.12.1 ou version ultérieure et si votre système StorageGRID utilise 11.3 ou version ultérieure. <a href="https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-backup-onprem-private-cloud.html#preparing-to-archive-older-backup-files-to-public-cloud-storage">"En savoir plus"</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="possibilité-de-sélectionner-vos-propres-clés-gérées-par-le-client-pour-le-chiffrement-des-données-sur-google-cloud">Possibilité de sélectionner vos propres clés gérées par le client pour le chiffrement des données sur Google Cloud</h3>
+<div class="paragraph">
+<p>Lorsque vous sauvegardez les données de vos systèmes ONTAP dans Google Cloud Storage, vous pouvez maintenant sélectionner vos propres clés gérées par le client pour le chiffrement des données dans l&#8217;assistant d&#8217;activation au lieu d&#8217;utiliser les clés de chiffrement gérées par Google par défaut. Il vous suffit de configurer d&#8217;abord vos clés de chiffrement gérées par le client, puis de saisir les informations lors de l&#8217;activation de Cloud Backup.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="le-rôle-dadministrateur-du-stockage-nest-plus-nécessaire-pour-créer-des-sauvegardes-dans-google-cloud-storage">Le rôle d&#8217;administrateur du stockage n&#8217;est plus nécessaire pour créer des sauvegardes dans Google Cloud Storage</h3>
+<div class="paragraph">
+<p>Dans les versions antérieures, le rôle d&#8217;administrateur du stockage était requis pour le compte de service permettant à Cloud Backup d&#8217;accéder aux compartiments Google Cloud Storage. Vous pouvez désormais créer un rôle personnalisé avec un ensemble réduit d&#8217;autorisations à attribuer au compte de service. <a href="https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-backup-onprem-to-gcp.html#preparing-google-cloud-storage-for-backups">"Découvrez comment préparer votre Google Cloud Storage pour les sauvegardes"</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="possibilité-de-télécharger-la-page-des-résultats-de-la-surveillance-des-travaux-sous-forme-de-rapport-csv">Possibilité de télécharger la page des résultats de la surveillance des travaux sous forme de rapport .csv</h3>
+<div class="paragraph">
+<p>Après avoir filtré la page surveillance des travaux pour afficher les travaux et les actions qui vous intéressent, vous pouvez maintenant générer et télécharger un fichier .csv de ces données. Vous pouvez ensuite analyser les informations ou envoyer le rapport à d&#8217;autres personnes de votre organisation. <a href="https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-monitor-backup-jobs.html#download-job-monitoring-results-as-a-report">"Découvrez comment générer un rapport de surveillance des travaux"</a>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1607,7 +1648,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="améliorations-apportées-à-cloud-backup">Améliorations apportées à Cloud Backup</h3>
+<h3 id="améliorations-de-cloud-backup-pour-les-machines-virtuelles">Améliorations de Cloud Backup pour les machines virtuelles</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1778,7 +1819,7 @@
 <p>La page Détails du travail affiche tous les sous-travaux en cours d&#8217;exécution pour terminer le travail principal.</p>
 </li>
 <li>
-<p>La page est automatiquement réactualisée toutes les 15 minutes pour que vous puissiez toujours voir les derniers résultats d&#8217;état des travaux. Et vous pouvez cliquer sur le bouton <strong>Actualiser</strong> pour mettre la page à jour immédiatement.</p>
+<p>La page est automatiquement actualisée toutes les 15 minutes pour que vous puissiez toujours voir les résultats de l&#8217;état des travaux les plus récents. Et vous pouvez cliquer sur le bouton <strong>Actualiser</strong> pour mettre la page à jour immédiatement.</p>
 </li>
 </ul>
 </div>
@@ -1826,7 +1867,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="améliorations-de-cloud-backup-pour-les-machines-virtuelles">Améliorations de Cloud Backup pour les machines virtuelles</h3>
+<h3 id="améliorations-de-cloud-backup-pour-les-machines-virtuelles-2">Améliorations de Cloud Backup pour les machines virtuelles</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -2163,7 +2204,7 @@
         <div class="n-footer__copyright">
           <ul class="n-footer__copyright-list">
             <li class="n-footer__copyright-link">
-              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2023 NetApp, Inc.</a>
             </li>
             <li class="n-footer__copyright-link">
               <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>

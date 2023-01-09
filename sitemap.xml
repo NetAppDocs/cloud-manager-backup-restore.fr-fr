@@ -36,7 +36,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/concept-cloud-backup-policies.html</loc>
       
-      <lastmod>2022-12-15T16:32:05+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
@@ -50,7 +50,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/concept-ontap-backup-to-cloud.html</loc>
       
-      <lastmod>2022-12-15T16:32:05+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
@@ -113,7 +113,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/reference-backup-cbs-db-in-dark-site.html</loc>
       
-      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
@@ -155,7 +155,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore//search.html</loc>
       
-      <lastmod>2023-01-06T11:09:12+00:00</lastmod>
+      <lastmod>2023-01-09T16:25:14+00:00</lastmod>
       
     </url>
   
@@ -232,7 +232,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-onprem-private-cloud.html</loc>
       
-      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
@@ -246,35 +246,35 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-onprem-to-azure.html</loc>
       
-      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-onprem-to-gcp.html</loc>
       
-      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-to-azure.html</loc>
       
-      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-to-gcp.html</loc>
       
-      <lastmod>2022-12-06T17:32:39+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-backup-to-s3.html</loc>
       
-      <lastmod>2022-12-14T19:02:53+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
@@ -393,7 +393,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-monitor-backup-jobs.html</loc>
       
-      <lastmod>2022-11-16T19:15:28+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
@@ -428,7 +428,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/task-restore-backups-ontap.html</loc>
       
-      <lastmod>2022-12-14T19:02:53+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   
@@ -477,7 +477,7 @@
     <url>
       <loc>https://docs.netapp.com/fr-fr/cloud-manager-backup-restore/whats-new.html</loc>
       
-      <lastmod>2022-12-19T11:29:42+00:00</lastmod>
+      <lastmod>2023-01-09T16:24:59+00:00</lastmod>
       
     </url>
   

@@ -855,6 +855,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1386,6 +1388,13 @@
         Tiers de stockage d'archivage Google pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Sauvegardez la base de données Cloud Backup sur un site sombre"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/aws/reference-backup-cbs-db-in-dark-site.html">
+        Sauvegardez la base de données Cloud Backup sur un site sombre
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1492,7 +1501,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-15 16:32:05 +0000">12/15/2022</time>
+    <time datetime="2023-01-09 16:24:59 +0000">01/09/2023</time>
     
   
 
@@ -1573,7 +1582,7 @@
 <p>Restaurez les données dans un environnement de travail à l&#8217;aide d&#8217;un autre abonnement/compte ou dans une autre région.</p>
 </li>
 <li>
-<p>Restaure les données au niveau bloc en les plaçant directement à l&#8217;emplacement que vous indiquez, tout en conservant les ACL d&#8217;origine.</p>
+<p>Les données sont restaurées au niveau bloc, en plaçant les données directement à l&#8217;emplacement que vous spécifiez, tout en préservant les ACL d&#8217;origine.</p>
 </li>
 <li>
 <p>Catalogues de fichiers consultables pour la sélection de dossiers et de fichiers individuels pour la restauration de fichiers uniques.</p>
@@ -2024,6 +2033,9 @@ DataLock ne peut pas être activé si vous effectuez le Tiering des sauvegardes 
 </li>
 <li>
 <p>Dans StorageGRID, les sauvegardes sont associées à la classe de stockage <em>Standard</em>.</p>
+<div class="paragraph">
+<p>Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure et que votre système StorageGRID utilise 11.3 ou version ultérieure, vous pouvez archiver les fichiers de sauvegarde les plus anciens dans un stockage d&#8217;archivage dans le cloud public. Le stockage d&#8217;archivage est actuellement pris en charge uniquement pour les classes de stockage AWS S3. Vous pouvez choisir de hiérarchiser les sauvegardes dans AWS <em>S3 Glacier</em> ou <em>S3 Glacier Deep Archive</em> stockage après un certain nombre de jours. <a href="task-backup-onprem-private-cloud.html#preparing-to-archive-older-backup-files-to-public-cloud-storage" target="_blank" rel="noopener">"En savoir plus sur l&#8217;archivage des fichiers de sauvegarde StorageGRID"</a>.</p>
+</div>
 </li>
 </ul>
 </div>
@@ -2168,7 +2180,7 @@ DataLock ne peut pas être activé si vous effectuez le Tiering des sauvegardes 
         <div class="n-footer__copyright">
           <ul class="n-footer__copyright-list">
             <li class="n-footer__copyright-link">
-              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2023 NetApp, Inc.</a>
             </li>
             <li class="n-footer__copyright-link">
               <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>

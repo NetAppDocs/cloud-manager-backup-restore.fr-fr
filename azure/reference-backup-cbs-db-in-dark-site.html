@@ -851,6 +851,10 @@
 
 
 
+    <ul class="subfolders" id="pdf-remove" style="display:none;"><li class="active"></li></ul>
+  
+
+
 
 
         </li>
@@ -1428,6 +1432,13 @@
         Tiers de stockage d'archivage Google pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Sauvegardez la base de données Cloud Backup sur un site sombre"
+      data-li-level="2#" 
+      class="  active "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/azure/reference-backup-cbs-db-in-dark-site.html">
+        Sauvegardez la base de données Cloud Backup sur un site sombre
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1534,7 +1545,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
+    <time datetime="2023-01-09 16:24:59 +0000">01/09/2023</time>
     
   
 
@@ -1555,18 +1566,6 @@
 <div class="paragraph">
 <p>Cette section décrit comment sauvegarder les données Cloud Backup stratégiques sur votre système StorageGRID connecté. Il décrit également comment restaurer les données sur un nouveau connecteur si nécessaire.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<img src="/us-en/cloud-manager-backup-restore/images/note.svg" alt="Note">
-</td>
-<td class="content">
-Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin que vous ayez toujours accès aux données les plus récentes.
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -1585,8 +1584,20 @@ Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin 
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/cloud-manager-backup-restore/images/note.svg" alt="Note">
+</td>
+<td class="content">
+Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin que vous ayez toujours accès aux données les plus récentes.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>Aucune donnée de volume n&#8217;est déjà incluse dans la base de données Cloud Backup ou dans les fichiers de catalogue indexés.</p>
+<p>Notez qu&#8217;aucune donnée de volume n&#8217;est déjà incluse dans la base de données Cloud Backup ou dans les fichiers de catalogue indexés.</p>
 </div>
 <div class="sect2">
 <h3 id="sauvegardez-la-base-de-données-cloud-backup">Sauvegardez la base de données Cloud Backup</h3>
@@ -1614,7 +1625,7 @@ Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin 
 <p>Vous aurez besoin du mot de passe MySQL DB, donc copiez la valeur de la clé "MYSQL_ROOT_PASSWORD".</p>
 </li>
 <li>
-<p>Sauvegardez la base de données Cloud Backup MySQL à l&#8217;aide de la commande suivante :</p>
+<p>Sauvegardez la base de données Cloud Backup MySQL en entrant la commande suivante :</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-cli" data-lang="cli">mysqldump --user root --password -p cloud_backup --result-file=mysql.dump.cloud_backup.sql</code></pre>
@@ -1630,7 +1641,7 @@ Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin 
 </div>
 </li>
 <li>
-<p>Copiez la sauvegarde dans un emplacement sécurisé de votre réseau. Vous pouvez utiliser un système StorageGRID local si vous créez des sauvegardes de volumes ONTAP à cet emplacement.</p>
+<p>Copiez les sauvegardes dans un emplacement sécurisé de votre réseau. Vous pouvez utiliser un système StorageGRID local si vous créez des sauvegardes de volumes ONTAP à cet emplacement.</p>
 </li>
 </ol>
 </div>
@@ -1638,7 +1649,7 @@ Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin 
 <div class="sect2">
 <h3 id="sauvegardez-les-fichiers-de-catalogue-indexés">Sauvegardez les fichiers de catalogue indexés</h3>
 <div class="paragraph">
-<p>Le catalogue indexé est utilisé pour la fonctionnalité de recherche et de restauration. Il contient des informations sur chaque volume et chaque fichier de sauvegarde, ce qui accélère et optimise les recherches lors de la restauration de données de volume.</p>
+<p>Le catalogue indexé est utilisé pour la fonctionnalité de recherche et de restauration. Il contient des informations sur chaque volume et chaque fichier de sauvegarde, ce qui permet de rechercher des recherches très rapides et efficaces, lorsque vous recherchez des données de volume à restaurer.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1676,7 +1687,7 @@ Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin 
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-install-connector-onprem-no-internet.html" target="_blank" rel="noopener">"Installez un nouveau connecteur sur un nouvel hôte Linux sur site"</a></p>
+<p>Installez un nouveau connecteur BlueXP</p>
 </li>
 <li>
 <p>Restaurez la base de données Cloud Backup</p>
@@ -1685,7 +1696,7 @@ Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin 
 <p>Restaurez les fichiers de catalogue indexés</p>
 </li>
 <li>
-<p>Redécouvrez tous vos systèmes ONTAP sur site dans l&#8217;interface utilisateur BlueXP</p>
+<p>Redécouvrez tous vos systèmes ONTAP et StorageGRID sur site dans l&#8217;interface utilisateur BlueXP</p>
 </li>
 </ul>
 </div>
@@ -1693,14 +1704,27 @@ Il est conseillé de sauvegarder régulièrement ces données Cloud Backup afin 
 <p>Une fois que vous avez vérifié que votre système est de nouveau en bon état de fonctionnement, nous vous recommandons de créer de nouveaux fichiers de sauvegarde.</p>
 </div>
 <div class="sect2">
+<h3 id="installez-un-nouveau-connecteur-sur-un-nouvel-hôte-linux-sur-site">Installez un nouveau connecteur sur un nouvel hôte Linux sur site</h3>
+<div class="paragraph">
+<p>Lors de l&#8217;installation d&#8217;un nouveau connecteur BlueXP, assurez-vous de télécharger la même version de logiciel que celle installée sur le connecteur d&#8217;origine. Les modifications périodiques de la structure de la base de données Cloud Backup peuvent rendre les nouvelles versions logicielles incompatibles avec les sauvegardes de la base de données d&#8217;origine. C&#8217;est possible <a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-managing-connectors.html#upgrade-the-connector-on-prem-without-internet-access" target="_blank" rel="noopener">"Mettez à niveau le logiciel du connecteur vers la version la plus récente après avoir restauré la base de données de sauvegarde"</a>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://docs.netapp.com/us-en/cloud-manager-setup-admin/task-install-connector-onprem-no-internet.html" target="_blank" rel="noopener">"Installez le connecteur BlueXP sur un nouvel hôte Linux sur site"</a></p>
+</li>
+<li>
+<p>Connectez-vous à BlueXP à l&#8217;aide des informations d&#8217;identification utilisateur administrateur que vous venez de créer.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
 <h3 id="restaurez-la-base-de-données-cloud-backup">Restaurez la base de données Cloud Backup</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Après avoir installé le nouveau connecteur, connectez-vous au système hôte du connecteur à l&#8217;aide des informations d&#8217;identification appropriées.</p>
-</li>
-<li>
-<p>Copiez la sauvegarde MySQL de l&#8217;emplacement sécurisé vers le nouvel hôte de connecteur.</p>
+<p>Copiez les sauvegardes MySQL de l&#8217;emplacement sécurisé vers le nouvel hôte de connecteur.</p>
 </li>
 <li>
 <p>Copiez la sauvegarde dans le conteneur MySQL docker à l&#8217;aide de la commande suivante :</p>
@@ -1777,15 +1801,75 @@ mysql&gt; select * from volume;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="détecter-les-clusters-et-vérifier-les-paramètres-de-cloud-backup">Détecter les clusters et vérifier les paramètres de Cloud Backup</h3>
+<h3 id="découvrir-les-clusters-ontap-et-les-systèmes-storagegrid">Découvrir les clusters ONTAP et les systèmes StorageGRID</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html#discovering-clusters-from-the-canvas-page" target="_blank" rel="noopener">"Découvrez tous les environnements de travail ONTAP sur site"</a> qui étaient disponibles dans votre environnement précédent.</p>
+<p><a href="https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html#discover-clusters-using-a-connector" target="_blank" rel="noopener">"Découvrez tous les environnements de travail ONTAP sur site"</a> qui étaient disponibles dans votre environnement précédent.</p>
 </li>
 <li>
-<p>En option, <a href="https://docs.netapp.com/us-en/cloud-manager-storagegrid/task-discover-storagegrid.html" target="_blank" rel="noopener">"Découvrir vos systèmes StorageGRID"</a>.</p>
+<p><a href="https://docs.netapp.com/us-en/cloud-manager-storagegrid/task-discover-storagegrid.html" target="_blank" rel="noopener">"Découvrir vos systèmes StorageGRID"</a>.</p>
 </li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configurer-les-détails-de-lenvironnement-storagegrid">Configurer les détails de l&#8217;environnement StorageGRID</h3>
+<div class="paragraph">
+<p>Ajoutez les détails du système StorageGRID associé à vos environnements de travail ONTAP tels qu&#8217;ils ont été configurés dans la configuration du connecteur d&#8217;origine à l&#8217;aide du <a href="https://docs.netapp.com/us-en/cloud-manager-automation/index.html" target="_blank" rel="noopener">"API BlueXP"</a>.</p>
+</div>
+<div class="paragraph">
+<p>Ces étapes sont nécessaires pour chaque système ONTAP qui sauvegarde des données sur StorageGRID.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Extrayez le jeton d&#8217;autorisation à l&#8217;aide de l&#8217;API oauth/token suivante.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-http" data-lang="http">curl 'http://10.193.192.202/oauth/token' -X POST -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:100101 Firefox/108.0' -H 'Accept: application/json' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: gzip, deflate' -H 'Content-Type: application/json' -d '{"username":admin@netapp.com,"password":"Netapp@123","grant_type":"password"}
+&gt; '</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cette API renvoie une réponse comme suit. Vous pouvez récupérer le jeton d&#8217;autorisation comme indiqué ci-dessous.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-text" data-lang="text">{"expires_in":21600,"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJlMGFiZjRiIn0eyJzdWIiOiJvY2NtYXV0aHwxIiwiYXVkIjpbImh0dHBzOi8vYXBpLmNsb3VkLm5ldGFwcC5jb20iXSwiaHR0cDovL2Nsb3VkLm5ldGFwcC5jb20vZnVsbF9uYW1lIjoiYWRtaW4iLCJodHRwOi8vY2xvdWQubmV0YXBwLmNvbS9lbWFpbCI6ImFkbWluQG5ldGFwcC5jb20iLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIiwiaWF0IjoxNjcyNzM2MDIzLCJleHAiOjE2NzI3NTc2MjMsImlzcyI6Imh0dHA6Ly9vY2NtYXV0aDo4NDIwLyJ9CJtRpRDY23PokyLg1if67bmgnMcYxdCvBOY-ZUYWzhrWbbY_hqUH4T-114v_pNDsPyNDyWqHaKizThdjjHYHxm56vTz_Vdn4NqjaBDPwN9KAnC6Z88WA1cJ4WRQqj5ykODNDmrv5At_f9HHp0-xVMyHqywZ4nNFalMvAh4xESc5jfoKOZc-IOQdWm4F4LHpMzs4qFzCYthTuSKLYtqSTUrZB81-o-ipvrOqSo1iwIeHXZJJV-UsWun9daNgiYd_wX-4WWJViGEnDzzwOKfUoUoe1Fg3ch--7JFkFl-rrXDOjk1sUMumN3WHV9usp1PgBE5HAcJPrEBm0ValSZcUbiA"}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Extrayez l&#8217;ID de l&#8217;environnement de travail et l&#8217;ID-agent-X à l&#8217;aide de l&#8217;API location/externe/ressource.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-http" data-lang="http">curl -X GET http://10.193.192.202/tenancy/external/resource?account=account-DARKSITE1 -H 'accept: application/json' -H 'authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJlMGFiZjRiIn0eyJzdWIiOiJvY2NtYXV0aHwxIiwiYXVkIjpbImh0dHBzOi8vYXBpLmNsb3VkLm5ldGFwcC5jb20iXSwiaHR0cDovL2Nsb3VkLm5ldGFwcC5jb20vZnVsbF9uYW1lIjoiYWRtaW4iLCJodHRwOi8vY2xvdWQubmV0YXBwLmNvbS9lbWFpbCI6ImFkbWluQG5ldGFwcC5jb20iLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIiwiaWF0IjoxNjcyNzIyNzEzLCJleHAiOjE2NzI3NDQzMTMsImlzcyI6Imh0dHA6Ly9vY2NtYXV0aDo4NDIwLyJ9X_cQF8xttD0-S7sU2uph2cdu_kN-fLWpdJJX98HODwPpVUitLcxV28_sQhuopjWobozPelNISf7KvMqcoXc5kLDyX-yE0fH9gr4XgkdswjWcNvw2rRkFzjHpWrETgfqAMkZcAukV4DHuxogHWh6-DggB1NgPZT8A_szHinud5W0HJ9c4AaT0zC-sp81GaqMahPf0KcFVyjbBL4krOewgKHGFo_7ma_4mF39B1LCj7Vc2XvUd0wCaJvDMjwp19-KbZqmmBX9vDnYp7SSxC1hHJRDStcFgJLdJHtowweNH2829KsjEGBTTcBdO8SvIDtctNH_GAxwSgMT3zUfwaOimPw'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cette API renvoie une réponse comme suit. La valeur sous "resourceIdentifier" désigne l&#8217;ID <em>WorkingEnvironment</em> et la valeur sous "agentID" indique <em>x-agent-ID</em>.</p>
+</div>
+</li>
+<li>
+<p>Mettez à jour la base de données Cloud Backup en indiquant les détails du système StorageGRID associé aux environnements de travail. Veillez à saisir le nom de domaine complet du StorageGRID, ainsi que la clé d&#8217;accès et la clé de stockage, comme indiqué ci-dessous :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-http" data-lang="http">curl -X POST 'http://10.193.192.202/account/account-DARKSITE1/providers/cloudmanager_cbs/api/v1/sg/credentials/working-environment/OnPremWorkingEnvironment-pMtZND0M' \
+&gt; --header 'authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJlMGFiZjRiIn0eyJzdWIiOiJvY2NtYXV0aHwxIiwiYXVkIjpbImh0dHBzOi8vYXBpLmNsb3VkLm5ldGFwcC5jb20iXSwiaHR0cDovL2Nsb3VkLm5ldGFwcC5jb20vZnVsbF9uYW1lIjoiYWRtaW4iLCJodHRwOi8vY2xvdWQubmV0YXBwLmNvbS9lbWFpbCI6ImFkbWluQG5ldGFwcC5jb20iLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIiwiaWF0IjoxNjcyNzIyNzEzLCJleHAiOjE2NzI3NDQzMTMsImlzcyI6Imh0dHA6Ly9vY2NtYXV0aDo4NDIwLyJ9X_cQF8xttD0-S7sU2uph2cdu_kN-fLWpdJJX98HODwPpVUitLcxV28_sQhuopjWobozPelNISf7KvMqcoXc5kLDyX-yE0fH9gr4XgkdswjWcNvw2rRkFzjHpWrETgfqAMkZcAukV4DHuxogHWh6-DggB1NgPZT8A_szHinud5W0HJ9c4AaT0zC-sp81GaqMahPf0KcFVyjbBL4krOewgKHGFo_7ma_4mF39B1LCj7Vc2XvUd0wCaJvDMjwp19-KbZqmmBX9vDnYp7SSxC1hHJRDStcFgJLdJHtowweNH2829KsjEGBTTcBdO8SvIDtctNH_GAxwSgMT3zUfwaOimPw' \
+&gt; --header 'x-agent-id: vB_1xShPpBtUosjD7wfBlLIhqDgIPA0wclients' \
+&gt; -d '
+&gt; { "storage-server" : "sr630ip15.rtp.eng.netapp.com:10443", "access-key": "2ZMYOAVAS5E70MCNH9", "secret-password": "uk/6ikd4LjlXQOFnzSzP/T0zR4ZQlG0w1xgWsB" }'</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="vérifiez-les-paramètres-de-cloud-backup">Vérifiez les paramètres de Cloud Backup</h3>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Sélectionnez chaque environnement de travail ONTAP et cliquez sur <strong>Afficher les sauvegardes</strong> en regard du service de sauvegarde et de restauration dans le panneau de droite.</p>
 <div class="paragraph">
@@ -1822,7 +1906,7 @@ mysql&gt; select * from volume;</code></pre>
         <div class="n-footer__copyright">
           <ul class="n-footer__copyright-list">
             <li class="n-footer__copyright-link">
-              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2023 NetApp, Inc.</a>
             </li>
             <li class="n-footer__copyright-link">
               <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>

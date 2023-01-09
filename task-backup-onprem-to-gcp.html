@@ -850,6 +850,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1495,6 +1497,13 @@
         Tiers de stockage d'archivage Google pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Sauvegardez la base de données Cloud Backup sur un site sombre"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/reference-backup-cbs-db-in-dark-site.html">
+        Sauvegardez la base de données Cloud Backup sur un site sombre
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1601,7 +1610,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
+    <time datetime="2023-01-09 16:24:59 +0000">01/09/2023</time>
     
   
 
@@ -1631,11 +1640,11 @@
 <div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png" alt="Une seule"></span> Vérifiez la prise en charge de votre configuration</div>
 <ul>
 <li>
-<p>Vous avez découvert le cluster sur site et l&#8217;avez ajouté à un environnement de travail dans BlueXP. Voir <a href="https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html" target="_blank" rel="noopener">"Découverte des clusters ONTAP"</a> pour plus d&#8217;informations.</p>
+<p>Vous avez découvert le cluster sur site et l&#8217;avez ajouté comme environnement de travail dans BlueXP. Voir <a href="https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html" target="_blank" rel="noopener">"Découverte des clusters ONTAP"</a> pour plus d&#8217;informations.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Le cluster exécute ONTAP 9.7P5 ou version ultérieure.</p>
+<p>Le cluster exécute ONTAP 9.7P5 ou version ultérieure (ONTAP 9.8P13 et version ultérieure recommandée).</p>
 </li>
 <li>
 <p>Le cluster est doté d&#8217;une licence SnapMirror&#8201;&#8212;&#8201;elle est incluse dans le bundle Premium ou Data protection.</p>
@@ -1666,7 +1675,10 @@
 </div>
 <div class="paragraph quick-margin-para">
 <div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png" alt="Trois"></span> Sélectionnez le fournisseur de cloud et entrez les informations relatives au fournisseur</div>
-<p>Sélectionnez Google Cloud comme fournisseur, puis saisissez les informations relatives au fournisseur. Vous devez également spécifier l&#8217;IPspace dans le cluster ONTAP où les volumes résident.</p>
+<p>Sélectionnez Google Cloud comme fournisseur, puis saisissez les informations relatives au fournisseur. Vous devez spécifier l&#8217;IPspace dans le cluster ONTAP où les volumes résident. Vous pouvez également choisir vos propres clés gérées par le client pour le chiffrement des données au lieu d&#8217;utiliser la clé de chiffrement gérée par Google par défaut.</p>
+</div>
+<div class="paragraph quick-margin-para">
+<p><span class="image"><img src="./media/screenshot_backup_onprem_to_google.png" alt="Une copie d&#8217;écran présente les informations fournies par le fournisseur cloud lors de la sauvegarde des volumes depuis un système ONTAP sur site vers un compartiment Google Cloud Storage."></span></p>
 </div>
 <div class="paragraph quick-margin-para">
 <div class="title"><span class="image"><img src="https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png" alt="Quatre"></span> Définissez la stratégie de sauvegarde par défaut</div>
@@ -1781,14 +1793,14 @@
 <li>
 <p>Les serveurs DNS ont été configurés pour la machine virtuelle de stockage où les volumes sont situés. Découvrez comment <a href="https://docs.netapp.com/us-en/ontap/networking/configure_dns_services_auto.html" target="_blank" rel="noopener">"Configuration des services DNS pour le SVM"</a>.</p>
 <div class="paragraph">
-<p>Si vous utilisez Private Google Access ou Private Service Connect, assurez-vous que vos serveurs DNS ont été configurés pour pointer storage.googleapis.com vers l&#8217;adresse IP interne (privée) correcte.</p>
+<p>Si vous utilisez Private Google Access ou Private Service Connect, assurez-vous que vos serveurs DNS ont été configurés pour pointer <code>storage.googleapis.com</code> À l&#8217;adresse IP interne (privée) correcte.</p>
 </div>
 </li>
 <li>
 <p>Notez que si vous utilisez un IPspace différent de celui utilisé par défaut, vous devrez peut-être créer une route statique pour obtenir l&#8217;accès au stockage objet.</p>
 </li>
 <li>
-<p>Mettre à jour les règles de pare-feu, si nécessaire, pour autoriser les connexions Cloud Backup Service de ONTAP au stockage objet via le port 443 et le trafic de résolution de nom entre le VM de stockage et le serveur DNS via le port 53 (TCP/UDP).</p>
+<p>Si nécessaire, mettre à jour les règles de pare-feu pour autoriser les connexions Cloud Backup entre ONTAP et le stockage objet via le port 443, et nommer le trafic de résolution entre le VM de stockage et le serveur DNS via le port 53 (TCP/UDP).</p>
 </li>
 </ul>
 </div>
@@ -1844,7 +1856,7 @@
 <li>
 <p>Activez Private Google Access (ou Private Service Connect) sur le sous-réseau où vous prévoyez de déployer le connecteur. <a href="https://cloud.google.com/vpc/docs/configure-private-google-access" target="_blank" rel="noopener">"Accès privé à Google"</a> ou <a href="https://cloud.google.com/vpc/docs/configure-private-service-connect-apis#on-premises" target="_blank" rel="noopener">"Service privé Connect"</a> Sont nécessaires si vous disposez d&#8217;une connexion directe entre votre cluster ONTAP et le VPC et que vous souhaitez que la communication entre le connecteur et Google Cloud Storage reste dans votre réseau privé virtuel (une connexion <strong>privée</strong>).</p>
 <div class="paragraph">
-<p>Suivez les instructions Google pour configurer ces options d&#8217;accès privé. Assurez-vous que vos serveurs DNS ont été configurés aux points www.googleapis.com et storage.googleapis.com pour les adresses IP internes (privées) correctes.</p>
+<p>Suivez les instructions Google pour configurer ces options d&#8217;accès privé. Assurez-vous que vos serveurs DNS ont été configurés pour pointer <code>www.googleapis.com</code> et <code>storage.googleapis.com</code> Aux adresses IP internes (privées) correctes.</p>
 </div>
 </li>
 </ol>
@@ -1859,7 +1871,7 @@
 <div class="title">Étapes</div>
 <ol class="arabic">
 <li>
-<p>Dans <a href="https://console.cloud.google.com" target="_blank" rel="noopener">"Console cloud"</a>, Allez à la page <strong>rôles</strong>.</p>
+<p>Dans le <a href="https://console.cloud.google.com" target="_blank" rel="noopener">"Console Google Cloud"</a>, Allez à la page <strong>rôles</strong>.</p>
 </li>
 <li>
 <p>A l&#8217;aide de la liste déroulante située en haut de la page, sélectionnez le projet ou l&#8217;organisation qui contient le rôle que vous souhaitez modifier.</p>
@@ -1894,6 +1906,120 @@ bigquery.tables.create</code></pre>
 </div>
 </div>
 <div class="sect2">
+<h3 id="préparation-de-google-cloud-storage-pour-les-sauvegardes">Préparation de Google Cloud Storage pour les sauvegardes</h3>
+<div class="paragraph">
+<p>Lorsque vous configurez la sauvegarde, vous devez fournir des clés d&#8217;accès au stockage pour un compte de service avec des autorisations spécifiques. Un compte de service permet à Cloud Backup d&#8217;authentifier et d&#8217;accéder aux compartiments Cloud Storage utilisés pour stocker les sauvegardes. Les clés sont requises pour que Google Cloud Storage sache qui effectue la demande.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Étapes</div>
+<ol class="arabic">
+<li>
+<p>Dans le <a href="https://console.cloud.google.com" target="_blank" rel="noopener">"Console Google Cloud"</a>, Allez à la page <strong>rôles</strong>.</p>
+</li>
+<li>
+<p><a href="https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role" target="_blank" rel="noopener">"Créer un nouveau rôle"</a> avec les autorisations suivantes :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">storage.buckets.create
+storage.buckets.delete
+storage.buckets.get
+storage.buckets.list
+storage.buckets.update
+storage.buckets.getIamPolicy
+storage.multipartUploads.create
+storage.objects.create
+storage.objects.delete
+storage.objects.get
+storage.objects.list
+storage.objects.update</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dans la console Google Cloud, <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener">"Accédez à la page comptes de service"</a>.</p>
+</li>
+<li>
+<p>Sélectionnez votre projet cloud.</p>
+</li>
+<li>
+<p>Cliquez sur <strong>Créer un compte de service</strong> et fournissez les informations requises :</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>Détails du compte de service</strong> : saisissez un nom et une description.</p>
+</li>
+<li>
+<p><strong>Accordez à ce compte de service l&#8217;accès au projet</strong> : sélectionnez le rôle personnalisé que vous venez de créer.</p>
+</li>
+<li>
+<p>Cliquez sur <strong>Done</strong>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Accédez à <a href="https://console.cloud.google.com/storage/settings" target="_blank" rel="noopener">"Paramètres de stockage GCP"</a> et créez des clés d&#8217;accès pour le compte de service :</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Sélectionnez un projet et cliquez sur <strong>interopérabilité</strong>. Si ce n&#8217;est déjà fait, cliquez sur <strong>Activer l&#8217;accès à l&#8217;interopérabilité</strong>.</p>
+</li>
+<li>
+<p>Sous <strong>clés d&#8217;accès pour les comptes de service</strong>, cliquez sur <strong>Créer une clé pour un compte de service</strong>, sélectionnez le compte de service que vous venez de créer, puis cliquez sur <strong>Créer une clé</strong>.</p>
+<div class="paragraph">
+<p>Lorsque vous configurez le service de sauvegarde, vous devrez saisir les clés dans Cloud Backup.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="utilisation-de-clés-de-chiffrement-gérées-par-le-client-cmek">Utilisation de clés de chiffrement gérées par le client (CMEK)</h4>
+<div class="paragraph">
+<p>Vous pouvez utiliser vos propres clés gérées par le client pour le chiffrement des données au lieu d&#8217;utiliser les clés de chiffrement gérées par Google par défaut. Dans ce cas, vous devez disposer du porte-clés et du nom de la clé pour pouvoir ajouter ces informations dans l&#8217;assistant d&#8217;activation. <a href="https://cloud.google.com/kms/docs/cmek" target="_blank" rel="noopener">"En savoir plus sur les clés de chiffrement gérées par les clients"</a>.</p>
+</div>
+<div class="paragraph">
+<p>Vous devrez également ajouter ces autorisations requises dans le rôle pour que le connecteur pour CMEK fonctionne :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">cloudkms.cryptoKeys.get
+cloudkms.cryptoKeys.getIamPolicy
+cloudkms.cryptoKeys.list
+cloudkms.cryptoKeys.setIamPolicy
+cloudkms.keyRings.get
+cloudkms.keyRings.getIamPolicy
+cloudkms.keyRings.list
+cloudkms.keyRings.setIamPolicy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Considérations de CMEK:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Les clés HSM (sauvegarde matérielle) et Software Generated sont prises en charge.</p>
+</li>
+<li>
+<p>Les clés KMS créées ou importées Cloud sont toutes les deux prises en charge.</p>
+</li>
+<li>
+<p>Seules les clés régionales sont prises en charge, et les clés globales ne sont pas prises en charge.</p>
+</li>
+<li>
+<p>Actuellement, seul l&#8217;objectif "chiffrement/déchiffrement symétrique" est pris en charge.</p>
+</li>
+<li>
+<p>Le rôle IAM de l&#8217;agent de service associé au compte de stockage est attribué à « CryptoKey Encrypter/Decrypter (roles/cloudkms.cryptoKeyEncrypterDecrypter) » par Cloud Backup.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="vérification-des-besoins-en-licence">Vérification des besoins en licence</h3>
 <div class="ulist">
 <ul>
@@ -1917,36 +2043,6 @@ bigquery.tables.create</code></pre>
 </div>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="préparation-de-google-cloud-storage-pour-les-sauvegardes">Préparation de Google Cloud Storage pour les sauvegardes</h3>
-<div class="paragraph">
-<p>Lorsque vous configurez la sauvegarde, vous devez fournir des clés d&#8217;accès au stockage pour un compte de service avec des autorisations d&#8217;administrateur du stockage. Un compte de service permet à Cloud Backup d&#8217;authentifier et d&#8217;accéder aux compartiments Cloud Storage utilisés pour stocker les sauvegardes. Les clés sont requises pour que Google Cloud Storage sache qui effectue la demande.</p>
-</div>
-<div class="olist arabic">
-<div class="title">Étapes</div>
-<ol class="arabic">
-<li>
-<p><a href="https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating_a_service_account" target="_blank" rel="noopener">"Créez un compte de service avec le rôle d&#8217;administrateur de stockage prédéfini"</a>.</p>
-</li>
-<li>
-<p>Accédez à <a href="https://console.cloud.google.com/storage/settings" target="_blank" rel="noopener">"Paramètres de stockage GCP"</a> et créez des clés d&#8217;accès pour le compte de service :</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Sélectionnez un projet et cliquez sur <strong>interopérabilité</strong>. Si ce n&#8217;est déjà fait, cliquez sur <strong>Activer l&#8217;accès à l&#8217;interopérabilité</strong>.</p>
-</li>
-<li>
-<p>Sous <strong>clés d&#8217;accès pour les comptes de service</strong>, cliquez sur <strong>Créer une clé pour un compte de service</strong>, sélectionnez le compte de service que vous venez de créer, puis cliquez sur <strong>Créer une clé</strong>.</p>
-<div class="paragraph">
-<p>Lorsque vous configurez le service de sauvegarde, vous devrez saisir les clés dans Cloud Backup.</p>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>
@@ -1977,7 +2073,7 @@ bigquery.tables.create</code></pre>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Google Cloud Project où vous souhaitez créer le compartiment Google Cloud Storage pour la sauvegarde. (Le projet doit disposer d&#8217;un compte de service avec le rôle d&#8217;administrateur de stockage prédéfini.)</p>
+<p>Google Cloud Project où vous souhaitez créer le compartiment Google Cloud Storage pour la sauvegarde. (Le projet doit disposer d&#8217;un compte de service doté d&#8217;un rôle personnalisé avec des autorisations spécifiques - <a href="#préparation-de-google-cloud-storage-pour-les-sauvegardes">comme décrit ici</a>.)</p>
 </li>
 <li>
 <p>Clé d&#8217;accès Google et clé secrète utilisées pour stocker les sauvegardes.</p>
@@ -1987,6 +2083,9 @@ bigquery.tables.create</code></pre>
 </li>
 <li>
 <p>L&#8217;IPspace dans le cluster ONTAP où les volumes à sauvegarder résident. Les LIF intercluster pour cet IPspace doivent avoir un accès Internet sortant.</p>
+</li>
+<li>
+<p>Que vous utilisiez la clé de chiffrement gérée par Google par défaut ou que vous choisissiez vos propres clés gérées par le client pour gérer le chiffrement de vos données. Pour utiliser un CMEK, vous devez disposer du porte-clés et du nom de la clé. <a href="https://cloud.google.com/kms/docs/cmek" target="_blank" rel="noopener">"En savoir plus sur les clés de chiffrement gérées par les clients"</a>.</p>
 <div class="paragraph">
 <p><span class="image"><img src="./media/screenshot_backup_onprem_to_google.png" alt="Copie d&#8217;écran montrant les informations fournies par le fournisseur cloud lors de la sauvegarde de volumes depuis un cluster sur site vers Google Cloud Storage."></span></p>
 </div>
@@ -2083,7 +2182,7 @@ bigquery.tables.create</code></pre>
         <div class="n-footer__copyright">
           <ul class="n-footer__copyright-list">
             <li class="n-footer__copyright-link">
-              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2023 NetApp, Inc.</a>
             </li>
             <li class="n-footer__copyright-link">
               <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>

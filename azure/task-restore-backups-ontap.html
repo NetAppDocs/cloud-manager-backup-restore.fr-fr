@@ -855,6 +855,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1430,6 +1432,13 @@
         Tiers de stockage d'archivage Google pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Sauvegardez la base de données Cloud Backup sur un site sombre"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/azure/reference-backup-cbs-db-in-dark-site.html">
+        Sauvegardez la base de données Cloud Backup sur un site sombre
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1536,7 +1545,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-14 19:02:53 +0000">12/14/2022</time>
+    <time datetime="2023-01-09 16:24:59 +0000">01/09/2023</time>
     
   
 
@@ -1670,7 +1679,7 @@ Cloud Backup doit déjà être activé pour au moins un environnement de travail
 <p>Avant de commencer la restauration d&#8217;un volume, d&#8217;un dossier ou d&#8217;un fichier, vous devez connaître le nom du volume à partir duquel vous souhaitez restaurer, le nom de l&#8217;environnement de travail où réside le volume et la date approximative du fichier de sauvegarde à partir duquel vous souhaitez restaurer.</p>
 </div>
 <div class="paragraph">
-<p><strong>Remarque :</strong> si le fichier de sauvegarde du volume que vous souhaitez restaurer réside dans le stockage d&#8217;archives (à partir de ONTAP 9.10.1), l&#8217;opération de restauration prendra plus de temps et entraînera un coût. En outre, le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration du volume, 9.11.1 pour la restauration des fichiers et 9.12.1 pour Google Archive.</p>
+<p><strong>Remarque :</strong> si le fichier de sauvegarde contenant les données que vous souhaitez restaurer réside dans le stockage d&#8217;archives (à partir de ONTAP 9.10.1), l&#8217;opération de restauration prendra plus de temps et entraînera un coût. En outre, le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration du volume, 9.11.1 pour la restauration des fichiers et 9.12.1 pour Google Archive et StorageGRID.</p>
 </div>
 <div class="paragraph">
 <p><a href="reference-azure-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Azure"</a>.</p>
@@ -2060,7 +2069,7 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <p>Vous pouvez restaurer un volume, un dossier ou des fichiers à partir d&#8217;un fichier de sauvegarde ONTAP à l&#8217;aide de la fonction Rechercher et restaurer. La fonction de recherche et restauration vous permet de rechercher un volume, un dossier ou un fichier spécifique à partir de toutes les sauvegardes stockées dans le stockage cloud pour un fournisseur spécifique, puis d&#8217;effectuer une restauration. Il n&#8217;est pas nécessaire de connaître le nom exact de l&#8217;environnement de travail ou le nom du volume ; la recherche s&#8217;effectue via tous les fichiers de sauvegarde de volume.</p>
 </div>
 <div class="paragraph">
-<p>L&#8217;opération de recherche examine également toutes les copies Snapshot locales existant pour vos volumes ONTAP. Étant donné que la restauration des données à partir d&#8217;une copie Snapshot locale peut être plus rapide et moins coûteuse que la restauration à partir d&#8217;un fichier de sauvegarde, il est possible de restaurer les données à partir d&#8217;une copie Snapshot. Vous pouvez restaurer l&#8217;instantané en tant que nouveau volume à partir de la page Détails du volume de la zone de travail.</p>
+<p>L&#8217;opération de recherche examine également toutes les copies Snapshot locales existant pour vos volumes ONTAP. Étant donné que la restauration des données à partir d&#8217;une copie Snapshot locale peut être plus rapide et moins coûteuse que la restauration à partir d&#8217;un fichier de sauvegarde, il est possible de restaurer les données à partir d&#8217;une copie Snapshot. Vous pouvez restaurer l&#8217;instantané en tant que nouveau volume à partir de la page Volume Details (Détails du volume) de la toile (pas à partir de Cloud Backup).</p>
 </div>
 <div class="paragraph">
 <p>Lorsque vous restaurez un volume à partir d&#8217;un fichier de sauvegarde, Cloud Backup crée un <em>nouveau</em> volume en utilisant les données de la sauvegarde. Vous pouvez restaurer les données en tant que volume dans l&#8217;environnement de travail d&#8217;origine ou vers un autre environnement de travail situé dans le même compte cloud que l&#8217;environnement de travail source. Vous pouvez également restaurer des volumes sur un système ONTAP sur site.</p>
@@ -2069,7 +2078,7 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <p>Vous pouvez restaurer des dossiers ou des fichiers vers l&#8217;emplacement du volume d&#8217;origine, vers un autre volume dans le même environnement de travail ou vers un autre environnement de travail qui utilise le même compte cloud. Vous pouvez également restaurer des dossiers et des fichiers vers un volume situé sur un système ONTAP sur site.</p>
 </div>
 <div class="paragraph">
-<p>Si le fichier de sauvegarde du volume que vous souhaitez restaurer se trouve dans le stockage d&#8217;archives (disponible à partir de ONTAP 9.10.1), l&#8217;opération de restauration prend plus de temps et entraînera des coûts supplémentaires. Notez que le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration de volume, 9.11.1 pour la restauration de fichiers et 9.12.1 pour Google Archive.</p>
+<p>Si le fichier de sauvegarde du volume que vous souhaitez restaurer se trouve dans le stockage d&#8217;archives (disponible à partir de ONTAP 9.10.1), l&#8217;opération de restauration prend plus de temps et entraînera des coûts supplémentaires. Notez que le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration de volume, 9.11.1 pour la restauration de fichiers et 9.12.1 pour Google Archive et StorageGRID.</p>
 </div>
 <div class="paragraph">
 <p><a href="reference-azure-backup-tiers.html">"En savoir plus sur la restauration à partir du stockage d&#8217;archivage Azure"</a>.</p>
@@ -2173,10 +2182,10 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
 <p>La VM de stockage (SVM) sur laquelle réside le volume doit avoir une LIF de données configurée.</p>
 </li>
 <li>
-<p>NFS doit être activé sur le volume.</p>
+<p>NFS doit être activé sur le volume (les volumes NFS et SMB/CIFS sont pris en charge).</p>
 </li>
 <li>
-<p>Le serveur RPC SnapDiff doit être activé sur le SVM. BlueXP le fait automatiquement lorsque vous activez l&#8217;indexation sur l&#8217;environnement de travail.</p>
+<p>Le serveur RPC SnapDiff doit être activé sur le SVM. BlueXP le fait automatiquement lorsque vous activez l&#8217;indexation sur l&#8217;environnement de travail. (SnapDiff est la technologie qui identifie rapidement les différences entre les fichiers et les répertoires entre deux copies Snapshot.)</p>
 </li>
 </ul>
 </div>
@@ -2414,7 +2423,7 @@ Vous ne pouvez pas restaurer des dossiers ou des fichiers si le fichier de sauve
         <div class="n-footer__copyright">
           <ul class="n-footer__copyright-list">
             <li class="n-footer__copyright-link">
-              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2023 NetApp, Inc.</a>
             </li>
             <li class="n-footer__copyright-link">
               <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>

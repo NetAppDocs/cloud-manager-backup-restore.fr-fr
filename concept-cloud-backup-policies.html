@@ -850,6 +850,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1495,6 +1497,13 @@
         Tiers de stockage d'archivage Google pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Sauvegardez la base de données Cloud Backup sur un site sombre"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/reference-backup-cbs-db-in-dark-site.html">
+        Sauvegardez la base de données Cloud Backup sur un site sombre
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1601,7 +1610,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-15 16:32:05 +0000">12/15/2022</time>
+    <time datetime="2023-01-09 16:24:59 +0000">01/09/2023</time>
     
   
 
@@ -2024,7 +2033,7 @@ La fonction de verrouillage d&#8217;objet StorageGRID S3 fournit un mode de verr
 </div>
 </li>
 <li>
-<p>Dans GCP, les sauvegardes sont associées par défaut à la classe de stockage <em>Standard</em>.</p>
+<p>Dans GCP, les sauvegardes sont associées à la classe de stockage <em>Standard</em>.</p>
 <div class="paragraph">
 <p>Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure, vous pouvez choisir de transférer d&#8217;anciennes sauvegardes vers le stockage <em>Archive</em> dans l&#8217;interface utilisateur de sauvegarde dans le cloud au bout d&#8217;un certain nombre de jours afin d&#8217;optimiser les coûts. (Cette fonctionnalité n&#8217;est pas disponible actuellement pour les systèmes Cloud Volumes ONTAP.) <a href="reference-google-backup-tiers.html" target="_blank" rel="noopener">"En savoir plus sur le stockage des archives Google"</a>.</p>
 </div>
@@ -2032,7 +2041,7 @@ La fonction de verrouillage d&#8217;objet StorageGRID S3 fournit un mode de verr
 <li>
 <p>Dans StorageGRID, les sauvegardes sont associées à la classe de stockage <em>Standard</em>.</p>
 <div class="paragraph">
-<p>Il n&#8217;y a pas de niveau d&#8217;archivage disponible pour le moment.</p>
+<p>Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure et que votre système StorageGRID utilise 11.3 ou version ultérieure, vous pouvez archiver les fichiers de sauvegarde les plus anciens dans un stockage d&#8217;archivage dans le cloud public. Le stockage d&#8217;archivage est actuellement pris en charge uniquement pour les classes de stockage AWS S3. Vous pouvez choisir de hiérarchiser les sauvegardes dans AWS <em>S3 Glacier</em> ou <em>S3 Glacier Deep Archive</em> stockage après un certain nombre de jours. <a href="task-backup-onprem-private-cloud.html#preparing-to-archive-older-backup-files-to-public-cloud-storage" target="_blank" rel="noopener">"En savoir plus sur l&#8217;archivage des fichiers de sauvegarde StorageGRID"</a>.</p>
 </div>
 </li>
 </ul>
@@ -2055,7 +2064,7 @@ La fonction de verrouillage d&#8217;objet StorageGRID S3 fournit un mode de verr
         <div class="n-footer__copyright">
           <ul class="n-footer__copyright-list">
             <li class="n-footer__copyright-link">
-              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2023 NetApp, Inc.</a>
             </li>
             <li class="n-footer__copyright-link">
               <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>

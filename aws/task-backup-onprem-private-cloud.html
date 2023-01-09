@@ -855,6 +855,8 @@
 
 
 
+
+
         </li>
       </ul>
     
@@ -1386,6 +1388,13 @@
         Tiers de stockage d'archivage Google pris en charge
       </a></li><li 
       data-pdf-exists="true" 
+      data-pdf-filename="Sauvegardez la base de données Cloud Backup sur un site sombre"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/cloud-manager-backup-restore/aws/reference-backup-cbs-db-in-dark-site.html">
+        Sauvegardez la base de données Cloud Backup sur un site sombre
+      </a></li><li 
+      data-pdf-exists="true" 
       data-pdf-filename="Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure"
       data-li-level="2#" 
       class=" "
@@ -1492,7 +1501,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-12-06 17:32:39 +0000">12/06/2022</time>
+    <time datetime="2023-01-09 16:24:59 +0000">01/09/2023</time>
     
   
 
@@ -1577,6 +1586,9 @@
 <p>La règle par défaut sauvegarde les volumes tous les jours et conserve les 30 copies de sauvegarde les plus récentes de chaque volume. Passage à des sauvegardes toutes les heures, tous les jours, toutes les semaines, tous les mois ou tous les ans vous pouvez également sélectionner l&#8217;une des règles définies par le système qui offrent plus d&#8217;options. Vous pouvez également modifier le nombre de copies de sauvegarde à conserver.</p>
 </div>
 <div class="paragraph quick-margin-para">
+<p>Si votre cluster utilise ONTAP 9.12.1 ou version ultérieure et que vous utilisez StorageGRID 11.3 ou version ultérieure, vous pouvez choisir de transférer les anciennes sauvegardes vers AWS S3 Glacier ou vers le stockage d&#8217;archivage profond S3 Glacier au bout d&#8217;un certain nombre de jours pour optimiser les coûts.</p>
+</div>
+<div class="paragraph quick-margin-para">
 <p>Si vous utilisez ONTAP 9.11.1 ou version ultérieure, vous pouvez choisir de protéger vos sauvegardes contre les suppressions et les attaques par ransomware en configurant l&#8217;un des paramètres <em>DataLock et ransomware protection</em>. <a href="concept-cloud-backup-policies.html" target="_blank" rel="noopener">"En savoir plus sur les paramètres de configuration des règles de sauvegarde dans le cloud"</a>.</p>
 </div>
 <div class="paragraph quick-margin-para">
@@ -1598,13 +1610,13 @@
 <p>Avant de commencer à sauvegarder des volumes sur site vers StorageGRID, lisez les informations suivantes pour vous assurer que votre configuration est prise en charge.</p>
 </div>
 <div class="paragraph">
-<p>L&#8217;image suivante montre chaque composant lors de la sauvegarde d&#8217;un système ONTAP sur site vers StorageGRID et les connexions dont vous avez besoin pour les préparer :</p>
+<p>L&#8217;image suivante montre chaque composant lors de la sauvegarde d&#8217;un système ONTAP sur site vers StorageGRID et les connexions dont vous avez besoin pour les préparer.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./media/diagram_cloud_backup_onprem_storagegrid.png" alt="Un diagramme montrant comment Cloud Backup communique avec les volumes des systèmes source et le stockage de destination où sont situés les fichiers de sauvegarde."></span></p>
 </div>
 <div class="paragraph">
-<p>Lorsque le connecteur et le système ONTAP sur site sont installés sur site sans accès à Internet, le système StorageGRID doit se trouver dans le même data Center sur site.</p>
+<p>Lorsque le connecteur et le système ONTAP sur site sont installés sur site sans accès à Internet (un « site noir »), le système StorageGRID doit se trouver dans le même data Center sur site. L&#8217;archivage des anciens fichiers de sauvegarde dans le cloud public n&#8217;est pas pris en charge dans les configurations de sites sombres.</p>
 </div>
 <div class="sect2">
 <h3 id="préparation-des-clusters-ontap">Préparation des clusters ONTAP</h3>
@@ -1701,6 +1713,9 @@
 <div class="paragraph">
 <p>Pour utiliser DataLock &amp; protection contre les attaques par ransomware pour vos sauvegardes, vos systèmes StorageGRID doivent exécuter la version 11.6.0.3 ou ultérieure.</p>
 </div>
+<div class="paragraph">
+<p>Pour effectuer le Tiering des sauvegardes plus anciennes sur un stockage d&#8217;archivage dans le cloud, vos systèmes StorageGRID doivent exécuter la version 11.3 ou une version ultérieure.</p>
+</div>
 </div>
 </div>
 </dd>
@@ -1768,6 +1783,9 @@ La fonctionnalité Cloud Backup est intégrée dans le connecteur BlueXP. Lorsqu
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Nous vous recommandons vivement de créer régulièrement des sauvegardes locales des données de configuration de Cloud Backup lorsque le connecteur est installé sur un site sans connexion Internet. <a href="reference-backup-cbs-db-in-dark-site.html" target="_blank" rel="noopener">"Découvrez comment sauvegarder les données Cloud Backup dans un site sombre"</a>.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="préparation-de-la-mise-en-réseau-pour-le-connecteur">Préparation de la mise en réseau pour le connecteur</h3>
@@ -1794,6 +1812,51 @@ La fonctionnalité Cloud Backup est intégrée dans le connecteur BlueXP. Lorsqu
 </div>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="préparation-à-larchivage-danciens-fichiers-de-sauvegarde-dans-le-cloud-public">Préparation à l&#8217;archivage d&#8217;anciens fichiers de sauvegarde dans le cloud public</h3>
+<div class="paragraph">
+<p>Le Tiering des anciens fichiers de sauvegarde vers le stockage d&#8217;archivage permet de réaliser des économies grâce à une classe de stockage moins chère pour les sauvegardes dont vous n&#8217;avez peut-être pas besoin. StorageGRID est une solution sur site (cloud privé) qui ne propose pas de stockage d&#8217;archivage, mais vous pouvez transférer des fichiers de sauvegarde d&#8217;ancienne génération vers un stockage d&#8217;archivage dans le cloud public.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">De formation</dt>
+<dd>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Votre cluster doit utiliser ONTAP 9.12.1 ou version supérieure</p>
+</li>
+<li>
+<p>Votre StorageGRID doit utiliser 11.3 ou plus</p>
+</li>
+<li>
+<p>Votre StorageGRID doit être <a href="https://docs.netapp.com/us-en/cloud-manager-storagegrid/task-discover-storagegrid.html" target="_blank" rel="noopener">"Découvert et disponible dans BlueXP Canvas"</a></p>
+</li>
+<li>
+<p>Le stockage d&#8217;archivage est actuellement pris en charge uniquement pour les classes de stockage AWS S3. Vous pouvez choisir de transférer les sauvegardes vers un stockage AWS S3 Glacier ou S3 Glacier Deep Archive. <a href="reference-aws-backup-tiers.html" target="_blank" rel="noopener">"En savoir plus sur les niveaux d&#8217;archivage AWS"</a>.</p>
+</li>
+<li>
+<p>Vous devez vous inscrire à un abonnement AWS S3 pour l&#8217;espace de stockage où se trouvent vos sauvegardes.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Lorsque vous définissez les paramètres d&#8217;archivage pour la règle de sauvegarde de votre cluster, vous entrez vos identifiants du fournisseur de cloud et sélectionnez la classe de stockage à utiliser. Cloud Backup crée un compartiment cloud lorsque vous activez la sauvegarde pour le cluster. Les informations requises pour le stockage d&#8217;archivage AWS sont présentées ci-dessous.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./media/screenshot_sg_archive_to_aws.png" alt="Copie d&#8217;écran des informations dont vous avez besoin pour archiver les fichiers de sauvegarde de StorageGRID vers AWS S3."></span></p>
+</div>
+<div class="paragraph">
+<p>Les paramètres de la règle d&#8217;archivage que vous sélectionnez génèrent une règle de gestion du cycle de vie des informations (ILM) dans StorageGRID et ajoutent les paramètres comme « règles ». Si une politique ILM est active, de nouvelles règles sont ajoutées à la politique ILM pour déplacer les données vers le Tier d&#8217;archivage. Si l&#8217;état « proposé » existe une politique ILM, la création et l&#8217;activation d&#8217;une nouvelle politique ILM ne seront pas possibles. <a href="https://docs.netapp.com/us-en/storagegrid-116/ilm/index.html" target="_blank" rel="noopener">"En savoir plus sur les règles et les règles StorageGRID ILM"</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1873,7 +1936,10 @@ Les licences PAYGO ne sont pas prises en charge lors de la sauvegarde des fichie
 <p>Définissez le programme de sauvegarde et choisissez le nombre de sauvegardes à conserver. <a href="concept-ontap-backup-to-cloud.html#customizable-backup-schedule-and-retention-settings" target="_blank" rel="noopener">"Consultez la liste des règles que vous pouvez choisir"</a>.</p>
 </li>
 <li>
-<p>Si vous utilisez ONTAP 9.11.1 ou version supérieure, vous pouvez choisir de protéger vos sauvegardes contre la suppression et les attaques par ransomware en configurant <em>DataLock et protection contre les attaques par ransomware</em>. <em>DataLock</em> protège vos fichiers de sauvegarde contre la modification ou la suppression, et <em>Attack protection</em> analyse vos fichiers de sauvegarde pour rechercher la preuve d&#8217;une attaque par ransomware dans vos fichiers de sauvegarde. <a href="concept-cloud-backup-policies.html#datalock-and-ransomware-protection" target="_blank" rel="noopener">"En savoir plus sur les paramètres DataLock disponibles"</a>.</p>
+<p>Si votre cluster utilise ONTAP 9.11.1 ou version supérieure, vous pouvez choisir de protéger vos sauvegardes contre les suppressions et les attaques par ransomware en configurant <em>DataLock et ransomware protection</em>. <em>DataLock</em> protège vos fichiers de sauvegarde contre la modification ou la suppression, et <em>Attack protection</em> analyse vos fichiers de sauvegarde pour rechercher la preuve d&#8217;une attaque par ransomware dans vos fichiers de sauvegarde. <a href="concept-cloud-backup-policies.html#datalock-and-ransomware-protection" target="_blank" rel="noopener">"En savoir plus sur les paramètres DataLock disponibles"</a>.</p>
+</li>
+<li>
+<p>Si votre cluster utilise ONTAP 9.12.1 ou version ultérieure et que vous utilisez StorageGRID 11.3 ou version ultérieure, vous pouvez choisir de transférer les anciennes sauvegardes vers AWS S3 Glacier ou vers le stockage d&#8217;archivage profond S3 Glacier au bout d&#8217;un certain nombre de jours pour optimiser les coûts. <a href="Préparation à l&.html#8217;archivage d&#8217;anciens fichiers de sauvegarde dans le cloud public">Découvrez comment configurer vos systèmes pour cette fonctionnalité</a>.</p>
 <div class="paragraph">
 <p><span class="image"><img src="./media/screenshot_backup_onprem_policy.png" alt="Capture d&#8217;écran indiquant les paramètres de Cloud Backup dans lesquels vous pouvez choisir la planification de sauvegarde et la période de conservation."></span></p>
 </div>
@@ -1951,7 +2017,7 @@ Les licences PAYGO ne sont pas prises en charge lors de la sauvegarde des fichie
         <div class="n-footer__copyright">
           <ul class="n-footer__copyright-list">
             <li class="n-footer__copyright-link">
-              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2023 NetApp, Inc.</a>
             </li>
             <li class="n-footer__copyright-link">
               <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>
