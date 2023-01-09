@@ -24,7 +24,7 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Une seule"] Vérifiez la prise en charge de votre configuration
 [role="quick-margin-list"]
-* Vous exécutez Cloud Volumes ONTAP 9.7P5 ou une version ultérieure dans GCP.
+* Vous exécutez Cloud Volumes ONTAP 9.7P5 ou une version ultérieure dans GCP (ONTAP 9.8P13 et une version ultérieure est recommandée).
 * Vous disposez d'un abonnement GCP valide pour l'espace de stockage où se trouvent vos sauvegardes.
 * Vous disposez d'un compte de service dans votre projet Google Cloud avec le rôle d'administrateur de stockage prédéfini.
 * Vous avez souscrit au https://console.cloud.google.com/marketplace/details/netapp-cloudmanager/cloud-manager?supportedpurview=project&rif_reserved["Offre de sauvegarde BlueXP Marketplace"^], ou vous avez acheté link:task-licensing-cloud-backup.html#use-a-cloud-backup-byol-license["et activé"^] Licence Cloud Backup BYOL de NetApp.
@@ -41,7 +41,7 @@ image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton C
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Trois"] Entrez les détails du fournisseur
 [role="quick-margin-para"]
-Sélectionnez le compartiment Google Cloud Project où vous souhaitez créer le compartiment Google Cloud Storage pour les sauvegardes.
+Sélectionnez la région et le projet Google Cloud Project où vous souhaitez créer le compartiment Google Cloud Storage pour la sauvegarde. Vous pouvez également choisir vos propres clés gérées par le client pour le chiffrement des données au lieu d'utiliser la clé de chiffrement gérée par Google par défaut.
 
 [role="quick-margin-para"]
 image:screenshot_backup_provider_settings_gcp.png["Une copie d'écran présente les informations détaillées du fournisseur cloud lors de la sauvegarde des volumes à partir d'un système Cloud Volumes ONTAP installé sur GCP vers un compartiment Google Cloud Storage."]
@@ -104,6 +104,32 @@ bigquery.tables.create
 
 
 --
+Informations requises pour l'utilisation de clés de chiffrement gérées par le client (CMEK):: Vous pouvez utiliser vos propres clés gérées par le client pour le chiffrement des données au lieu d'utiliser les clés de chiffrement gérées par Google par défaut. Dans ce cas, vous devez disposer du porte-clés et du nom de la clé pour pouvoir ajouter ces informations dans l'assistant d'activation. https://cloud.google.com/kms/docs/cmek["En savoir plus sur les clés de chiffrement gérées par les clients"^].
++
+--
+Vous devrez également ajouter ces autorisations requises dans le rôle pour que le connecteur pour CMEK fonctionne :
+
+[source, json]
+----
+cloudkms.cryptoKeys.get
+cloudkms.cryptoKeys.getIamPolicy
+cloudkms.cryptoKeys.list
+cloudkms.cryptoKeys.setIamPolicy
+cloudkms.keyRings.get
+cloudkms.keyRings.getIamPolicy
+cloudkms.keyRings.list
+cloudkms.keyRings.setIamPolicy
+----
+*Considérations de CMEK:*
+
+* Les clés HSM (sauvegarde matérielle) et Software Generated sont prises en charge.
+* Les clés KMS créées ou importées Cloud sont toutes les deux prises en charge.
+* Seules les clés régionales sont prises en charge, et les clés globales ne sont pas prises en charge.
+* Actuellement, seul l'objectif "chiffrement/déchiffrement symétrique" est pris en charge.
+* Le rôle IAM de l'agent de service associé au compte de stockage est attribué à « CryptoKey Encrypter/Decrypter (roles/cloudkms.cryptoKeyEncrypterDecrypter) » par Cloud Backup.
+
+
+--
 
 
 
@@ -158,12 +184,17 @@ Si la destination Google Cloud Storage pour vos sauvegardes existe en tant qu'en
 +
 image:screenshot_backup_cvo_enable.png["Une copie d'écran présente le bouton Cloud Backup Settings, disponible après la sélection d'un environnement de travail."]
 
-. Sélectionnez Google Cloud Project et la région dans laquelle vous souhaitez créer le compartiment Google Cloud Storage pour les sauvegardes, puis cliquez sur *Next*.
+. Sélectionnez les détails du fournisseur et cliquez sur *Suivant*.
++
+.. Google Cloud Project et la région dans laquelle vous souhaitez créer le compartiment Google Cloud Storage pour la sauvegarde.
+.. Que vous utilisiez la clé de chiffrement gérée par Google par défaut ou que vous choisissiez vos propres clés gérées par le client pour gérer le chiffrement de vos données. Pour utiliser un CMEK, vous devez disposer du porte-clés et du nom de la clé. https://cloud.google.com/kms/docs/cmek["En savoir plus sur les clés de chiffrement gérées par les clients"^].
 +
 image:screenshot_backup_provider_settings_gcp.png["Une copie d'écran présente les informations détaillées du fournisseur cloud lors de la sauvegarde des volumes à partir d'un système Cloud Volumes ONTAP installé sur GCP vers un compartiment Google Cloud Storage."]
 
 +
 Notez que le projet doit disposer d'un compte de service avec le rôle d'administrateur de stockage prédéfini.
+
+
 
 . Entrez les détails de la stratégie de sauvegarde qui seront utilisés pour votre stratégie par défaut et cliquez sur *Suivant*. Vous pouvez sélectionner une stratégie existante ou créer une nouvelle stratégie en entrant vos sélections dans chaque section :
 +

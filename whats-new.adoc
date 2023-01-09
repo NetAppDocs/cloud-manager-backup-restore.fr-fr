@@ -18,6 +18,36 @@ Découvrez les nouveautés de Cloud Backup.
 
 
 
+== 9 janvier 2023
+
+
+
+=== La possibilité de déplacer d'anciens fichiers de sauvegarde vers le stockage d'archivage AWS S3 à partir des systèmes StorageGRID
+
+Vous pouvez désormais transférer d'anciens fichiers de sauvegarde des systèmes StorageGRID vers le stockage d'archivage dans AWS S3. Cela vous permet de libérer de l'espace sur vos systèmes StorageGRID et de réaliser des économies en utilisant une solution de stockage bon marché pour les anciens fichiers de sauvegarde. Vous pouvez choisir de transférer les sauvegardes vers un stockage AWS S3 Glacier ou S3 Glacier Deep Archive.
+
+Cette fonctionnalité est disponible si votre cluster utilise ONTAP 9.12.1 ou version ultérieure et si votre système StorageGRID utilise 11.3 ou version ultérieure. https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-backup-onprem-private-cloud.html#preparing-to-archive-older-backup-files-to-public-cloud-storage["En savoir plus"].
+
+
+
+=== Possibilité de sélectionner vos propres clés gérées par le client pour le chiffrement des données sur Google Cloud
+
+Lorsque vous sauvegardez les données de vos systèmes ONTAP dans Google Cloud Storage, vous pouvez maintenant sélectionner vos propres clés gérées par le client pour le chiffrement des données dans l'assistant d'activation au lieu d'utiliser les clés de chiffrement gérées par Google par défaut. Il vous suffit de configurer d'abord vos clés de chiffrement gérées par le client, puis de saisir les informations lors de l'activation de Cloud Backup.
+
+
+
+=== Le rôle d'administrateur du stockage n'est plus nécessaire pour créer des sauvegardes dans Google Cloud Storage
+
+Dans les versions antérieures, le rôle d'administrateur du stockage était requis pour le compte de service permettant à Cloud Backup d'accéder aux compartiments Google Cloud Storage. Vous pouvez désormais créer un rôle personnalisé avec un ensemble réduit d'autorisations à attribuer au compte de service. https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-backup-onprem-to-gcp.html#preparing-google-cloud-storage-for-backups["Découvrez comment préparer votre Google Cloud Storage pour les sauvegardes"].
+
+
+
+=== Possibilité de télécharger la page des résultats de la surveillance des travaux sous forme de rapport .csv
+
+Après avoir filtré la page surveillance des travaux pour afficher les travaux et les actions qui vous intéressent, vous pouvez maintenant générer et télécharger un fichier .csv de ces données. Vous pouvez ensuite analyser les informations ou envoyer le rapport à d'autres personnes de votre organisation. https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-monitor-backup-jobs.html#download-job-monitoring-results-as-a-report["Découvrez comment générer un rapport de surveillance des travaux"].
+
+
+
 == 19 décembre 2022
 
 
@@ -45,7 +75,7 @@ Découvrez les nouveautés de Cloud Backup.
 
 
 
-=== Améliorations apportées à Cloud Backup
+=== Améliorations de Cloud Backup pour les machines virtuelles
 
 * Ordinateurs virtuels
 +
@@ -159,7 +189,7 @@ Les mises à jour suivantes ont été effectuées sur le https://docs.netapp.com
 * Une colonne pour « charge de travail » est disponible. Vous pouvez donc filtrer la page pour afficher les travaux des services de sauvegarde suivants : volumes, applications, machines virtuelles et Kubernetes.
 * Vous pouvez ajouter de nouvelles colonnes pour « Nom d'utilisateur » et « Type de travail » si vous souhaitez afficher ces détails pour une tâche de sauvegarde spécifique.
 * La page Détails du travail affiche tous les sous-travaux en cours d'exécution pour terminer le travail principal.
-* La page est automatiquement réactualisée toutes les 15 minutes pour que vous puissiez toujours voir les derniers résultats d'état des travaux. Et vous pouvez cliquer sur le bouton *Actualiser* pour mettre la page à jour immédiatement.
+* La page est automatiquement actualisée toutes les 15 minutes pour que vous puissiez toujours voir les résultats de l'état des travaux les plus récents. Et vous pouvez cliquer sur le bouton *Actualiser* pour mettre la page à jour immédiatement.
 
 
 

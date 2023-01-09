@@ -85,7 +85,7 @@ Reportez-vous aux étapes de configuration requise et de restauration pour le ty
 
 Avant de commencer la restauration d'un volume, d'un dossier ou d'un fichier, vous devez connaître le nom du volume à partir duquel vous souhaitez restaurer, le nom de l'environnement de travail où réside le volume et la date approximative du fichier de sauvegarde à partir duquel vous souhaitez restaurer.
 
-*Remarque :* si le fichier de sauvegarde du volume que vous souhaitez restaurer réside dans le stockage d'archives (à partir de ONTAP 9.10.1), l'opération de restauration prendra plus de temps et entraînera un coût. En outre, le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration du volume, 9.11.1 pour la restauration des fichiers et 9.12.1 pour Google Archive.
+*Remarque :* si le fichier de sauvegarde contenant les données que vous souhaitez restaurer réside dans le stockage d'archives (à partir de ONTAP 9.10.1), l'opération de restauration prendra plus de temps et entraînera un coût. En outre, le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration du volume, 9.11.1 pour la restauration des fichiers et 9.12.1 pour Google Archive et StorageGRID.
 
 ifdef::aws[]
 
@@ -422,13 +422,13 @@ Vous disposez de quelques options pour l'emplacement de restauration des dossier
 
 Vous pouvez restaurer un volume, un dossier ou des fichiers à partir d'un fichier de sauvegarde ONTAP à l'aide de la fonction Rechercher et restaurer. La fonction de recherche et restauration vous permet de rechercher un volume, un dossier ou un fichier spécifique à partir de toutes les sauvegardes stockées dans le stockage cloud pour un fournisseur spécifique, puis d'effectuer une restauration. Il n'est pas nécessaire de connaître le nom exact de l'environnement de travail ou le nom du volume ; la recherche s'effectue via tous les fichiers de sauvegarde de volume.
 
-L'opération de recherche examine également toutes les copies Snapshot locales existant pour vos volumes ONTAP. Étant donné que la restauration des données à partir d'une copie Snapshot locale peut être plus rapide et moins coûteuse que la restauration à partir d'un fichier de sauvegarde, il est possible de restaurer les données à partir d'une copie Snapshot. Vous pouvez restaurer l'instantané en tant que nouveau volume à partir de la page Détails du volume de la zone de travail.
+L'opération de recherche examine également toutes les copies Snapshot locales existant pour vos volumes ONTAP. Étant donné que la restauration des données à partir d'une copie Snapshot locale peut être plus rapide et moins coûteuse que la restauration à partir d'un fichier de sauvegarde, il est possible de restaurer les données à partir d'une copie Snapshot. Vous pouvez restaurer l'instantané en tant que nouveau volume à partir de la page Volume Details (Détails du volume) de la toile (pas à partir de Cloud Backup).
 
 Lorsque vous restaurez un volume à partir d'un fichier de sauvegarde, Cloud Backup crée un _nouveau_ volume en utilisant les données de la sauvegarde. Vous pouvez restaurer les données en tant que volume dans l'environnement de travail d'origine ou vers un autre environnement de travail situé dans le même compte cloud que l'environnement de travail source. Vous pouvez également restaurer des volumes sur un système ONTAP sur site.
 
 Vous pouvez restaurer des dossiers ou des fichiers vers l'emplacement du volume d'origine, vers un autre volume dans le même environnement de travail ou vers un autre environnement de travail qui utilise le même compte cloud. Vous pouvez également restaurer des dossiers et des fichiers vers un volume situé sur un système ONTAP sur site.
 
-Si le fichier de sauvegarde du volume que vous souhaitez restaurer se trouve dans le stockage d'archives (disponible à partir de ONTAP 9.10.1), l'opération de restauration prend plus de temps et entraînera des coûts supplémentaires. Notez que le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration de volume, 9.11.1 pour la restauration de fichiers et 9.12.1 pour Google Archive.
+Si le fichier de sauvegarde du volume que vous souhaitez restaurer se trouve dans le stockage d'archives (disponible à partir de ONTAP 9.10.1), l'opération de restauration prend plus de temps et entraînera des coûts supplémentaires. Notez que le cluster de destination doit également exécuter ONTAP 9.10.1 ou version ultérieure pour la restauration de volume, 9.11.1 pour la restauration de fichiers et 9.12.1 pour Google Archive et StorageGRID.
 
 ifdef::aws[]
 
@@ -518,8 +518,8 @@ Notez que les références aux « systèmes ONTAP sur site » incluent les syst�
 +
 ** La version ONTAP doit être supérieure ou égale à 9.8.
 ** La VM de stockage (SVM) sur laquelle réside le volume doit avoir une LIF de données configurée.
-** NFS doit être activé sur le volume.
-** Le serveur RPC SnapDiff doit être activé sur le SVM. BlueXP le fait automatiquement lorsque vous activez l'indexation sur l'environnement de travail.
+** NFS doit être activé sur le volume (les volumes NFS et SMB/CIFS sont pris en charge).
+** Le serveur RPC SnapDiff doit être activé sur le SVM. BlueXP le fait automatiquement lorsque vous activez l'indexation sur l'environnement de travail. (SnapDiff est la technologie qui identifie rapidement les différences entre les fichiers et les répertoires entre deux copies Snapshot.)
 
 
 

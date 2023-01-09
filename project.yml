@@ -198,6 +198,8 @@ sidebar:
       url: "/reference-azure-backup-tiers.html"
     - title: Tiers de stockage d'archivage Google pris en charge
       url: "/reference-google-backup-tiers.html"
+    - title: Sauvegardez la base de données Cloud Backup sur un site sombre
+      url: "/reference-backup-cbs-db-in-dark-site.html"
     - title: Configurez la sauvegarde pour l'accès à plusieurs comptes dans Azure
       url: "/reference-backup-multi-account-azure.html"
   - title: Connaissances et support

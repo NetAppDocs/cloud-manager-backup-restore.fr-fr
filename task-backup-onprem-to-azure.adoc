@@ -28,7 +28,7 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 [role="quick-margin-list"]
 * Vous avez découvert le cluster sur site et l'avez ajouté à un environnement de travail dans BlueXP. Voir https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html["Découverte des clusters ONTAP"^] pour plus d'informations.
 +
-** Le cluster exécute ONTAP 9.7P5 ou version ultérieure.
+** Le cluster exécute ONTAP 9.7P5 ou version ultérieure (ONTAP 9.8P13 et version ultérieure recommandée).
 ** Le cluster est doté d'une licence SnapMirror -- elle est incluse dans le bundle Premium ou Data protection.
 ** Le cluster doit disposer des connexions réseau requises vers le stockage Blob et vers le connecteur.
 
@@ -167,6 +167,7 @@ Assurez-vous que le connecteur dispose des connexions réseau requises.
 ** Une connexion Internet sortante vers le Cloud Backup Service over port 443 (HTTPS)
 ** Une connexion HTTPS via le port 443 vers votre stockage objet Blob
 ** Une connexion HTTPS via le port 443 vers votre LIF de gestion de cluster ONTAP
+** Pour que la fonctionnalité de recherche et de restauration de sauvegarde dans le Cloud fonctionne, le port 1433 doit être ouvert pour la communication entre le connecteur et les services SQL d'Azure Synapse.
 ** Des règles de groupes de sécurité entrants supplémentaires sont requises pour les déploiements d'Azure et d'Azure Government. Voir https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-ports-azure.html["Règles pour le connecteur dans Azure"^] pour plus d'informations.
 
 
@@ -214,9 +215,11 @@ Vous devez enregistrer le fournisseur de ressources Azure Synapse Analytics aupr
 "Microsoft.Synapse/register/action",
 "Microsoft.Synapse/checkNameAvailability/action",
 "Microsoft.Synapse/workspaces/operationStatuses/read",
+"Microsoft.Synapse/workspaces/firewallRules/write",
 "Microsoft.Synapse/workspaces/firewallRules/read",
 "Microsoft.Synapse/workspaces/replaceAllIpFirewallRules/action",
-"Microsoft.Synapse/workspaces/operationResults/read"
+"Microsoft.Synapse/workspaces/operationResults/read",
+"Microsoft.Synapse/workspaces/privateEndpointConnectionsApproval/action"
 ----
 +
 https://docs.netapp.com/us-en/cloud-manager-setup-admin/reference-permissions-azure.html["Afficher le format JSON complet de la règle"^]

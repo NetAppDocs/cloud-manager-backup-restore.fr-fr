@@ -255,7 +255,7 @@ endif::azure[]
 
 ifdef::gcp[]
 
-* Dans GCP, les sauvegardes sont associées par défaut à la classe de stockage _Standard_.
+* Dans GCP, les sauvegardes sont associées à la classe de stockage _Standard_.
 +
 Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure, vous pouvez choisir de transférer d'anciennes sauvegardes vers le stockage _Archive_ dans l'interface utilisateur de sauvegarde dans le cloud au bout d'un certain nombre de jours afin d'optimiser les coûts. (Cette fonctionnalité n'est pas disponible actuellement pour les systèmes Cloud Volumes ONTAP.) link:reference-google-backup-tiers.html["En savoir plus sur le stockage des archives Google"^].
 
@@ -265,6 +265,6 @@ endif::gcp[]
 
 * Dans StorageGRID, les sauvegardes sont associées à la classe de stockage _Standard_.
 +
-Il n'y a pas de niveau d'archivage disponible pour le moment.
+Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure et que votre système StorageGRID utilise 11.3 ou version ultérieure, vous pouvez archiver les fichiers de sauvegarde les plus anciens dans un stockage d'archivage dans le cloud public. Le stockage d'archivage est actuellement pris en charge uniquement pour les classes de stockage AWS S3. Vous pouvez choisir de hiérarchiser les sauvegardes dans AWS _S3 Glacier_ ou _S3 Glacier Deep Archive_ stockage après un certain nombre de jours. link:task-backup-onprem-private-cloud.html#preparing-to-archive-older-backup-files-to-public-cloud-storage["En savoir plus sur l'archivage des fichiers de sauvegarde StorageGRID"^].
 
 

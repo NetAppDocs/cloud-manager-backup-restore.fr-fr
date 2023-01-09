@@ -43,7 +43,7 @@ Fonctions de restauration :
 * Restauration des données à partir d'un point dans le temps spécifique
 * Restaurez un volume, un dossier ou des fichiers individuels vers le système source ou vers un autre système.
 * Restaurez les données dans un environnement de travail à l'aide d'un autre abonnement/compte ou dans une autre région.
-* Restaure les données au niveau bloc en les plaçant directement à l'emplacement que vous indiquez, tout en conservant les ACL d'origine.
+* Les données sont restaurées au niveau bloc, en plaçant les données directement à l'emplacement que vous spécifiez, tout en préservant les ACL d'origine.
 * Catalogues de fichiers consultables pour la sélection de dossiers et de fichiers individuels pour la restauration de fichiers uniques.
 
 
@@ -379,6 +379,9 @@ Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure, vous pouv
 endif::gcp[]
 
 * Dans StorageGRID, les sauvegardes sont associées à la classe de stockage _Standard_.
++
+Si votre cluster sur site utilise ONTAP 9.12.1 ou version ultérieure et que votre système StorageGRID utilise 11.3 ou version ultérieure, vous pouvez archiver les fichiers de sauvegarde les plus anciens dans un stockage d'archivage dans le cloud public. Le stockage d'archivage est actuellement pris en charge uniquement pour les classes de stockage AWS S3. Vous pouvez choisir de hiérarchiser les sauvegardes dans AWS _S3 Glacier_ ou _S3 Glacier Deep Archive_ stockage après un certain nombre de jours. link:task-backup-onprem-private-cloud.html#preparing-to-archive-older-backup-files-to-public-cloud-storage["En savoir plus sur l'archivage des fichiers de sauvegarde StorageGRID"^].
+
 
 
 Voir link:concept-cloud-backup-policies.html#archival-storage-settings["Paramètres de stockage d'archivage"] pour plus d'informations sur l'archivage d'anciens fichiers de sauvegarde.

@@ -26,9 +26,9 @@ Pour commencer rapidement, suivez ces étapes ou faites défiler jusqu'aux secti
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Une seule"] Vérifiez la prise en charge de votre configuration
 [role="quick-margin-list"]
-* Vous avez découvert le cluster sur site et l'avez ajouté à un environnement de travail dans BlueXP. Voir https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html["Découverte des clusters ONTAP"^] pour plus d'informations.
+* Vous avez découvert le cluster sur site et l'avez ajouté comme environnement de travail dans BlueXP. Voir https://docs.netapp.com/us-en/cloud-manager-ontap-onprem/task-discovering-ontap.html["Découverte des clusters ONTAP"^] pour plus d'informations.
 +
-** Le cluster exécute ONTAP 9.7P5 ou version ultérieure.
+** Le cluster exécute ONTAP 9.7P5 ou version ultérieure (ONTAP 9.8P13 et version ultérieure recommandée).
 ** Le cluster est doté d'une licence SnapMirror -- elle est incluse dans le bundle Premium ou Data protection.
 ** Le cluster doit disposer des connexions réseau requises vers le stockage Google et vers le connecteur.
 
@@ -47,7 +47,10 @@ image:screenshot_backup_onprem_enable.png["Capture d'écran présentant le bouto
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Trois"] Sélectionnez le fournisseur de cloud et entrez les informations relatives au fournisseur
 [role="quick-margin-para"]
-Sélectionnez Google Cloud comme fournisseur, puis saisissez les informations relatives au fournisseur. Vous devez également spécifier l'IPspace dans le cluster ONTAP où les volumes résident.
+Sélectionnez Google Cloud comme fournisseur, puis saisissez les informations relatives au fournisseur. Vous devez spécifier l'IPspace dans le cluster ONTAP où les volumes résident. Vous pouvez également choisir vos propres clés gérées par le client pour le chiffrement des données au lieu d'utiliser la clé de chiffrement gérée par Google par défaut.
+
+[role="quick-margin-para"]
+image:screenshot_backup_onprem_to_google.png["Une copie d'écran présente les informations fournies par le fournisseur cloud lors de la sauvegarde des volumes depuis un système ONTAP sur site vers un compartiment Google Cloud Storage."]
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Quatre"] Définissez la stratégie de sauvegarde par défaut
 [role="quick-margin-para"]
@@ -124,10 +127,10 @@ Lors de la configuration de Cloud Backup, vous êtes invité à utiliser l'IPspa
 * Les LIFs intercluster des nœuds peuvent accéder au magasin d'objets.
 * Les serveurs DNS ont été configurés pour la machine virtuelle de stockage où les volumes sont situés. Découvrez comment https://docs.netapp.com/us-en/ontap/networking/configure_dns_services_auto.html["Configuration des services DNS pour le SVM"^].
 +
-Si vous utilisez Private Google Access ou Private Service Connect, assurez-vous que vos serveurs DNS ont été configurés pour pointer storage.googleapis.com vers l'adresse IP interne (privée) correcte.
+Si vous utilisez Private Google Access ou Private Service Connect, assurez-vous que vos serveurs DNS ont été configurés pour pointer `storage.googleapis.com` À l'adresse IP interne (privée) correcte.
 
 * Notez que si vous utilisez un IPspace différent de celui utilisé par défaut, vous devrez peut-être créer une route statique pour obtenir l'accès au stockage objet.
-* Mettre à jour les règles de pare-feu, si nécessaire, pour autoriser les connexions Cloud Backup Service de ONTAP au stockage objet via le port 443 et le trafic de résolution de nom entre le VM de stockage et le serveur DNS via le port 53 (TCP/UDP).
+* Si nécessaire, mettre à jour les règles de pare-feu pour autoriser les connexions Cloud Backup entre ONTAP et le stockage objet via le port 443, et nommer le trafic de résolution entre le VM de stockage et le serveur DNS via le port 53 (TCP/UDP).
 
 
 --
@@ -160,7 +163,7 @@ Assurez-vous que le connecteur dispose des connexions réseau requises.
 
 . Activez Private Google Access (ou Private Service Connect) sur le sous-réseau où vous prévoyez de déployer le connecteur. https://cloud.google.com/vpc/docs/configure-private-google-access["Accès privé à Google"^] ou https://cloud.google.com/vpc/docs/configure-private-service-connect-apis#on-premises["Service privé Connect"^] Sont nécessaires si vous disposez d'une connexion directe entre votre cluster ONTAP et le VPC et que vous souhaitez que la communication entre le connecteur et Google Cloud Storage reste dans votre réseau privé virtuel (une connexion *privée*).
 +
-Suivez les instructions Google pour configurer ces options d'accès privé. Assurez-vous que vos serveurs DNS ont été configurés aux points www.googleapis.com et storage.googleapis.com pour les adresses IP internes (privées) correctes.
+Suivez les instructions Google pour configurer ces options d'accès privé. Assurez-vous que vos serveurs DNS ont été configurés pour pointer `www.googleapis.com` et `storage.googleapis.com` Aux adresses IP internes (privées) correctes.
 
 
 
@@ -171,7 +174,7 @@ Suivez les instructions Google pour configurer ces options d'accès privé. Assu
 Pour utiliser la fonctionnalité « recherche et restauration » de Cloud Backup, vous devez disposer d'autorisations spécifiques dans le rôle du connecteur afin qu'il puisse accéder au service Google Cloud BigQuery. Reportez-vous aux autorisations ci-dessous et suivez les étapes si vous devez modifier la stratégie.
 
 .Étapes
-. Dans link:https://console.cloud.google.com["Console cloud"^], Allez à la page *rôles*.
+. Dans le https://console.cloud.google.com["Console Google Cloud"^], Allez à la page *rôles*.
 . A l'aide de la liste déroulante située en haut de la page, sélectionnez le projet ou l'organisation qui contient le rôle que vous souhaitez modifier.
 . Cliquez sur un rôle personnalisé.
 . Cliquez sur *Modifier le rôle* pour mettre à jour les autorisations du rôle.
@@ -195,6 +198,79 @@ bigquery.tables.create
 
 
 
+=== Préparation de Google Cloud Storage pour les sauvegardes
+
+Lorsque vous configurez la sauvegarde, vous devez fournir des clés d'accès au stockage pour un compte de service avec des autorisations spécifiques. Un compte de service permet à Cloud Backup d'authentifier et d'accéder aux compartiments Cloud Storage utilisés pour stocker les sauvegardes. Les clés sont requises pour que Google Cloud Storage sache qui effectue la demande.
+
+.Étapes
+. Dans le https://console.cloud.google.com["Console Google Cloud"^], Allez à la page *rôles*.
+. https://cloud.google.com/iam/docs/creating-custom-roles#creating_a_custom_role["Créer un nouveau rôle"^] avec les autorisations suivantes :
++
+[source, json]
+----
+storage.buckets.create
+storage.buckets.delete
+storage.buckets.get
+storage.buckets.list
+storage.buckets.update
+storage.buckets.getIamPolicy
+storage.multipartUploads.create
+storage.objects.create
+storage.objects.delete
+storage.objects.get
+storage.objects.list
+storage.objects.update
+----
+. Dans la console Google Cloud, https://console.cloud.google.com/iam-admin/serviceaccounts["Accédez à la page comptes de service"^].
+. Sélectionnez votre projet cloud.
+. Cliquez sur *Créer un compte de service* et fournissez les informations requises :
++
+.. *Détails du compte de service* : saisissez un nom et une description.
+.. *Accordez à ce compte de service l'accès au projet* : sélectionnez le rôle personnalisé que vous venez de créer.
+.. Cliquez sur *Done*.
+
+
+. Accédez à https://console.cloud.google.com/storage/settings["Paramètres de stockage GCP"^] et créez des clés d'accès pour le compte de service :
++
+.. Sélectionnez un projet et cliquez sur *interopérabilité*. Si ce n'est déjà fait, cliquez sur *Activer l'accès à l'interopérabilité*.
+.. Sous *clés d'accès pour les comptes de service*, cliquez sur *Créer une clé pour un compte de service*, sélectionnez le compte de service que vous venez de créer, puis cliquez sur *Créer une clé*.
++
+Lorsque vous configurez le service de sauvegarde, vous devrez saisir les clés dans Cloud Backup.
+
+
+
+
+
+
+
+==== Utilisation de clés de chiffrement gérées par le client (CMEK)
+
+Vous pouvez utiliser vos propres clés gérées par le client pour le chiffrement des données au lieu d'utiliser les clés de chiffrement gérées par Google par défaut. Dans ce cas, vous devez disposer du porte-clés et du nom de la clé pour pouvoir ajouter ces informations dans l'assistant d'activation. https://cloud.google.com/kms/docs/cmek["En savoir plus sur les clés de chiffrement gérées par les clients"^].
+
+Vous devrez également ajouter ces autorisations requises dans le rôle pour que le connecteur pour CMEK fonctionne :
+
+[source, json]
+----
+cloudkms.cryptoKeys.get
+cloudkms.cryptoKeys.getIamPolicy
+cloudkms.cryptoKeys.list
+cloudkms.cryptoKeys.setIamPolicy
+cloudkms.keyRings.get
+cloudkms.keyRings.getIamPolicy
+cloudkms.keyRings.list
+cloudkms.keyRings.setIamPolicy
+----
+*Considérations de CMEK:*
+
+* Les clés HSM (sauvegarde matérielle) et Software Generated sont prises en charge.
+* Les clés KMS créées ou importées Cloud sont toutes les deux prises en charge.
+* Seules les clés régionales sont prises en charge, et les clés globales ne sont pas prises en charge.
+* Actuellement, seul l'objectif "chiffrement/déchiffrement symétrique" est pris en charge.
+* Le rôle IAM de l'agent de service associé au compte de stockage est attribué à « CryptoKey Encrypter/Decrypter (roles/cloudkms.cryptoKeyEncrypterDecrypter) » par Cloud Backup.
+
+
+
+
 === Vérification des besoins en licence
 
 * Avant d'activer Cloud Backup pour votre cluster, vous devez vous abonner à une offre BlueXP Marketplace sur Google, ou acheter et activer une licence Cloud Backup BYOL auprès de NetApp. Ces licences sont destinées à votre compte et peuvent être utilisées sur plusieurs systèmes.
@@ -206,25 +282,6 @@ bigquery.tables.create
 * Vous devez disposer d'un abonnement Google pour l'espace de stockage objet dans lequel vos sauvegardes seront stockées.
 +
 Vous pouvez créer des sauvegardes à partir de systèmes sur site vers Google Cloud Storage dans toutes les régions https://cloud.netapp.com/cloud-volumes-global-regions["Dans ce cas, Cloud Volumes ONTAP est pris en charge"^]. Vous spécifiez la région dans laquelle les sauvegardes seront stockées lors de la configuration du service.
-
-
-
-
-
-=== Préparation de Google Cloud Storage pour les sauvegardes
-
-Lorsque vous configurez la sauvegarde, vous devez fournir des clés d'accès au stockage pour un compte de service avec des autorisations d'administrateur du stockage. Un compte de service permet à Cloud Backup d'authentifier et d'accéder aux compartiments Cloud Storage utilisés pour stocker les sauvegardes. Les clés sont requises pour que Google Cloud Storage sache qui effectue la demande.
-
-.Étapes
-. https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating_a_service_account["Créez un compte de service avec le rôle d'administrateur de stockage prédéfini"^].
-. Accédez à https://console.cloud.google.com/storage/settings["Paramètres de stockage GCP"^] et créez des clés d'accès pour le compte de service :
-+
-.. Sélectionnez un projet et cliquez sur *interopérabilité*. Si ce n'est déjà fait, cliquez sur *Activer l'accès à l'interopérabilité*.
-.. Sous *clés d'accès pour les comptes de service*, cliquez sur *Créer une clé pour un compte de service*, sélectionnez le compte de service que vous venez de créer, puis cliquez sur *Créer une clé*.
-+
-Lorsque vous configurez le service de sauvegarde, vous devrez saisir les clés dans Cloud Backup.
-
-
 
 
 
@@ -245,10 +302,11 @@ image:screenshot_backup_onprem_enable.png["Capture d'écran présentant le bouto
 . Sélectionnez Google Cloud comme fournisseur et cliquez sur *Suivant*.
 . Entrez les détails du fournisseur et cliquez sur *Suivant*.
 +
-.. Google Cloud Project où vous souhaitez créer le compartiment Google Cloud Storage pour la sauvegarde. (Le projet doit disposer d'un compte de service avec le rôle d'administrateur de stockage prédéfini.)
+.. Google Cloud Project où vous souhaitez créer le compartiment Google Cloud Storage pour la sauvegarde. (Le projet doit disposer d'un compte de service doté d'un rôle personnalisé avec des autorisations spécifiques - <<Préparation de Google Cloud Storage pour les sauvegardes,comme décrit ici>>.)
 .. Clé d'accès Google et clé secrète utilisées pour stocker les sauvegardes.
 .. Région Google où les sauvegardes seront stockées.
 .. L'IPspace dans le cluster ONTAP où les volumes à sauvegarder résident. Les LIF intercluster pour cet IPspace doivent avoir un accès Internet sortant.
+.. Que vous utilisiez la clé de chiffrement gérée par Google par défaut ou que vous choisissiez vos propres clés gérées par le client pour gérer le chiffrement de vos données. Pour utiliser un CMEK, vous devez disposer du porte-clés et du nom de la clé. https://cloud.google.com/kms/docs/cmek["En savoir plus sur les clés de chiffrement gérées par les clients"^].
 +
 image:screenshot_backup_onprem_to_google.png["Copie d'écran montrant les informations fournies par le fournisseur cloud lors de la sauvegarde de volumes depuis un cluster sur site vers Google Cloud Storage."]
 

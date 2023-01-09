@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: task-monitor-backup-jobs.html 
 keywords: cloud backup, cloud backup service, backup, restore, status, monitor, alert, notification 
-summary: 'Vous pouvez surveiller l"état des tâches de sauvegarde et de restauration que vous avez lancées dans vos environnements de travail. Cela vous permet de voir les travaux qui ont réussi, ceux qui sont en cours et ceux qui ont échoué afin de diagnostiquer et de résoudre tout problème. Vous pouvez également configurer les notifications à envoyer par e-mail pour vous informer de l"activité système importante, même lorsque vous n"êtes pas connecté au système.' 
+summary: 'Vous pouvez surveiller l"état des tâches de sauvegarde et de restauration que vous avez lancées dans vos environnements de travail. Cela vous permet de voir les travaux qui ont réussi, ceux qui sont en cours et ceux qui ont échoué afin de diagnostiquer et de résoudre tout problème. Vous pouvez également configurer les notifications à envoyer par e-mail afin de vous informer de l"activité importante du système, même lorsque vous n"êtes pas connecté au système.' 
 ---
 = Surveillance de l'état des tâches de sauvegarde et de restauration
 :hardbreaks:
@@ -14,7 +14,7 @@ summary: 'Vous pouvez surveiller l"état des tâches de sauvegarde et de restaur
 
 
 [role="lead"]
-Vous pouvez surveiller l'état des tâches de sauvegarde et de restauration que vous avez lancées dans vos environnements de travail. Cela vous permet de voir les travaux qui ont réussi, ceux qui sont en cours et ceux qui ont échoué afin de diagnostiquer et de résoudre tout problème. Vous pouvez également configurer les notifications à envoyer par e-mail pour vous informer de l'activité système importante, même lorsque vous n'êtes pas connecté au système.
+Vous pouvez surveiller l'état des tâches de sauvegarde et de restauration que vous avez lancées dans vos environnements de travail. Cela vous permet de voir les travaux qui ont réussi, ceux qui sont en cours et ceux qui ont échoué afin de diagnostiquer et de résoudre tout problème. Vous pouvez également configurer les notifications à envoyer par e-mail afin de vous informer de l'activité importante du système, même lorsque vous n'êtes pas connecté au système.
 
 
 
@@ -56,9 +56,19 @@ Si vous recherchez des emplois spécifiques, vous pouvez :
 
 
 
-Notez que cette page est automatiquement actualisée toutes les 15 minutes afin que vous puissiez toujours voir les résultats d'état des travaux les plus récents. Vous pouvez cliquer sur le bouton *Actualiser* pour mettre la page à jour immédiatement.
+Notez que cette page est automatiquement actualisée toutes les 15 minutes afin que vous puissiez toujours voir les résultats d'état des travaux les plus récents. Vous pouvez cliquer sur image:button_refresh.png["Bouton Rafraîchir"] pour mettre immédiatement à jour la page.
 
-Pour afficher les détails correspondant à un travail spécifique, cliquez sur le nom du travail. Vous verrez tous les sous-travaux en cours d'exécution pour terminer le travail principal dans la page Détails du travail.
+
+
+=== Téléchargez les résultats de la surveillance des travaux sous forme de rapport
+
+Si vous voulez télécharger le contenu de la page principale de surveillance des travaux sous forme de rapport après l'avoir raffiné, cliquez sur le bouton image:button_download.png["Bouton Télécharger"] bouton. Cloud Backup génère un fichier .CSV que vous pouvez consulter et envoyer à d'autres groupes si nécessaire. Le fichier .CSV contient jusqu'à 10,000 lignes de données.
+
+
+
+=== Afficher les détails du travail
+
+Vous pouvez afficher les détails correspondant à un travail spécifique en cliquant sur le nom du travail. Vous verrez tous les sous-travaux en cours d'exécution pour terminer le travail principal dans la page Détails du travail.
 
 image:screenshot_backup_job_monitor_details.png["Capture d'écran affichant la page Détails du travail."]
 
@@ -66,7 +76,7 @@ image:screenshot_backup_job_monitor_details.png["Capture d'écran affichant la p
 
 == Utilisez le Centre de notification pour consulter les alertes de sauvegarde et de restauration
 
-Le Centre de notification suit la progression des travaux de sauvegarde et de restauration que vous avez lancés afin de vérifier si l'opération a réussi ou non. Vous pouvez afficher les notifications en cliquant sur le bouton (image:icon_bell.png["signal sonore de notification"]) Dans la barre de menus BlueXP. Vous pouvez également configurer BlueXP pour qu'il envoie des notifications par e-mail en tant qu'alertes de sorte que vous puissiez être informé de l'activité système importante, même lorsque vous n'êtes pas connecté au système.
+Le Centre de notification suit la progression des tâches de sauvegarde et de restauration que vous avez lancées afin de vérifier si l'opération a réussi ou non. Vous pouvez afficher les notifications en cliquant sur le bouton (image:icon_bell.png["signal sonore de notification"]) Dans la barre de menus BlueXP. Vous pouvez également configurer BlueXP pour envoyer des notifications par e-mail en tant qu'alertes afin de vous informer de l'activité système importante, même lorsque vous n'êtes pas connecté au système.
 
 À ce stade, quatre événements déclenchent des alertes par e-mail :
 
